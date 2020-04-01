@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Logo from '../assets/playroom-logo.png'
-import { Container, Input, InputGroup, InputGroupAddon, InputGroupText, Button } from 'reactstrap'
+import { Container, Input, InputGroup, /*, InputGroupAddon, InputGroupText,*/ Button } from 'reactstrap'
 
 export class SignIn extends Component {
 
