@@ -10,14 +10,9 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const cookieParser = require("cookie-parser");
-<<<<<<< HEAD
 const _ = require("lodash");
 const server = http.createServer(app);
 const io = socketio(server);
-||||||| 75ef914e
-=======
-const _ = require("lodash");
->>>>>>> refs/remotes/origin/master
 
 const allQuestions = require("./questions");
 
@@ -44,7 +39,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-<<<<<<< HEAD
 // Database Connection
 mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useUnifiedTopology: true,
@@ -141,107 +135,6 @@ app
             username: req.body.username,
             gender: req.body.gender
           });
-||||||| 75ef914e
-=======
-// Database Connection
-mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-});
-
-/////DEFINE SCHEMA FOR ALL QUESTIONS ASKED PER USER//////////////
-const questionsAskedSchema = new mongoose.Schema({
-  id: String,
-  q: String,
-  category: String
-});
-
-const QuestionsAsked = mongoose.model("QuestionAsked", questionsAskedSchema);
-
-/////DEFINITION OF USER SCHEMA////////////////
-const userSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true
-    },
-    gender: {
-      type: String,
-      enum: ["Male", "Female"]
-    },
-    lastLogin: Date,
-    dateAdded: {
-      type: Date,
-      default: Date.now
-    },
-    questAskedbyThisUser: [questionsAskedSchema]
-  },
-  { timestamps: true }
-);
-
-///Delete inactive user after 604800 seconds or 1 week
-userSchema.index(
-  { createdAt: userSchema.lastLogin },
-  { expireAfterSeconds: 604800 }
-);
-
-/////////////////////PLUGIN PASSPORTLOCALMONGOOSE FOR PASSWORD HASHING////////////////////
-userSchema.plugin(passportLocalMongoose);
-const User = mongoose.model("User", userSchema);
-
-// CHANGE: USE "createStrategy" INSTEAD OF "authenticate"
-passport.use(User.createStrategy());
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-//////USER REGISTRATION OR LOGIN DEPENDING ON COOKIE SESSION VARIABLES//////////////////////////
-app
-  .route("/:userName")
-  .post((req, res) => {
-    //check for previous session
-    console.log(req.params.userName);
-
-    let sess = req.session;
-
-    const gender = req.body.gender;
-
-    if (sess.username || sess.email) {
-      //if session exists log user in
-      User.findOne({ username: sess.username }, (err, foundUser) => {
-        const user = new User({
-          username: _.lowerCase(req.body.username),
-          password: _.lowerCase(req.body.username)
-        });
-
-        ///know which block got executed
-        console.log(sess);
-        console.log(user + "1");
-
-        req.login(user, function(err) {
-          if (err) {
-            res.send(err);
-          } else {
-            passport.authenticate("local")(req, res, function() {
-              res.redirect("/" + req.params.userName);
-            });
-          }
-        });
-      });
-    } else {
-      //check database if username exists
-      User.findOne({ username: req.body.username }, (err, foundUser) => {
-        if (!foundUser) {
-          //if no previous session register user
-          const newUser = new User({
-            username: req.body.username,
-            gender: req.body.gender
-          });
->>>>>>> refs/remotes/origin/master
 
           ///know which block got executed
           console.log(newUser + "2");
@@ -288,12 +181,6 @@ if (port == null || port == "") {
   port = 5000;
 }
 
-<<<<<<< HEAD
 app.listen(port, () => {
-||||||| 75ef914e
-app.listen(port, function(req, res) {
-=======
-app.listen(port, (req, res) => {
->>>>>>> refs/remotes/origin/master
   console.log("Server is listening on port " + port);
 });
