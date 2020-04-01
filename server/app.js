@@ -1,6 +1,8 @@
 //jshint esversion: 6
 require("dotenv").config();
 const express = require("express");
+const socketio = require("socket.io");
+const http = require("http");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -9,6 +11,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const cookieParser = require("cookie-parser");
 const _ = require("lodash");
+const server = http.createServer(app);
+const io = socketio(server);
 
 const allQuestions = require("./questions");
 
@@ -100,8 +104,6 @@ app
 
     let sess = req.session;
 
-    const gender = req.body.gender;
-
     if (sess.username || sess.email) {
       //if session exists log user in
       User.findOne({ username: sess.username }, (err, foundUser) => {
@@ -179,6 +181,6 @@ if (port == null || port == "") {
   port = 5000;
 }
 
-app.listen(port, (req, res) => {
+app.listen(port, () => {
   console.log("Server is listening on port " + port);
 });
