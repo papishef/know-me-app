@@ -1,4 +1,21 @@
+.logo {
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
+}
 .onboard {
   width: 100vw;
   height: 100vh;
+}
+.login-page-wrapper {
+  background: url(./assets/bg-mob.png) center no-repeat !important;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover !important;
+}
+.form-input::placeholder {
+  color: white;
+}
+.submit {
+  background: transparent !important;
 }
