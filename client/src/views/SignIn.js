@@ -5,7 +5,7 @@ import { Container, Input, InputGroup, InputGroupAddon, InputGroupText, Button }
 export class SignIn extends Component {
     render() {
         return (
-            <div className='login-page-wrapper'>
+            <div className='page-wrapper'>
                 <Container className="themed-container" >
                     <div><img className='logo pt-4' src={Logo} alt='#' /></div>
                     <div className='pt-4'>

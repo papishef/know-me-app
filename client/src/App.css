@@ -7,7 +7,7 @@
   width: 100vw;
   height: 100vh;
 }
-.login-page-wrapper {
+.page-wrapper {
   background: url(./assets/bg-mob.png) center no-repeat !important;
   width: 100vw;
   height: 100vh;
@@ -18,4 +18,7 @@
 }
 .submit {
   background: transparent !important;
+}
+.social-icon {
+  width: 2rem;
 }
