@@ -7,6 +7,7 @@ import {
 import './App.css';
 import Onboarding from './views/Onboarding';
 import SignIn from './views/SignIn'
+import Invitation from './views/Invitation';
 
 function App() {
   return (
@@ -19,9 +20,9 @@ function App() {
           <Route path="/signin">
             <SignIn />
           </Route>
-          {/* <Route path="/">
-            <Home />
-          </Route> */}
+          <Route path="/invite">
+            <Invitation />
+          </Route>
         </Switch>
       </Router>
     </div>
