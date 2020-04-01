@@ -8,6 +8,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const cookieParser = require("cookie-parser");
+const _ = require("lodash");
 
 const allQuestions = require("./questions");
 
@@ -35,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Database Connection
-mongoose.connect("mongodb://localhost:27017/playroomDB", {
+mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -52,33 +53,37 @@ const questionsAskedSchema = new mongoose.Schema({
 const QuestionsAsked = mongoose.model("QuestionAsked", questionsAskedSchema);
 
 /////DEFINITION OF USER SCHEMA////////////////
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female"]
+    },
+    lastLogin: Date,
+    dateAdded: {
+      type: Date,
+      default: Date.now
+    },
+    questAskedbyThisUser: [questionsAskedSchema]
   },
-  gender: {
-    type: String,
-    enum: ["Male", "Female"]
-  },
-  lastLogin: Date,
-  dateAdded: {
-    type: Date,
-    default: Date.now
-  },
-  questAskedbyThisUser: [questionsAskedSchema]
-}, {timestamps: true});
-
+  { timestamps: true }
+);
 
 ///Delete inactive user after 604800 seconds or 1 week
-userSchema.index({createdAt: userSchema.lastLogin}, {expireAfterSeconds: 604800})
+userSchema.index(
+  { createdAt: userSchema.lastLogin },
+  { expireAfterSeconds: 604800 }
+);
 
 /////////////////////PLUGIN PASSPORTLOCALMONGOOSE FOR PASSWORD HASHING////////////////////
 userSchema.plugin(passportLocalMongoose);
 const User = mongoose.model("User", userSchema);
-
 
 // CHANGE: USE "createStrategy" INSTEAD OF "authenticate"
 passport.use(User.createStrategy());
@@ -92,17 +97,22 @@ app
   .post((req, res) => {
     //check for previous session
     console.log(req.params.userName);
+
     let sess = req.session;
 
     const gender = req.body.gender;
 
-    if (sess) {
+    if (sess.username || sess.email) {
       //if session exists log user in
       User.findOne({ username: sess.username }, (err, foundUser) => {
         const user = new User({
-          username: req.body.username.toLowerCase(),
-          password: req.body.username.toLowerCase()
+          username: _.lowerCase(req.body.username),
+          password: _.lowerCase(req.body.username)
         });
+
+        ///know which block got executed
+        console.log(sess);
+        console.log(user + "1");
 
         req.login(user, function(err) {
           if (err) {
@@ -117,15 +127,18 @@ app
     } else {
       //check database if username exists
       User.findOne({ username: req.body.username }, (err, foundUser) => {
-        if (err) {
+        if (!foundUser) {
           //if no previous session register user
           const newUser = new User({
-            username: nickName,
-            gender: gender
+            username: req.body.username,
+            gender: req.body.gender
           });
+
+          ///know which block got executed
+          console.log(newUser + "2");
           const password = req.body.username;
 
-          User.register(newUser, password, (err, user) => {
+          User.register(newUser, password, err => {
             if (err) {
               res.send(err);
               res.redirect("/register");
@@ -136,14 +149,17 @@ app
               });
             }
           });
-        } else {
+        } else if (foundUser) {
+          ///know which block got executed
+          console.log(foundUser);
           res.send(
             "User already exists, if you're this user, try using the previous browser used to pick up where you left off"
           );
+        } else {
+          res.send(err);
         }
       });
     }
-
   })
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
