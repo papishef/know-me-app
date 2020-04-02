@@ -26,8 +26,8 @@ import { Container, Input, InputGroup,
        setGender(e.target.value)
         console.log(gender)
     }
+    const preventswitch = e => !username ? e.preventDefault(): null
 
-    const myRoute = '/chat'
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -82,7 +82,8 @@ import { Container, Input, InputGroup,
                         </Dropdown>
                         <br />
 
-                        <Link to={`/chat?room=${username}`}>
+                        <Link to={`/chat?room=${username}`}
+                                onClick={preventswitch}>
                             <Button 
                                 className='submit border border-light' 
                                 type='submit' 
