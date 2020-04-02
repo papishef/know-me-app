@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <Switch>
+        <Switch>
           <Route path="/onboard">
             <Onboarding />
           </Route>

@@ -16,6 +16,7 @@ const io = socketio(server);
 
 const allQuestions = require("./questions");
 
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true
