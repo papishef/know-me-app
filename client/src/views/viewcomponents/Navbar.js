@@ -10,7 +10,9 @@ import { Nav,
 import SmallLogo from '../../assets/logo-sm.png';
 import DropIcon from '../../assets/drop-icon.png';
 
-const Navbar = (props) => {
+const Navbar = () => {
+    
+    
 
     //dropdown state and hooks
     const [dropdownOpen, setDropdownOpen] = useState(false);
