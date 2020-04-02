@@ -1,3 +1,4 @@
+//jshint esversion: 6
 import React, { useState } from 'react'
 import Logo from '../assets/playroom-logo.png'
 import { Container, Input, InputGroup,

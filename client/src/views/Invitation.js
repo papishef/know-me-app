@@ -1,3 +1,4 @@
+//jshint esversion: 6
 import React from 'react'
 import Logo from '../assets/playroom-logo.png'
 import Whatsapp from '../assets/whatsapp.svg'
