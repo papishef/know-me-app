@@ -13,9 +13,18 @@ const cookieParser = require("cookie-parser");
 const _ = require("lodash");
 const server = http.createServer(app);
 const io = socketio(server);
+const cors = require("cors");
+
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom
+} = require("./users");
 
 const allQuestions = require("./questions");
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -23,12 +32,11 @@ app.use(
   })
 );
 
-//To allow our express serveer render local files including css and javascript
 
 app.use(cookieParser());
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: "thenameofthisappwasformerlyknowmeapp",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -58,33 +66,34 @@ const questionsAskedSchema = new mongoose.Schema({
 const QuestionsAsked = mongoose.model("QuestionAsked", questionsAskedSchema);
 
 /////DEFINITION OF USER SCHEMA////////////////
-const userSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true
-    },
-    gender: {
-      type: String,
-      enum: ["Male", "Female"]
-    },
-    lastLogin: Date,
-    dateAdded: {
-      type: Date,
-      default: Date.now
-    },
-    questAskedbyThisUser: [questionsAskedSchema]
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true
   },
-  { timestamps: true }
-);
+  gender: {
+    type: String,
+    enum: ["Male", "Female"]
+  },
+  lastLogin: Date,
+  dateAdded: {
+    type: Date,
+    default: Date.now
+  },
+  questAskedbyThisUser: [questionsAskedSchema]
+}, {
+  timestamps: true
+});
+
 
 ///Delete inactive user after 604800 seconds or 1 week
-userSchema.index(
-  { createdAt: userSchema.lastLogin },
-  { expireAfterSeconds: 604800 }
-);
+userSchema.index({
+  createdAt: userSchema.lastLogin
+}, {
+  expireAfterSeconds: 604800
+});
 
 /////////////////////PLUGIN PASSPORTLOCALMONGOOSE FOR PASSWORD HASHING////////////////////
 userSchema.plugin(passportLocalMongoose);
@@ -96,90 +105,92 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//////USER REGISTRATION OR LOGIN DEPENDING ON COOKIE SESSION VARIABLES//////////////////////////
-app
-  .route("/:userName")
-  .post((req, res) => {
-    //check for previous session
-    console.log(req.params.userName);
+///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
+app.get("/:roomID", (req, res) => {
+  const roomEndpoint = req.params.roomID;
+  if (req.isAuthenticated()) {
+    res.render("/" + roomEndpoint, {
+      allQuestions: allQuestions
+    });
+  } else {
+    res.redirect("/");
+  }
+});
 
-    let sess = req.session;
 
-    if (sess.username || sess.email) {
-      //if session exists log user in
-      User.findOne({ username: sess.username }, (err, foundUser) => {
-        const user = new User({
-          username: _.lowerCase(req.body.username),
-          password: _.lowerCase(req.body.username)
-        });
+app.get("/", (req, res) => {
+  res.send("Server started successfully with no errors");
+})
 
-        ///know which block got executed
-        console.log(sess);
-        console.log(user + "1");
 
-        req.login(user, function(err) {
-          if (err) {
-            res.send(err);
-          } else {
-            passport.authenticate("local")(req, res, function() {
-              res.redirect("/" + req.params.userName);
-            });
-          }
-        });
+io.on("connect", (socket) => {
+  socket.on("join", ({
+    nickname,
+    roomID
+  }, callback) => {
+    const {
+      error,
+      user
+    } = addUser({
+      id: socket.id,
+      nickname,
+      roomID
+    });
+
+    if (error) return callback(error);
+    //Add new user to invited room
+    socket.join(user.roomID);
+
+    socket.emit("message", {
+      user: "admin",
+      text: `${user.nickname}, welcome to room ${user.roomID}.`
+    });
+    socket.broadcast.to(user.roomID).emit("message", {
+      user: "admin",
+      text: `${user.nickname} has joined!`
+    });
+
+    io.to(user.roomID).emit("roomData", {
+      room: user.roomID,
+      users: getUsersInRoom(user.roomID)
+    });
+
+    callback();
+  });
+
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
+      text: message
+    });
+
+    callback();
+  });
+
+  socket.on('disconnect', () => {
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.roomID).emit('message', {
+        user: 'Admin',
+        text: `${user.nickname} has left.`
       });
-    } else {
-      //check database if username exists
-      User.findOne({ username: req.body.username }, (err, foundUser) => {
-        if (!foundUser) {
-          //if no previous session register user
-          const newUser = new User({
-            username: req.body.username,
-            gender: req.body.gender
-          });
-
-          ///know which block got executed
-          console.log(newUser + "2");
-          const password = req.body.username;
-
-          User.register(newUser, password, err => {
-            if (err) {
-              res.send(err);
-              res.redirect("/register");
-            } else {
-              passport.authenticate("local", {
-                successRedirect: "/" + req.params.userName,
-                failureRedirect: "/"
-              });
-            }
-          });
-        } else if (foundUser) {
-          ///know which block got executed
-          console.log(foundUser);
-          res.send(
-            "User already exists, if you're this user, try using the previous browser used to pick up where you left off"
-          );
-        } else {
-          res.send(err);
-        }
+      io.to(user.roomID).emit('roomData', {
+        room: user.roomID,
+        users: getUsersInRoom(user.roomID)
       });
     }
   })
-  .get((req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.render("/" + req.params.userName, {
-        questions: allQuestions
-      });
-      next((req, res) => {
-        //ALL SOCKET BACKEND CODES GO HERE
-      });
-    } else {
-      res.redirect("/");
-    }
-  });
+});
+
+
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 5000;
+  port = 4000;
 }
 
 app.listen(port, () => {
