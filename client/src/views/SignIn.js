@@ -6,7 +6,7 @@ export class SignIn extends Component {
 
     state = {
         nickname: '',
-        sex: ''
+        gender: ''
       }
       handleChange = event => {
         event.preventDefault();
@@ -17,15 +17,20 @@ export class SignIn extends Component {
           [name]: value    });
       };
 
-      handleSubmit = event => {
+      handleSubmit = event => { 
     event.preventDefault();
 
     const user = {
       nickname: this.state.nickname,
-      sex: this.state.sex
+      gender: this.state.gender
     };
     console.log(user)
-}
+    /////SET STATE BACK TO EMPTY ON SUBMIT////
+    this.setState({
+        nickname: '',
+        gender: ''
+    })
+    }
     render() {
         return (
             <div className='page-wrapper'>
@@ -33,11 +38,11 @@ export class SignIn extends Component {
                     <div><img className='logo py-4' src={Logo} alt='#' /></div>
                     <form className='pt-4 form-wrapper' onSubmit={this.handleSubmit}>
                         <InputGroup className='pt-4'>
-                            <Input className='bg-transparent text-white form-input' name='nickname' placeholder="Nickname" value={this.state.email} type="string"  onChange={this.handleChange} />
+                            <Input className='bg-transparent text-white form-input' name='nickname' placeholder="Nickname" value={this.state.nickname} type="string"  onChange={this.handleChange} />
                         </InputGroup>
                         <br />
                         <InputGroup className='pt-4'>
-                            <Input className='bg-transparent text-white form-input' name='sex' placeholder="sex" value={this.state.email} type="string" onChange={this.handleChange}/>
+                            <Input className='bg-transparent text-white form-input' name='gender' placeholder="Gender" value={this.state.gender} type="string" onChange={this.handleChange}/>
                         </InputGroup>
                         {/* <InputGroup>
                             <InputGroupAddon addonType="prepend">
