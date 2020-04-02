@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import Navbar from './viewcomponents/Navbar';
 import Message from './viewcomponents/Message';
 import Texting from './viewcomponents/Texting';
+import AdminPanel from './viewcomponents/AdminPanel'
 
 
 
@@ -19,6 +20,7 @@ const Chat = (location) => {
     return (
         <div className='page-wrapper'>
             <Navbar />
+            <AdminPanel />
             <Message />
             <Texting />
         </div>
