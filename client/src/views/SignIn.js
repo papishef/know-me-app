@@ -29,12 +29,12 @@ import { Container, Input, InputGroup,
        setGender(e.target.value)
         console.log(gender)
     }
-    const preventswitch = e => !input.username || !input.room ? e.preventDefault(): null
+    const preventswitch = e => !input.nickname || !input.roomID ? e.preventDefault(): null
 
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input.username)
+        console.log(input.nickname)
         //post request goes here
         fetch("http://localhost:5000/nickName", {
             method: 'POST',
@@ -67,7 +67,7 @@ import { Container, Input, InputGroup,
                             <Input 
                             color='light'
                             className='form-input' 
-                            name='username' placeholder="Nickname"  
+                            name='nickname' placeholder="Nickname"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
@@ -76,7 +76,7 @@ import { Container, Input, InputGroup,
                             <Input 
                             color='light'
                             className='form-input' 
-                            name='room' placeholder="Room name"  
+                            name='roomID' placeholder="Room name"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
@@ -93,7 +93,7 @@ import { Container, Input, InputGroup,
                         </Dropdown>
                         <br />
 
-                        <Link to={`/chat?room=${input.room}&&userID=${input.username}`}
+                        <Link to={`/chat?nickname=${input.nickname}&&roomID=${input.roomID}`}
                                 onClick={preventswitch}>
                             <Button 
                                 className='submit border border-light' 
