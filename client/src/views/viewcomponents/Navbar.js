@@ -1,4 +1,6 @@
+//jshint esversion: 6
 import React, {useState} from 'react';
+import Questions from './Questions'
 import { Nav,
     NavLink, 
     Dropdown,
@@ -16,17 +18,20 @@ const Navbar = (props) => {
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
   return (
-    <div className='page-wrapper'>
+    <div>
       <div className='p-1'><img src={SmallLogo} alt='#' /></div>
       <Nav>
         <NavLink className='text-light font-weight-bold'>Nickname</NavLink>
+        <span className='mx-auto'><Questions /></span>
         <Dropdown className='ml-auto pr-2' isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle className='bg-transparent border-0'>
                     <img src={DropIcon} alt='#' />
                     </DropdownToggle>
                 <DropdownMenu className='drp-content'>
                     <DropdownItem>How to play</DropdownItem>
-                    <DropdownItem>Categories</DropdownItem>
+                    <DropdownItem>
+                    <NavLink className='text-dark' href='/invite'>Invite</NavLink>
+                    </DropdownItem>
                     <DropdownItem>End Session</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
