@@ -33,3 +33,10 @@
   padding: 0px !important;
   max-height: 2.1rem !important;
 }
+.admin-alerts {
+  border: solid 2px white !important;
+}
+.message-container {
+  height: 75% !important;
+  
+}

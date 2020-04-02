@@ -35,23 +35,7 @@ import { Container, Input, InputGroup,
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(input.nickname)
-        //post request goes here
-        fetch("http://localhost:5000/nickName", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ post: input })
-        })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setInput(input);
-        })
-        
-
     }
-      // reset state
        
     return (
         <div className='page-wrapper'>
@@ -76,7 +60,7 @@ import { Container, Input, InputGroup,
                             <Input 
                             color='light'
                             className='form-input' 
-                            name='roomID' placeholder="Room name"  
+                            name='roomID' placeholder="roomID"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
@@ -93,7 +77,7 @@ import { Container, Input, InputGroup,
                         </Dropdown>
                         <br />
 
-                        <Link to={`/chat?nickname=${input.nickname}&&roomID=${input.roomID}`}
+                        <Link to={`/chat?nickname=${input.nickname}&roomID=${input.roomID}`}
                                 onClick={preventswitch}>
                             <Button 
                                 className='submit border border-light' 

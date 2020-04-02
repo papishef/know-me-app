@@ -4,7 +4,7 @@ import React from 'react'
 
 const Message = () => {
     return (
-        <div>
+        <div className='message-container border-2'>
             
         </div>
     )
