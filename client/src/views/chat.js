@@ -10,6 +10,7 @@ import Texting from './viewcomponents/Texting';
 const Chat = (location) => {
 
     useEffect(() => {
+        //capture param with location prop
         const data = queryString.parse(location.search);
         console.log(location.search);
         console.log(data);
