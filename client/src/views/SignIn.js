@@ -1,72 +1,107 @@
 //jshint esversion: 6
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Logo from '../assets/playroom-logo.png'
-import { Container, Input, InputGroup, /*, InputGroupAddon, InputGroupText,*/ Button } from 'reactstrap'
+import { Container, Input, InputGroup,
+     /*, InputGroupAddon, InputGroupText,*/ 
+     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
+     Button } from 'reactstrap'
 
-export class SignIn extends Component {
 
-    state = {
-        nickname: '',
-        gender: ''
-      }
-      handleChange = event => {
-        event.preventDefault();
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        this.setState({
-          [name]: value    });
-      };
+// sign in component
+ const Signin = () => {
+    // Username and gender state hooks
+    const [input, setInput] = useState("");
+    const [gender, setGender] = useState("");
 
-      handleSubmit = event => { 
-    event.preventDefault();
+    //dropdown toggle-state and toggle-function
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const toggle = () => setDropdownOpen(prevState => !prevState);
 
-    const user = {
-      nickname: this.state.nickname,
-      gender: this.state.gender
-    };
-    console.log(user)
-    /////SET STATE BACK TO EMPTY ON SUBMIT////
-    this.setState({
-        nickname: '',
-        gender: ''
-    })
+    // function to handle input change
+    const handleChange = (e) => setInput({
+        ...input,
+        [e.currentTarget.name]: e.currentTarget.value
+      })
+
+   //function to handle dropdown change
+   const selectGender = (e) => {
+       setGender(e.target.value)
+        console.log(gender)
     }
-    render() {
-        return (
-            <div className='page-wrapper'>
+    const preventswitch = e => !input.nickname || !input.roomID ? e.preventDefault(): null
+
+    // function to submit data
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(input.nickname)
+    }
+       
+    return (
+        <div className='page-wrapper'>
+           {/* content container */}
                 <Container className="themed-container login-wrapper" >
+                    {/* logo */}
                     <div><img className='logo py-4' src={Logo} alt='#' /></div>
-                    <form className='pt-4 form-wrapper' onSubmit={this.handleSubmit}>
+
+                    {/* user form */}
+                    <form className='pt-4 form-wrapper' onSubmit={handleSubmit}>
+
                         <InputGroup className='pt-4'>
-                            <Input className='bg-transparent text-white form-input' name='nickname' placeholder="Nickname" value={this.state.nickname} type="string"  onChange={this.handleChange} />
+                            <Input 
+                            color='light'
+                            className='form-input' 
+                            name='nickname' placeholder="Nickname"  
+                            type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
+
                         <InputGroup className='pt-4'>
-                            <Input className='bg-transparent text-white form-input' name='gender' placeholder="Gender" value={this.state.gender} type="string" onChange={this.handleChange}/>
+                            <Input 
+                            color='light'
+                            className='form-input' 
+                            name='roomID' placeholder="roomID"  
+                            type="string"  onChange={handleChange} />
                         </InputGroup>
-                        {/* <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                                <Input addon type="checkbox" aria-label="Checkbox for following text input" />
-                            </InputGroupText>
-                            </InputGroupAddon>
-                        </InputGroup> */}
                         <br />
-                        <Button className='submit border border-light' type='submit' color="secondary">submit</Button>{' '}
+
+                        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                            <DropdownToggle name='gender' color='light' caret>
+                                Gender
+                                </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem header>Select your gender</DropdownItem>
+                                <DropdownItem name='gender' onClick={selectGender}>Male</DropdownItem>
+                                <DropdownItem name='gender' onClick={selectGender} >Female</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <br />
+
+                        <Link to={`/chat?nickname=${input.nickname}&roomID=${input.roomID}`}
+                                onClick={preventswitch}>
+                            <Button 
+                                className='submit border border-light' 
+                                type='submit' 
+                                color="secondary">submit
+                            </Button>{' '}
+                        </Link>    
                     </form>
+
+
+                    {/* additional information */}
                     <div className='text-white pt-4'>
                         <strong>Disclaimer:</strong>Nickname should be kept private,
                          it would be used to identify you when you log in and out of the game.
                     </div>
+
                     <div className='text-white pt-2'>
                         By submiting, I agree to your <strong>Terms of service</strong> and
                         <strong>Privacy Policy</strong>
                     </div>
+
                 </Container>
             </div>
         )
-    }
 }
 
-export default SignIn
+export default Signin;

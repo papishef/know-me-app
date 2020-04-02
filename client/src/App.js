@@ -6,24 +6,24 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import Onboarding from './views/Onboarding';
 import SignIn from './views/SignIn'
 import Invitation from './views/Invitation';
+import Chat from './views/chat'
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/onboard">
-            <Onboarding />
-          </Route>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/invite">
-            <Invitation />
-          </Route>
+            <Route exact path="/">
+              <SignIn />
+            </Route>
+            <Route path="/invite">
+              <Invitation />
+            </Route>
+            <Route path="/chat">
+              <Chat />
+            </Route>
         </Switch>
       </Router>
     </div>
