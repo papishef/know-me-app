@@ -4,7 +4,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const Questions = (props) => {
   const {
-    buttonLabel,
     className
   } = props;
 
