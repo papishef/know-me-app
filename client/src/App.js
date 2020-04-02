@@ -8,6 +8,7 @@ import {
 import './App.css';
 import SignIn from './views/SignIn'
 import Invitation from './views/Invitation';
+import Chat from './views/chat'
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route path="/invite">
               <Invitation />
+            </Route>
+            <Route path="/chat">
+              <Chat />
             </Route>
         </Switch>
       </Router>

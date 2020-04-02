@@ -1,0 +1,38 @@
+import React, {useState} from 'react';
+import { Nav,
+    NavLink, 
+    Dropdown,
+    DropdownToggle,
+     DropdownMenu,
+      DropdownItem } from 'reactstrap';
+import SmallLogo from '../../assets/logo-sm.png';
+import DropIcon from '../../assets/drop-icon.png';
+
+const Navbar = (props) => {
+
+    //dropdown state and hooks
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    //dropdown toggle function
+    const toggle = () => setDropdownOpen(prevState => !prevState);
+
+  return (
+    <div className='page-wrapper'>
+      <div className='p-1'><img src={SmallLogo} alt='#' /></div>
+      <Nav>
+        <NavLink className='text-light font-weight-bold'>Nickname</NavLink>
+        <Dropdown className='ml-auto pr-2' isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle className='bg-transparent border-0'>
+                    <img src={DropIcon} alt='#' />
+                    </DropdownToggle>
+                <DropdownMenu className='drp-content'>
+                    <DropdownItem>How to play</DropdownItem>
+                    <DropdownItem>Categories</DropdownItem>
+                    <DropdownItem>End Session</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+      </Nav>
+    </div>
+  );
+}
+
+export default Navbar;
