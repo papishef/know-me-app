@@ -1,29 +1,54 @@
 import React, { useState } from 'react'
 import Logo from '../assets/playroom-logo.png'
-import { Container, Input, InputGroup, /*, InputGroupAddon, InputGroupText,*/ Button } from 'reactstrap'
+import { Container, Input, InputGroup,
+     /*, InputGroupAddon, InputGroupText,*/ 
+     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
+     Button } from 'reactstrap'
 
 
 // sign in component
  const Signin = () => {
-    // generic state hooks for all input
-    const [input, setInput] = useState('')
-    
+    // Username and gender state hooks
+    const [username, setUsername] = useState("");
+    const [gender, setGender] = useState("");
+
+    //dropdown toggle-state and toggle-function
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const toggle = () => setDropdownOpen(prevState => !prevState);
+
     // function to handle input change
-    const handleChange = (e) => setInput({
-        ...input, [e.target.name]: e.target.value
-    })
+    const handleChange = (e) => setUsername(e.target.value)
+
+   //function to handle dropdown change
+   const selectGender = (e) => {
+       setGender(e.target.value)
+        console.log(gender)
+    }
 
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input)
-        // post request goes here
-
-        // reset state
+        console.log(username)
+        //post request goes here
+        fetch("http://localhost:5000/nickName", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ post: username })
+        })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setUsername(username);
+        })
         
+
     }
+      // reset state
+       
     return (
-       <div className='page-wrapper'>
+        <div className='page-wrapper'>
            {/* content container */}
                 <Container className="themed-container login-wrapper" >
                     {/* logo */}
@@ -34,18 +59,24 @@ import { Container, Input, InputGroup, /*, InputGroupAddon, InputGroupText,*/ Bu
 
                         <InputGroup className='pt-4'>
                             <Input 
-                            className='bg-transparent text-white form-input' 
+                            color='light'
+                            value={username}
+                            className='form-input' 
                             name='username' placeholder="Nickname"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
 
-                        <InputGroup className='pt-4'>
-                            <Input 
-                            className='bg-transparent text-white form-input' 
-                            name='gender' placeholder="gender"  
-                            type="string" onChange={handleChange}/>
-                        </InputGroup>
+                        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                            <DropdownToggle name='gender' color='light' caret>
+                                Gender
+                                </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem header>Select your gender</DropdownItem>
+                                <DropdownItem name='gender' onClick={selectGender}>Male</DropdownItem>
+                                <DropdownItem name='gender' onClick={selectGender} >Female</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                         <br />
 
                         <Button 
@@ -68,7 +99,7 @@ import { Container, Input, InputGroup, /*, InputGroupAddon, InputGroupText,*/ Bu
 
                 </Container>
             </div>
-    )
+        )
 }
 
 export default Signin;
