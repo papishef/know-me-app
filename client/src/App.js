@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import Onboarding from './views/Onboarding';
+// import Onboarding from './views/Onboarding';
 import SignIn from './views/SignIn'
 import Invitation from './views/Invitation';
 
@@ -14,10 +14,10 @@ function App() {
     <div className="App">
       <Router>
       <Switch>
-          <Route path="/onboard">
+          {/* <Route path="/onboard">
             <Onboarding />
-          </Route>
-          <Route path="/signin">
+          </Route> */}
+          <Route path="/">
             <SignIn />
           </Route>
           <Route path="/invite">
