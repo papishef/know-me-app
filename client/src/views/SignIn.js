@@ -11,7 +11,7 @@ import { Container, Input, InputGroup,
 // sign in component
  const Signin = () => {
     // Username and gender state hooks
-    const [username, setUsername] = useState("");
+    const [input, setInput] = useState("");
     const [gender, setGender] = useState("");
 
     //dropdown toggle-state and toggle-function
@@ -19,31 +19,34 @@ import { Container, Input, InputGroup,
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
     // function to handle input change
-    const handleChange = (e) => setUsername(e.target.value)
+    const handleChange = (e) => setInput({
+        ...input,
+        [e.currentTarget.name]: e.currentTarget.value
+      })
 
    //function to handle dropdown change
    const selectGender = (e) => {
        setGender(e.target.value)
         console.log(gender)
     }
-    const preventswitch = e => !username ? e.preventDefault(): null
+    const preventswitch = e => !input.username || !input.room ? e.preventDefault(): null
 
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username)
+        console.log(input.username)
         //post request goes here
         fetch("http://localhost:5000/nickName", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ post: username })
+            body: JSON.stringify({ post: input })
         })
       .then(res => res.json())
       .then(
         (result) => {
-          setUsername(username);
+          setInput(input);
         })
         
 
@@ -63,9 +66,17 @@ import { Container, Input, InputGroup,
                         <InputGroup className='pt-4'>
                             <Input 
                             color='light'
-                            value={username}
                             className='form-input' 
                             name='username' placeholder="Nickname"  
+                            type="string"  onChange={handleChange} />
+                        </InputGroup>
+                        <br />
+
+                        <InputGroup className='pt-4'>
+                            <Input 
+                            color='light'
+                            className='form-input' 
+                            name='room' placeholder="Room name"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
@@ -82,7 +93,7 @@ import { Container, Input, InputGroup,
                         </Dropdown>
                         <br />
 
-                        <Link to={`/chat?room=${username}`}
+                        <Link to={`/chat?room=${input.room}&&userID=${input.username}`}
                                 onClick={preventswitch}>
                             <Button 
                                 className='submit border border-light' 
