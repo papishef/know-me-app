@@ -3,18 +3,23 @@ import {
     Input,
     InputGroup,
     InputGroupText,
-    InputGroupAddon
+    InputGroupAddon,
+    Button
 } from 'reactstrap'
 
 const Texting = () => {
     return (
         <div className='text-box'>
-            <InputGroup className='p-0'>
-                <Input  className='p-0' placeholder="" />
-                <InputGroupAddon addonType="append">
-                <InputGroupText>Send</InputGroupText>
-                </InputGroupAddon>
-            </InputGroup>
+            <form>
+                <InputGroup className='px-3 border-0'>
+                    <Input  className='p-0' placeholder="" />
+                    <InputGroupAddon  className='bg-transparent border-0' addonType="append">
+                    <InputGroupText className='bg-transparent border-0'>
+                        <Button type='submit'>Send</Button>
+                    </InputGroupText>
+                    </InputGroupAddon>
+                </InputGroup>
+            </form>
       <br />
         </div>
     )

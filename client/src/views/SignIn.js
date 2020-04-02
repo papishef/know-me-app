@@ -1,5 +1,6 @@
 //jshint esversion: 6
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Logo from '../assets/playroom-logo.png'
 import { Container, Input, InputGroup,
      /*, InputGroupAddon, InputGroupText,*/ 
@@ -26,6 +27,7 @@ import { Container, Input, InputGroup,
         console.log(gender)
     }
 
+    const myRoute = '/chat'
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -80,10 +82,13 @@ import { Container, Input, InputGroup,
                         </Dropdown>
                         <br />
 
-                        <Button 
-                        className='submit border border-light' 
-                        type='submit' 
-                        color="secondary">submit</Button>{' '}
+                        <Link to={`/chat?room=${username}`}>
+                            <Button 
+                                className='submit border border-light' 
+                                type='submit' 
+                                color="secondary">submit
+                            </Button>{' '}
+                        </Link>    
                     </form>
 
 
