@@ -26,3 +26,10 @@
 .drp-content {
   margin-right: 7rem !important;
 }
+.text-box {
+  position: fixed !important;
+  bottom: 1vh !important;
+  width: 100vw !important;
+  padding: 0px !important;
+  max-height: 2.1rem !important;
+}
