@@ -16,12 +16,6 @@ const server = http.createServer(app);
 const io = socketio(server);
 const cors = require("cors");
 
-io.origins((origin, callback) => {
-  if (origin !== "http://localhost:4000" || "http://localhost:3006") {
-      return callback('origin not allowed', false);
-  }
-  callback(null, true);
-});
 
 const {
   addUser,
@@ -52,6 +46,18 @@ app.use(
     }
   })
 );
+
+
+
+io.set("origins", "*:*");
+
+io.origins((origin, callback) => {
+  if (origin !== "http://localhost:3006") {
+      return callback('origin not allowed', false);
+  }
+  callback(null, true);
+});
+
 
 // Use shared session middleware for socket.io
 // setting autoSave:true
