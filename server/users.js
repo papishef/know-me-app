@@ -4,41 +4,52 @@ const users = [];
 const addUser = ({
   id,
   nickname,
-  roomID
+  roomID,
+  gender
 }) => {
-
-  const sess = req.session;
-//////USER REGISTRATION OR LOGIN DEPENDING ON COOKIE SESSION VARIABLES//////////////////////////
-  if (sess.username || sess.email) {
+  //////USER REGISTRATION OR LOGIN DEPENDING ON COOKIE SESSION VARIABLES//////////////////////////
+  if (socket.handshake.session.nickname || socket.handshake.session.id) {
     //if session exists log user in
     User.findOne({
-      username: sess.username
+      username: socket.handshake.session.nickname
     }, (err) => {
 
-
       if (err) {
-        return (err)
+        return (err);
       } else {
 
         const existingUser = new User({
-          username: _.lowerCase(sess.username),
-          password: _.lowerCase(sess.username)
+          username: _.lowerCase(socket.handshake.session.nickname),
+          password: _.lowerCase(socket.handshake.session.nickname)
         });
+        ///know which block got executed
+        console.log(existingUser + "1");
 
-        req.login(user, function (err) {
+        socket.login(existingUser, function (err) {
           if (err) {
-            res.send(err);
+            return(err);
           } else {
-            passport.authenticate("local")(req, res, function () {
-              users.push(existingUser)
-              // res.redirect("/?" + nickname&roomID);
+            passport.authenticate("local")(() => {
+              users.push(user);
+              console.log(socket.handshake.session) + "1";
+              socket.request.session.passport = {
+                id,
+                nickname,
+                roomID,
+                gender
+              };
+              socket.handshake.session = {
+                id,
+                nickname,
+                roomID,
+                gender
+              };
+              socket.handshake.session.save();
+              user.lastLogin = Date.now;
             });
           }
         });
       }
-      ///know which block got executed
-      console.log(sess);
-      console.log(user + "1");
 
     });
   } else {
@@ -50,20 +61,35 @@ const addUser = ({
         //if no previous session register user
         const newUser = new User({
           username: _.lowerCase(req.body.nickname),
-          gender: req.body.gender
+          gender: gender
         });
 
         ///know which block got executed
         console.log(newUser + "2");
-        const password = _.lowerCase(req.body.nickname);
+        const password = _.lowerCase(nickname);
 
         User.register(newUser, password, err => {
           if (err) {
-            res.send(err);
+            return(err);
             // res.redirect("/signin?" + nickname&roomID);
           } else {
             passport.authenticate("local")(req, res, function () {
               users.push(newUser);
+              console.log(socket.handshake.session) + "2";
+              socket.request.session.passport = {
+                id,
+                nickname,
+                roomID,
+                gender
+              };
+              socket.handshake.session = {
+                id,
+                nickname,
+                roomID,
+                gender
+              };
+              socket.handshake.session.save();
+              user.lastLogin = Date.now;
               // res.redirect("/?" + nickname&roomID);
             });
           }
@@ -71,11 +97,11 @@ const addUser = ({
       } else if (foundUser) {
         ///know which block got executed
         console.log(foundUser);
-        res.send(
+        return (
           "User already exists, if you're this user, try using the previous browser used to pick up where you left off"
         );
       } else {
-        res.send(err);
+        return(err);
       }
     });
   }
@@ -84,7 +110,8 @@ const addUser = ({
   const user = {
     id,
     nickname,
-    roomID
+    roomID,
+    gender
   };
 
   return {
