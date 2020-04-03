@@ -1,6 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 {"metricId":"06a6b0d7-0b6b-472b-94cc-0ed8507936f5","metrics":{"from":"2020-04-01T12:13:21.852Z","to":"2020-04-01T14:36:48.890Z","successfulInstalls":1,"failedInstalls":7}}
 ||||||| 9d7c79a3
 =======
 {"metricId":"2b0b18f1-201e-4a5b-8fa3-ea756c67aa3f","metrics":{"from":"2020-04-01T22:05:29.149Z","to":"2020-04-01T22:05:29.149Z","successfulInstalls":1,"failedInstalls":0}}
 >>>>>>> 6311fd22
+=======
+{"metricId":"78815d59-56a9-4964-9544-9b7e98b2dc94","metrics":{"from":"2020-04-03T11:30:13.193Z","to":"2020-04-03T11:53:14.645Z","successfulInstalls":2,"failedInstalls":2}}
+>>>>>>> 16528e8ec5d370f8cfb29e02d9abcd432599fc94
