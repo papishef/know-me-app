@@ -7,12 +7,13 @@ import {
     Button
 } from 'reactstrap'
 
-const Texting = () => {
+const Texting = ( props ) => {
     return (
         <div className='text-box'>
             <form>
                 <InputGroup className='px-3 border-0'>
-                    <Input  className='p-0' placeholder="" />
+                    <Input  className='p-0' placeholder="" 
+                            value={props.message}/>
                     <InputGroupAddon  className='bg-transparent border-0' addonType="append">
                     <InputGroupText className='bg-transparent border-0'>
                         <Button type='submit'>Send</Button>

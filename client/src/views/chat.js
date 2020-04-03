@@ -20,6 +20,7 @@ const Chat = () => {
     const [roomID, setRoomID] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState("");
+    
 
     useEffect(() => {
         //capture param with location prop
@@ -54,7 +55,7 @@ const Chat = () => {
         <div className='page-wrapper'>
             <Navbar />
             <AdminPanel />
-            <Message />
+            <Message message={message} />
             <Texting />
         </div>
     )
