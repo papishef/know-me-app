@@ -20,8 +20,7 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
 
    //function to handle dropdown change
    const selectGender = (e) => {
-    setGender(e.target.value)
-        console.log(gender)
+    setGender(e.target.value);
     }
     const preventswitch = e => !input.nickname || !input.roomID || !gender ? e.preventDefault(): null
 
