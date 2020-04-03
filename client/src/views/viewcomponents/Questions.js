@@ -1,29 +1,27 @@
 //jshint esversion: 6
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { InputGroup } from 'reactstrap';
+
 
 const Questions = (props) => {
-  const {
-    className
-  } = props;
 
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
+  const [question, setQuestion] = useState('')
+  
+  
+  const selectQuestion = (e) => {
+    setQuestion(e.target.value);
+    }
 
   return (
     <div>
-      <Button className='mx-auto bg-transparent border-0'  onClick={toggle}>Questions</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Select a question to get started</ModalHeader>
-        <ModalBody>
-            <span onClick={toggle}> 1.question</span>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Close</Button>{' '}
-         
-        </ModalFooter>
-      </Modal>
+      <InputGroup className='pt-4'>
+        <select value={question} onChange={selectQuestion} 
+          style={{borderRadius: 5, height: 35}}>
+            <option>Pick a question</option> 
+             <option value="id">what is you birthdate?</option>
+             <option value="id">Have you smoked before?</option>
+        </select>
+      </InputGroup>
     </div>
   );
 }

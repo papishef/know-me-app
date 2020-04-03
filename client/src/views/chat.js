@@ -55,7 +55,7 @@ const Chat = () => {
         <div className='page-wrapper'>
             <Navbar />
             <AdminPanel />
-            <Message message={message} />
+            <Message message={message} msgHandler={setMessage} />
             <Texting />
         </div>
     )

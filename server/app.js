@@ -50,7 +50,7 @@ app.use(
 // setting autoSave:true
 io.use(sharedsession(session, cookieParser({
       autoSave: true
-    }));
+    })));
 
     app.use(passport.initialize()); app.use(passport.session());
 
