@@ -52,7 +52,7 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
                             <Input 
                             color='light'
                             className='form-input' 
-                            name='roomID' placeholder="roomID"  
+                            name='roomID' placeholder="Invitation ID"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
@@ -63,29 +63,33 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
                              <option value="Female">Female</option>
                         </select>
                         </InputGroup>
-
+                        <div className='text-white pt-4'>
+                        <strong>Disclaimer:</strong> Nickname should be kept private,
+                         it would be used to identify you when you log in and out of the game.
+                    </div>
                         <br />
 
                         <Link to={`/chat?nickname=${input.nickname}&roomID=${input.roomID}`}
                                 onClick={preventswitch}>
                             <Button 
+                                style={{borderWidth: 2, fontWeight: 800}}
                                 className='submit border border-light' 
                                 type='submit' 
-                                color="secondary">submit
+                                color="secondary">Submit
                             </Button>{' '}
                         </Link>    
                     </form>
 
 
                     {/* additional information */}
-                    <div className='text-white pt-4'>
-                        <strong>Disclaimer:</strong>Nickname should be kept private,
-                         it would be used to identify you when you log in and out of the game.
-                    </div>
+
 
                     <div className='text-white pt-2'>
-                        By submiting, I agree to your <strong>Terms of service</strong> and
-                        <strong>Privacy Policy</strong>
+                        By submiting, I agree to your <Link to={`/terms`} style={{color: "purple"}}><strong>Terms of service</strong></Link> and 
+                        <Link to={`/privacy`} style={{color: "purple"}}><strong> Privacy Policy</strong></Link>
+                    </div>
+                    <div className='text-white pt-2'>
+                        Learn <Link to={`/terms`} style={{color: "purple"}}><strong>How to play</strong></Link>
                     </div>
 
                 </Container>
