@@ -12,11 +12,14 @@ let socket;
 const ENDPOINT  = 'localhost:4000';
 
 const Chat = () => {
+    //location hooks from react-router-dom to manipulate platform route, path, location
     const location = useLocation();
 
     // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState("");
 
     useEffect(() => {
         //capture param with location prop
@@ -28,7 +31,24 @@ const Chat = () => {
         setNickname(nickname);
         setRoomID(roomID);
 
-    },[ ENDPOINT, location.search ])
+        //listen for when a new user joins the room and send a message
+        socket.emit('join', {nickname, roomID});
+
+        return() => {
+            //will fire when users leave the room
+            socket.emit('disconnect');
+            
+            //web sockets stop listening
+            socket.off()
+        }
+
+    },[ ENDPOINT, location.search ]); //will trigger useeffect if values change
+
+    useEffect(() => {
+        socket.on('message', (message) => {
+            setMessages([...messages, message]);
+        })
+    }, [messages])
 
     return (
         <div className='page-wrapper'>

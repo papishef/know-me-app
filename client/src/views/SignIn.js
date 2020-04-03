@@ -2,10 +2,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../assets/playroom-logo.png'
-import { Container, Input, InputGroup,
-     /*, InputGroupAddon, InputGroupText,*/ 
-     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
-     Button } from 'reactstrap'
+import { Container, Input, InputGroup, Button } from 'reactstrap'
 
 
 // sign in component
@@ -14,9 +11,6 @@ import { Container, Input, InputGroup,
     const [input, setInput] = useState("");
     const [gender, setGender] = useState("");
 
-    //dropdown toggle-state and toggle-function
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggle = () => setDropdownOpen(prevState => !prevState);
 
     // function to handle input change
     const handleChange = (e) => setInput({
@@ -26,15 +20,14 @@ import { Container, Input, InputGroup,
 
    //function to handle dropdown change
    const selectGender = (e) => {
-       setGender(e.target.value)
+    setGender(e.target.value)
         console.log(gender)
     }
-    const preventswitch = e => !input.nickname || !input.roomID ? e.preventDefault(): null
+    const preventswitch = e => !input.nickname || !input.roomID || !gender ? e.preventDefault(): null
 
     // function to submit data
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input.nickname)
     }
        
     return (
@@ -64,17 +57,14 @@ import { Container, Input, InputGroup,
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />
+                        <InputGroup className='pt-4'>
+                        <select value={gender} onChange={selectGender} style={{borderRadius: 5, height: 35, width: 600}}>
+                            <option>Gender</option> 
+                             <option value="Male">Male</option>
+                             <option value="Female">Female</option>
+                        </select>
+                        </InputGroup>
 
-                        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                            <DropdownToggle name='gender' color='light' caret>
-                                Gender
-                                </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem header>Select your gender</DropdownItem>
-                                <DropdownItem name='gender' onClick={selectGender}>Male</DropdownItem>
-                                <DropdownItem name='gender' onClick={selectGender} >Female</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
                         <br />
 
                         <Link to={`/chat?nickname=${input.nickname}&roomID=${input.roomID}`}
