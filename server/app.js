@@ -84,7 +84,7 @@ mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useCreateIndex: true
 });
 
-const roomSchema = new mongoose.Schema({})
+const roomSchema = new mongoose.Schema({});
 
 /////DEFINE SCHEMA FOR ALL QUESTIONS ASKED PER USER//////////////
 const questionsAskedSchema = new mongoose.Schema({
@@ -232,7 +232,7 @@ app.post("/signIn", (req, res) => {
         if (err) {
           res.send(err);
         }
-        req.user.dateAdded = Date.now
+        req.user.dateAdded = Date.now;
         res.redirect('/chat?');
       });
     } else {
@@ -251,4 +251,4 @@ app.get("/questions", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Server started successfully with no errors");
-})
+});
