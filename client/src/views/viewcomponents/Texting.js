@@ -21,7 +21,7 @@ const Texting = ( {message, setMessage} ) => {
                     <Input  className='p-0' placeholder="" onChange={(e) => setMessage(e.target.value)}
                             value={message}/>
                     <InputGroupAddon  className='bg-transparent border-0' addonType="append">
-                    <InputGroupText className='bg-transparent border-0'>
+                    <InputGroupText className='bg-transparent border-0 mb-5'>
                         <Button type='submit'>Send</Button>
                     </InputGroupText>
                     </InputGroupAddon>
