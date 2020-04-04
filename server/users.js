@@ -1,16 +1,19 @@
 //jshint esversion: 6
 const users = [];
 
-const addUser = ({ id, name, room }) => {
-  name = name.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+const addUser = ({ id, nickname, roomID }) => {
+  name = nickname.trim().toLowerCase();
+  room = roomID.trim().toLowerCase();
 
-  const existingUser = users.find((user) => user.room === room && user.name === name);
 
-  if(!name || !room) return { error: 'Username and room are required.' };
-  if(existingUser) return { error: 'Username is taken.' };
+  const existingUser = users.find((user) => user.roomID === roomID && user.nickname === nickname);
 
-  const user = { id, name, room };
+
+  if(!nickname || !roomID) return { error: 'Username and room are required.' };
+  if(existingUser) return { error: 'Username is taken. Your activities will not be seen in this room and you will see no activity.' };
+  if(users.length>=2) return {error: "Room Over load. try another room or create yours and invite friends"};
+
+  const user = { id, nickname, roomID };
 
   users.push(user);
 

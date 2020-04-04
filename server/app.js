@@ -142,21 +142,51 @@ passport.deserializeUser(User.deserializeUser());
 app.get("/chat?", (req, res) => {
   const roomEndpoint = req.params.roomID;
   if (req.isAuthenticated()) {
-    res.json({allQuestions});
+    res.json({
+      allQuestions
+    });
   } else {
     res.redirect("/");
   }
 });
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
 
   socket.on("join", ({
     nickname,
     roomID
-  }) => {
- 
-    console.log(nickname, roomID);
+  }, callback) => {
+
+    const {
+      error,
+      user
+    } = addUser({
+      id: socket.id,
+      nickname,
+      roomID
+    });
+
+    if (error) return callback(error);
+
+    //Admin message to all new users
+    socket.emit("message", {
+      user: "PlayRoom",
+      text: `Hello ${user.nickname}, Welcome to ${user.roomID}, any player can pick a question first, Refer to the how to play guide on the top right`
+    });
+    //Admin message to existin user when a new user joins the room
+    socket.broadcast.to(user.roomID).emit("message", {
+      user: "PlayRoom",
+      text: `${user.nickname} has joined entered your Room, Break the ice by asking them a question`
+    });
+
+    socket.join(user.roomID);
+    callback();
+  });
+  //Expecting a message to be sent 
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.roomID).emit("message", {user: user.nickname, text: message});
+    callback();
   });
 
   socket.on("disconnect", () => {
@@ -222,8 +252,3 @@ app.get("/questions", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Server started successfully with no errors");
 })
-
-
-
-
-
