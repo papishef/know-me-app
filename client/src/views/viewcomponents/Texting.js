@@ -1,34 +1,25 @@
-import React from 'react'
-import {
-    Input,
-    InputGroup,
-    InputGroupText,
-    InputGroupAddon,
-    Button
-} from 'reactstrap'
+// //jshint esversion: 6
+// import React from 'react'
+// import {
+//     Input,
+//     InputGroup,
+//     InputGroupText,
+//     InputGroupAddon,
+//     Button
+// } from 'reactstrap';
 
-const Texting = ( {message, setMessage} ) => {
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
+
+
+
+// const Texting = ( {message, setMessage} ) => {
+
+//     let socket = io("http://localhost:4000");
+//     ///////////////////////SEND MESSAGE///////////////
+
 
     
-    return (
-        <div className='text-box'>
-            <form onSubmit={handleSubmit}>
-                <InputGroup className='px-3 border-0'>
-                    <Input  className='p-0' placeholder="" onChange={(e) => setMessage(e.target.value)}
-                            value={message}/>
-                    <InputGroupAddon  className='bg-transparent border-0' addonType="append">
-                    <InputGroupText className='bg-transparent border-0 mb-5'>
-                        <Button type='submit'>Send</Button>
-                    </InputGroupText>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
-      <br />
-        </div>
-    )
-}
-export default Texting
+//     return (
+
+//     )
+// }
+// export default Texting
