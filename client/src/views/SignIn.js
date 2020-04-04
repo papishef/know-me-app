@@ -12,7 +12,7 @@ import axios from "axios";
  const Signin = () => {
     // Username and gender state hooks
     const [input, setInput] = useState("");
-    const [isSignedUp, setIsSignedUp] = useState("");
+    const [isSignedUp, setIsSignedUp] = useState(false);
 
     // function to handle input change
     const handleChange = (e) => setInput({
@@ -33,7 +33,7 @@ import axios from "axios";
         axios.post("http://localhost:4000/signIn", input)
         .then(response => {
             console.log(response.data);
-            if (response.status === 200) {
+            if (response.status === 200 || "OK") {
                 setIsSignedUp(true);
             }
         })
@@ -82,6 +82,7 @@ import axios from "axios";
                     </div>
                         <br />
 
+                        {/* Redirect User to room after successful login or registration */}
                       {isSignedUp ? <Redirect  to= {`/chat?nickname=${input.nickname}&roomID=${input.roomID}`} /> : <Redirect  to= "/" />}
                             <Button 
                                 style={{borderWidth: 2, fontWeight: 800}}

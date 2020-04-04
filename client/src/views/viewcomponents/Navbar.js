@@ -23,7 +23,7 @@ const Navbar = (props) => {
     <div>
       <div className='p-1'><img src={SmallLogo} alt='#' /></div>
       <Nav>
-        <NavLink className='text-light font-weight-bold'>{props.nickname}'s Room</NavLink>
+        <NavLink className='text-light font-weight-bold'>{props.nickname}'s Room {props.roomID}</NavLink>
         <span className='mx-auto'><Questions /></span>
         <Dropdown className='ml-auto pr-2' isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle className='bg-transparent border-0'>

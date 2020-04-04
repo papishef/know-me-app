@@ -6,7 +6,8 @@ import io from 'socket.io-client'
 import Navbar from './viewcomponents/Navbar';
 import Message from './viewcomponents/Message';
 import Texting from './viewcomponents/Texting';
-import AdminPanel from './viewcomponents/AdminPanel'
+import AdminPanel from './viewcomponents/AdminPanel';
+import axios from "axios";
 
 let socket;
 
@@ -15,47 +16,38 @@ const Chat = () => {
     //location hooks from react-router-dom to manipulate platform route, path, location
     const location = useLocation();
 
-    // Username and gender state hooks
+    // // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
-    // const [gender, setGender] = useState("");
+    const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState("");
+    // const [messages, setMessages] = useState("");
     
-    const ENDPOINT  = 'http://localhost:4000';
+    const endPoint  = 'http://localhost:4000';
 
     useEffect(() => {
-        //capture param with location prop
-        const {nickname, roomID} = queryString.parse(location.search);
-        console.log(nickname, roomID);
-        socket = io(ENDPOINT);
-        // console.log(socket);
-
+        const {nickname, roomID, gender} = queryString.parse(location.search);
+ 
         setNickname(nickname);
         setRoomID(roomID);
+        console.log(nickname, roomID);
 
-        //listen for when a new user joins the room and send a message
-        socket.emit('join', {nickname, roomID});
+        socket = io(endPoint);
 
-        return() => {
-            //will fire when users leave the room
-            socket.emit('disconnect');
-            
-            //web sockets stop listening
+        console.log(socket);
+
+        socket.emit("join", {nickname, roomID});
+
+        return () => {
+            socket.emit("disconnect");
+
             socket.off();
-        };
-
-    }, [ ENDPOINT, location.search ]); //will trigger useeffect if values change
-
-    useEffect(() => {
-        socket.on('message', (message) => {
-            setMessages([...messages, message]);
-        });
-    }, [messages]);
+        }
+    }, [endPoint, location.search]);
 
     return (
         <div className='page-wrapper'>
-            <Navbar nickname= {nickname} />
+            <Navbar nickname= {nickname} roomID={roomID} />
             <AdminPanel />
             <Message message={message} msgHandler={setMessage} />
             <Texting />
