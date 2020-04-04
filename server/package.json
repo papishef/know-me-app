@@ -1,7 +1,7 @@
 {
   "name": "know-me-app",
   "version": "1.0.0",
-  "proxy": "http://localhost:3006",
+  "proxy": "http://localhost:3000",
   "description": "Get to know a new friend of the opposite sex better (18+)",
   "main": "app.js",
   "scripts": {

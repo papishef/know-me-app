@@ -9,7 +9,7 @@ import Texting from './viewcomponents/Texting';
 import AdminPanel from './viewcomponents/AdminPanel'
 
 let socket;
-const ENDPOINT  = 'localhost:4000';
+
 
 const Chat = () => {
     //location hooks from react-router-dom to manipulate platform route, path, location
@@ -18,16 +18,18 @@ const Chat = () => {
     // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
+    // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState("");
     
+    const ENDPOINT  = 'http://localhost:4000';
 
     useEffect(() => {
         //capture param with location prop
         const {nickname, roomID} = queryString.parse(location.search);
         console.log(nickname, roomID);
         socket = io(ENDPOINT);
-        console.log(socket);
+        // console.log(socket);
 
         setNickname(nickname);
         setRoomID(roomID);
@@ -40,24 +42,24 @@ const Chat = () => {
             socket.emit('disconnect');
             
             //web sockets stop listening
-            socket.off()
-        }
+            socket.off();
+        };
 
-    },[ ENDPOINT, location.search ]); //will trigger useeffect if values change
+    }, [ ENDPOINT, location.search ]); //will trigger useeffect if values change
 
     useEffect(() => {
         socket.on('message', (message) => {
             setMessages([...messages, message]);
-        })
-    }, [messages])
+        });
+    }, [messages]);
 
     return (
         <div className='page-wrapper'>
-            <Navbar />
+            <Navbar nickname= {nickname} />
             <AdminPanel />
-            <Message message={message} />
+            <Message message={message} msgHandler={setMessage} />
             <Texting />
         </div>
-    )
+    );
 }
 export default Chat

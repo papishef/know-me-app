@@ -1,16 +1,18 @@
 //jshint esversion: 6
+//jshint esversion: 9
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../assets/playroom-logo.png'
-import { Container, Input, InputGroup, Button } from 'reactstrap'
+import { Container, Input, InputGroup, Button } from 'reactstrap';
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 
 // sign in component
  const Signin = () => {
     // Username and gender state hooks
     const [input, setInput] = useState("");
-    const [gender, setGender] = useState("");
-
+    const [isSignedUp, setIsSignedUp] = useState("");
 
     // function to handle input change
     const handleChange = (e) => setInput({
@@ -18,16 +20,27 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
         [e.currentTarget.name]: e.currentTarget.value
       })
 
-   //function to handle dropdown change
-   const selectGender = (e) => {
-    setGender(e.target.value);
-    }
-    const preventswitch = e => !input.nickname || !input.roomID || !gender ? e.preventDefault(): null
+
+    const preventswitch = e => !input.nickname || !input.roomID || !input.gender ? e.preventDefault(): null;
+
 
     // function to submit data
     const handleSubmit = (e) => {
+
         e.preventDefault();
-    }
+        preventswitch(e);
+        console.log(input);
+        axios.post("http://localhost:4000/signIn", input)
+        .then(response => {
+            console.log(response.data);
+            if (response.status === 200) {
+                setIsSignedUp(true);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
        
     return (
         <div className='page-wrapper'>
@@ -57,7 +70,7 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
                         </InputGroup>
                         <br />
                         <InputGroup className='pt-4'>
-                        <select value={gender} onChange={selectGender} style={{borderRadius: 5, height: 35, width: 600}}>
+                        <select name="gender" onChange={handleChange} style={{borderRadius: 5, height: 35, width: 600}}>
                             <option>Gender</option> 
                              <option value="Male">Male</option>
                              <option value="Female">Female</option>
@@ -69,15 +82,15 @@ import { Container, Input, InputGroup, Button } from 'reactstrap'
                     </div>
                         <br />
 
-                        <Link to={`/chat?nickname=${input.nickname}&roomID=${input.roomID}`}
-                                onClick={preventswitch}>
+                      {isSignedUp ? <Redirect  to= {`/chat?nickname=${input.nickname}&roomID=${input.roomID}`} /> : <Redirect  to= "/" />}
                             <Button 
                                 style={{borderWidth: 2, fontWeight: 800}}
                                 className='submit border border-light' 
                                 type='submit' 
+                                onClick={handleSubmit}
                                 color="secondary">Submit
                             </Button>{' '}
-                        </Link>    
+                           
                     </form>
 
 

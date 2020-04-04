@@ -16,7 +16,6 @@ const server = http.createServer(app);
 const io = socketio(server);
 const cors = require("cors");
 
-
 const {
   addUser,
   removeUser,
@@ -26,13 +25,28 @@ const {
 
 const allQuestions = require("./questions");
 
+
 app.use(cors());
+
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
+
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000/");
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 
 app.use(cookieParser());
@@ -47,20 +61,9 @@ app.use(
   })
 );
 
-
-
-io.set("origins", "*:*");
-
-io.origins((origin, callback) => {
-  if (origin !== "http://localhost:3006") {
-      return callback('origin not allowed', false);
-  }
-  callback(null, true);
-});
-
-
 // Use shared session middleware for socket.io
 // setting autoSave:true
+
 io.use(sharedsession(session, cookieParser({
   autoSave: true
 })));
@@ -75,6 +78,8 @@ mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useFindAndModify: false,
   useCreateIndex: true
 });
+
+const roomSchema = new mongoose.Schema({})
 
 /////DEFINE SCHEMA FOR ALL QUESTIONS ASKED PER USER//////////////
 const questionsAskedSchema = new mongoose.Schema({
@@ -122,19 +127,75 @@ const User = mongoose.model("User", userSchema);
 // CHANGE: USE "createStrategy" INSTEAD OF "authenticate"
 passport.use(User.createStrategy());
 
-passport.serializeUser(User.serializeUser());
+passport.serializeUser(function (user, done) {
+  done(null, user.username);
+});
 passport.deserializeUser(User.deserializeUser());
+
+
 
 ///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
 app.get("/chat?", (req, res) => {
   const roomEndpoint = req.params.roomID;
   if (req.isAuthenticated()) {
-    res.json({
+  res.json({
       allQuestions
-    });
+    }); 
+   
   } else {
-    res.redirect("/questions");
+    res.redirect("/");
   }
+});
+
+
+
+app.post("/signIn", (req, res) => {
+
+  //check database if username exists
+  User.findOne({
+    username: req.body.nickname
+  }, (err, foundUser) => {
+    if (!foundUser) {
+      //if no previous session register user
+      const newUser = new User({
+        username: _.lowerCase(req.body.nickname),
+        gender: req.body.gender
+      });
+
+      ///know which block got executed
+
+      const password = _.lowerCase(req.body.nickname);
+
+      User.register(newUser, password, err => {
+        if (err) {
+          return (err);
+          // res.redirect("/signin?" + nickname&roomID);
+        } else {
+          res.json({
+            allQuestions
+          });
+
+        }
+      });
+
+    } else if (foundUser) {
+      ///know which block got executed
+      const existingUser = new User({
+        username: _.lowerCase(req.body.nickname),
+        password: _.lowerCase(req.body.nickname)
+      });
+      req.login(existingUser, function (err) {
+        if (err) {
+          return next(err);
+        }
+        req.user.lastLogin = Date.now;
+        return res.redirect('/chat?');
+      });
+    } else {
+      return (err);
+    }
+  });
+
 });
 
 
@@ -153,7 +214,6 @@ io.on("connect", (socket) => {
   socket.on("join", ({
     nickname,
     roomID,
-    gender
   }, callback) => {
 
     const {
@@ -163,7 +223,6 @@ io.on("connect", (socket) => {
       id: socket.id,
       nickname,
       roomID,
-      gender
     });
 
     if (error) return callback(error);
@@ -211,7 +270,7 @@ io.on("connect", (socket) => {
         users: getUsersInRoom(user.roomID)
       });
     }
-  })
+  });
 });
 
 

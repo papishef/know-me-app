@@ -1,122 +1,20 @@
 //jshint esversion: 6
 const users = [];
 
-const addUser = ({
-  id,
-  nickname,
-  roomID,
-  gender
-}) => {
-  //////USER REGISTRATION OR LOGIN DEPENDING ON COOKIE SESSION VARIABLES//////////////////////////
-  if (socket.handshake.session.nickname || socket.handshake.session.id) {
-    //if session exists log user in
-    User.findOne({
-      username: socket.handshake.session.nickname
-    }, (err) => {
+const addUser = ({ id, name, room }) => {
+  name = name.trim().toLowerCase();
+  room = room.trim().toLowerCase();
 
-      if (err) {
-        return (err);
-      } else {
+  const existingUser = users.find((user) => user.room === room && user.name === name);
 
-        const existingUser = new User({
-          username: _.lowerCase(socket.handshake.session.nickname),
-          password: _.lowerCase(socket.handshake.session.nickname)
-        });
-        ///know which block got executed
-        console.log(existingUser + "1");
+  if(!name || !room) return { error: 'Username and room are required.' };
+  if(existingUser) return { error: 'Username is taken.' };
 
-        socket.login(existingUser, function (err) {
-          if (err) {
-            return(err);
-          } else {
-            passport.authenticate("local")(() => {
-              users.push(user);
-              console.log(socket.handshake.session) + "1";
-              socket.request.session.passport = {
-                id,
-                nickname,
-                roomID,
-                gender
-              };
-              socket.handshake.session = {
-                id,
-                nickname,
-                roomID,
-                gender
-              };
-              socket.handshake.session.save();
-              user.lastLogin = Date.now;
-            });
-          }
-        });
-      }
+  const user = { id, name, room };
 
-    });
-  } else {
-    //check database if username exists
-    User.findOne({
-      username: req.body.nickname
-    }, (err, foundUser) => {
-      if (!foundUser) {
-        //if no previous session register user
-        const newUser = new User({
-          username: _.lowerCase(req.body.nickname),
-          gender: gender
-        });
+  users.push(user);
 
-        ///know which block got executed
-        console.log(newUser + "2");
-        const password = _.lowerCase(nickname);
-
-        User.register(newUser, password, err => {
-          if (err) {
-            return(err);
-            // res.redirect("/signin?" + nickname&roomID);
-          } else {
-            passport.authenticate("local")(req, res, function () {
-              users.push(newUser);
-              console.log(socket.handshake.session) + "2";
-              socket.request.session.passport = {
-                id,
-                nickname,
-                roomID,
-                gender
-              };
-              socket.handshake.session = {
-                id,
-                nickname,
-                roomID,
-                gender
-              };
-              socket.handshake.session.save();
-              user.lastLogin = Date.now;
-              // res.redirect("/?" + nickname&roomID);
-            });
-          }
-        });
-      } else if (foundUser) {
-        ///know which block got executed
-        console.log(foundUser);
-        return (
-          "User already exists, if you're this user, try using the previous browser used to pick up where you left off"
-        );
-      } else {
-        return(err);
-      }
-    });
-  }
-
-
-  const user = {
-    id,
-    nickname,
-    roomID,
-    gender
-  };
-
-  return {
-    user
-  };
+  return { user };
 }
 
 const removeUser = (id) => {
