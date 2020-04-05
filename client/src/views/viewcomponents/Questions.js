@@ -1,11 +1,22 @@
 //jshint esversion: 6
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { InputGroup } from 'reactstrap';
 
 
 const Questions = (props) => {
 
-  const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useState({})
+
+  useEffect(() => {
+    axios.get(`http://localhost:4000/questions`)
+    .then(res => {
+      const data = res.data;
+      console.log(data);
+      setQuestion(data.allQuestions);
+      console.log(question);
+    })
+  },[])
   
   
   const selectQuestion = (e) => {
