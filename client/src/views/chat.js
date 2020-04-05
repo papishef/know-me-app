@@ -4,17 +4,9 @@ import {  useLocation } from 'react-router-dom'
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
-import Message from './viewcomponents/Message';
+import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
 import AdminPanel from './viewcomponents/AdminPanel';
-import axios from "axios";
-import {
-    Input,
-    InputGroup,
-    InputGroupText,
-    InputGroupAddon,
-    Button
-} from 'reactstrap';
 
 let socket;
 
@@ -28,7 +20,7 @@ const Chat = () => {
     const [roomID, setRoomID] = useState("");
     // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState("");
+    const [messages, setMessages] = useState([]);
  
     
     const endPoint  = 'http://localhost:4000';
@@ -62,8 +54,10 @@ const Chat = () => {
             setMessages([...messages, message]);
         });
     }, [messages]);
+    
 
-    const handleSubmit = (e) => {
+    //handleSubmit and sendMessage conflicted so it's only sendMesage now
+    const sendMessage = (e) => {
         e.preventDefault();
         //console.log(message)
         if(message) {
@@ -78,8 +72,8 @@ const Chat = () => {
         <div className='page-wrapper'>
             <Navbar nickname= {nickname} roomID={roomID} />
             <AdminPanel />
-            <Message message={message} msgHandler={setMessage} />
-            <MyInput message={message} setMessage={setMessage} handleSubmit={handleSubmit} />
+            <Messages messages={messages} nickname={nickname} />
+            <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
             {/* <div className='text-box'>
       <br />
         </div> */}
