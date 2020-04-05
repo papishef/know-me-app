@@ -1,6 +1,6 @@
 //jshint esversion: 6
 import React, {useState} from 'react';
-import Questions from './Questions'
+import Questions from './Questions';
 import { Nav,
     NavLink, 
     Dropdown,
