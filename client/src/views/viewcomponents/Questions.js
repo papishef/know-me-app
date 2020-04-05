@@ -11,20 +11,28 @@ const Questions = (props) => {
   useEffect(() => {
     axios.get(`http://localhost:4000/questions`)
     .then(res => {
-      const data = res.data;
+      const data = res.data.allQuestions;
+      
       console.log(data);
-      setQuestion(data.allQuestions);
-      console.log(question);
-    })
-  },[])
+      
+      setQuestion(data);
+    }).catch(error => {
+        console.log(error);
+    });
+  },[]);
+
+  useEffect(() => {
+    console.log(question);
+  }, [question])
   
   
   const selectQuestion = (e) => {
     setQuestion(e.target.value);
+    
     }
 
   return (
-    <div>
+    <div>      
       <InputGroup className='pt-4'>
         <select value={question} onChange={selectQuestion} 
           style={{borderRadius: 5, height: 35}}>
