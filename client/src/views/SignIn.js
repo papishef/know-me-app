@@ -6,6 +6,7 @@ import Logo from '../assets/playroom-logo.png';
 import { Container, Input, InputGroup, Button } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import Footer from "./viewcomponents/Footer.js";
 
 
 // sign in component
@@ -107,6 +108,7 @@ import axios from "axios";
                     </div>
 
                 </Container>
+                <Footer />
             </div>
         )
 }
