@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
 import Message from './viewcomponents/Message';
-import Texting from './viewcomponents/Texting';
+import MyInput from './viewcomponents/Input';
 import AdminPanel from './viewcomponents/AdminPanel';
 import axios from "axios";
 import {
@@ -65,33 +65,24 @@ const Chat = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        //console.log(message)
         if(message) {
             socket.emit("sendMessage", message, () => setMessage(""));
         }
+        console.log(message, messages)
     };
 
-    console.log(message, messages)
+    
 //////////////////////////////////////////////////
     return (
         <div className='page-wrapper'>
             <Navbar nickname= {nickname} roomID={roomID} />
             <AdminPanel />
             <Message message={message} msgHandler={setMessage} />
-           
-            <div className='text-box'>
-            <form onSubmit={handleSubmit}>
-                <InputGroup className='px-3 border-0'>
-                    <Input  className='p-0' placeholder="Answer a question..." onChange={(e) => setMessage(e.target.value)} value={message} onKeyPress={event => event.key === 'Enter' ? handleSubmit(event) : null}  />
-                    <InputGroupAddon  className='bg-transparent border-0' addonType="append">
-                    <InputGroupText className='bg-transparent border-0 mb-5'>
-                        <Button type='submit'>Send</Button>
-                    </InputGroupText>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
+            <MyInput message={message} setMessage={setMessage} handleSubmit={handleSubmit} />
+            {/* <div className='text-box'>
       <br />
-        </div>
+        </div> */}
 
 
         </div>
