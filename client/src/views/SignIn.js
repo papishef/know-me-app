@@ -1,8 +1,8 @@
 //jshint esversion: 6
 //jshint esversion: 9
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/playroom-logo.png'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../assets/playroom-logo.png';
 import { Container, Input, InputGroup, Button } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -18,7 +18,7 @@ import axios from "axios";
     const handleChange = (e) => setInput({
         ...input,
         [e.currentTarget.name]: e.currentTarget.value
-      })
+      });
 
 
     const preventswitch = e => !input.nickname || !input.roomID || !input.gender ? e.preventDefault(): null;
@@ -47,7 +47,7 @@ import axios from "axios";
            {/* content container */}
                 <Container className="themed-container login-wrapper" >
                     {/* logo */}
-                    <div><img className='logo py-4' src={Logo} alt='#' /></div>
+                    <div> <img className='logo py-4' src={Logo} alt='#' /> </div>
 
                     {/* user form */}
                     <form className='pt-4 form-wrapper' onSubmit={handleSubmit}>
