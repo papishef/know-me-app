@@ -10,6 +10,7 @@ import SignIn from './views/SignIn';
 import Invitation from './views/Invitation';
 import Chat from './views/chat';
 import TermsOfService from './views/TermsOfService'
+import HowToPlay from './views/HowToPlay';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             </Route>
             <Route path="/terms">
               <TermsOfService />
+            </Route>
+            <Route path="/how-to-play">
+              <HowToPlay />
             </Route>
         </Switch>
       </Router>

@@ -32,7 +32,7 @@ const Questions = (props) => {
     };
 
   return (
-    <div>
+    <div>      
       <InputGroup className='pt-4'>
         <select value={question} onChange={selectQuestion} 
           style={{borderRadius: 5, height: 35}}>

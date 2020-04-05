@@ -104,7 +104,7 @@ import Footer from "./viewcomponents/Footer.js";
                         <Link to={`/privacy`} style={{color: "purple"}}><strong> Privacy Policy</strong></Link>
                     </div>
                     <div className='text-white pt-2'>
-                        Learn <Link to={`/terms`} style={{color: "purple"}}><strong>How to play</strong></Link>
+                        Learn <Link to='/how-to-play' style={{color: "purple"}}><strong>How to play</strong></Link>
                     </div>
 
                 </Container>

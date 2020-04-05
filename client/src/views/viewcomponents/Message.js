@@ -1,12 +1,44 @@
-//jshint esversion: 6
 import React from 'react'
+import Messages from './Messages'
 
+//user && text props destructured from message prop
+const Message = ({message: { user, text }, nickname}) =>{
+    //parameter to check active user on the device
+    let isSentbyCurrentUser = false
 
-const Message = () => {
+    //remove whitespace around name
+    let trimmedName = nickname.trim().toLowerCase();
+
+    //confirms which user is active on that device
+    if (user === trimmedName) {
+        isSentbyCurrentUser = true
+    }
+    
     return (
-        <div className='message-container border-2'>
-            
-        </div>
+        //conditional rendering by active user. renders active user messages different from other user
+        isSentbyCurrentUser ? (
+            <div className='myMessages'>
+                <span className='name-wrapper'>
+                    <p className='sender'>{trimmedName}</p>
+                </span>
+                <span className = 'text-wrapper'>
+                    <div className='sentMessage'>{text}</div>
+                </span>
+                
+            </div>
+        )
+        :(
+            <div className='theirMessages'>
+                <span className='name-wrapper'>
+                    <p className='reciever'>{trimmedName}</p>
+                </span>
+                <span className = 'text-wrapper'>
+                    <div className='recievedMessage'>{text}</div>
+                </span>
+            </div>
+        )
+        
     )
 }
+
 export default Message

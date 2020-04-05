@@ -4,17 +4,9 @@ import {  useLocation } from 'react-router-dom'
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
-import Message from './viewcomponents/Message';
-import Texting from './viewcomponents/Texting';
+import Messages from './viewcomponents/Messages';
+import MyInput from './viewcomponents/Input';
 import AdminPanel from './viewcomponents/AdminPanel';
-import axios from "axios";
-import {
-    Input,
-    InputGroup,
-    InputGroupText,
-    InputGroupAddon,
-    Button
-} from 'reactstrap';
 
 let socket;
 
@@ -28,7 +20,7 @@ const Chat = () => {
     const [roomID, setRoomID] = useState("");
     // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState("");
+    const [messages, setMessages] = useState([]);
  
     
     const endPoint  = 'http://localhost:4000';
@@ -62,36 +54,29 @@ const Chat = () => {
             setMessages([...messages, message]);
         });
     }, [messages]);
+    
 
-    const handleSubmit = (e) => {
+    //handleSubmit and sendMessage conflicted so it's only sendMesage now
+    const sendMessage = (e) => {
         e.preventDefault();
-
+        //console.log(message)
         if(message) {
             socket.emit("sendMessage", message, () => setMessage(""));
         }
+        console.log(message, messages)
     };
 
-    console.log(message, messages)
+    
 //////////////////////////////////////////////////
     return (
         <div className='page-wrapper'>
             <Navbar nickname= {nickname} roomID={roomID} />
             <AdminPanel />
-            <Message message={message} msgHandler={setMessage} />
-           
-            <div className='text-box'>
-            <form onSubmit={handleSubmit}>
-                <InputGroup className='px-3 border-0'>
-                    <Input  className='p-0' placeholder="Answer a question..." onChange={(e) => setMessage(e.target.value)} value={message} onKeyPress={event => event.key === 'Enter' ? handleSubmit(event) : null}  />
-                    <InputGroupAddon  className='bg-transparent border-0' addonType="append">
-                    <InputGroupText className='bg-transparent border-0 mb-5'>
-                        <Button type='submit'>Send</Button>
-                    </InputGroupText>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
+            <Messages messages={messages} nickname={nickname} />
+            <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
+            {/* <div className='text-box'>
       <br />
-        </div>
+        </div> */}
 
 
         </div>
