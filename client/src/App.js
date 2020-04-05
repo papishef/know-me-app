@@ -6,9 +6,10 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import SignIn from './views/SignIn'
+import SignIn from './views/SignIn';
 import Invitation from './views/Invitation';
-import Chat from './views/chat'
+import Chat from './views/chat';
+import TermsOfService from './views/TermsOfService'
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
             </Route>
             <Route path="/chat">
               <Chat />
+            </Route>
+            <Route path="/terms">
+              <TermsOfService />
             </Route>
         </Switch>
       </Router>
