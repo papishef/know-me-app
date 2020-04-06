@@ -74,11 +74,6 @@ const Chat = () => {
             <AdminPanel />
             <Messages messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
-            {/* <div className='text-box'>
-      <br />
-        </div> */}
-
-
         </div>
     );
 }

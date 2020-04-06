@@ -21,16 +21,9 @@ const MyInput = ( {message, setMessage, sendMessage} ) =>
     // return (
 
     // )
-
-    <form className='text-box'>
-        <InputGroup className='px-3 border-0'>
-            <Input  className='p-0' placeholder="Answer a question..." onChange={(e) => setMessage(e.target.value)} value={message} onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}  />
-            <InputGroupAddon  className='bg-transparent border-0' addonType="append">
-            <InputGroupText className='bg-transparent border-0 mb-5'>
-                <Button type='submit' onClick={(e) => sendMessage(e)} >Send</Button>
-            </InputGroupText>
-            </InputGroupAddon>
-        </InputGroup>
-    </form>
+    <InputGroup className='px-2 text-box'>
+        <input  className='p-0 form-control' placeholder="Answer a question..." onChange={(e) => setMessage(e.target.value)} value={message} onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}  />
+        <button className='btn btn-success' type='submit' onClick={(e) => sendMessage(e)} >Send</button>
+    </InputGroup>
 
 export default MyInput

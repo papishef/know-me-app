@@ -4,7 +4,7 @@ import React from "react";
 function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer style={{position: "relative", top: 30, textAlign: "center", color: "white", fontSize: 12, fontFamily: "Garamond", fontWeight: "bolder"}}>
+    <footer className='footer'>
       <p>ⓒ {year} with ❤️ by Kyiakyia </p>
     </footer>
   );
