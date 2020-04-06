@@ -6,7 +6,7 @@ import { InputGroup } from 'reactstrap';
 
 const Questions = (props) => {
 
-const [question, setQuestion] = useState({});
+const [question, setQuestion] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:4000/questions`)
@@ -32,15 +32,14 @@ const [question, setQuestion] = useState({});
 
   return (
     <div>
-      {/* {question.map((question, i) => <div key={question.key}>{question.q}</div>)} */}
-      {/* <InputGroup className='pt-4'>
+
+       <InputGroup className='pt-4'>
         <select value={question} onChange={selectQuestion} 
           style={{borderRadius: 5, height: 35}}>
             <option>Pick a question</option> 
-             <option value="id">what is you birthdate?</option>
-             <option value="id">Have you smoked before?</option>
+          {question.map((question) => <option key={question.key} value={question.q} >{question.q}</option>)} 
         </select>
-      </InputGroup> */}
+      </InputGroup>
     </div>
   );
 }

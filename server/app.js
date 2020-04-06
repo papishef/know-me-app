@@ -141,13 +141,10 @@ passport.deserializeUser(User.deserializeUser());
 ///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
 app.get("/chat?", (req, res) => {
   const roomEndpoint = req.params.roomID;
-  if (req.isAuthenticated()) {
-    res.json({
+    res.send({
       allQuestions
     });
-  } else {
-    res.redirect("/");
-  }
+ 
 });
 
 io.on('connection', function (socket) {
@@ -244,7 +241,7 @@ app.post("/signIn", (req, res) => {
 
 
 app.get("/questions", (req, res) => {
-  res.json({
+  res.send({
     allQuestions
   });
 });

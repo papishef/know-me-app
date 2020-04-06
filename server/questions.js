@@ -1,5 +1,5 @@
 ///////////////////THIS FILE CONTAIN ALL THE QUESTIONS////////////////////////////
-
+//jshint esversion: 6
 const allQuestions = [
    {
     id: 1,
@@ -557,6 +557,6 @@ const allQuestions = [
     category: "casual"
   },
 
-]
+];
 
 module.exports = allQuestions;
