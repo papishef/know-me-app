@@ -14,6 +14,15 @@
   min-height: 100vh;
   background-size: cover !important;
 }
+.qst-wrapper{
+  width: 100vw !important;
+  height: 35px;
+  border-radius: 5px;
+}
+.qst-list {
+  width: 100vw !important;
+  word-wrap: break-word;
+}
 
 .submit {
   background: transparent !important;
