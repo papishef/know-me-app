@@ -87,9 +87,8 @@ useEffect(() => {
   },[question]);
 
 
-
+//
 useEffect(() => {
-
     if(quest) {
         socket.emit("sendQuestion", quest, () => setQuest(""));
     }

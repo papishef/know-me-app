@@ -188,9 +188,6 @@ io.on('connection', function (socket) {
 //Expecting a question to be sent
   socket.on("sendQuestion", (quest, callback) => {
     const userQuest = getUser(socket.id);
-    // if(quest === "Pick a Question") {
-    //   console.log("Next user turn");
-    // } else {
       io.to(userQuest.roomID).emit("quest", {user: userQuest.nickname, text: quest});
       console.log(quest);
       callback();
