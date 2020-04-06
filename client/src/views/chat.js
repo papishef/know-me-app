@@ -1,12 +1,13 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
 import {  useLocation } from 'react-router-dom'
+import axios from 'axios';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
-import AdminPanel from './viewcomponents/AdminPanel';
+import Questions from './viewcomponents/Questions';
 
 let socket;
 
@@ -21,6 +22,7 @@ const Chat = () => {
     // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
+    const [question, setQuestion] = useState([]);
  
     
     const endPoint  = 'http://localhost:4000';
@@ -55,6 +57,31 @@ const Chat = () => {
         });
     }, [messages]);
     
+/////////////////////////////////////////////////
+//question state
+useEffect(() => {
+    axios.get(`http://localhost:4000/questions`)
+    .then(res => {
+      const data = res.data.allQuestions;
+
+      setQuestion(data);
+
+    })
+    .catch(error => {
+      console.log(error);
+  });
+
+  },[]);
+///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
+  useEffect(() => {
+    console.log(question);
+  },[question]);
+  
+  const selectQuestion = (e) => {
+    setQuestion(e.target.value);
+    };
+
+
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
     const sendMessage = (e) => {
@@ -71,7 +98,7 @@ const Chat = () => {
     return (
         <div className='page-wrapper'>
             <Navbar nickname= {nickname} roomID={roomID} />
-            <AdminPanel />
+            <Questions question={question} selectQuestion={selectQuestion} />
             <Messages messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
