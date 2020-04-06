@@ -185,6 +185,18 @@ io.on('connection', function (socket) {
     io.to(user.roomID).emit("message", {user: user.nickname, text: message});
     callback();
   });
+//Expecting a question to be sent
+  socket.on("sendQuestion", (quest, callback) => {
+    const userQuest = getUser(socket.id);
+    // if(quest === "Pick a Question") {
+    //   console.log("Next user turn");
+    // } else {
+      io.to(userQuest.roomID).emit("quest", {user: userQuest.nickname, text: quest});
+      console.log(quest);
+      callback();
+    // }
+  });
+
 
   socket.on("disconnect", () => {
     console.log("user left!!!");

@@ -1,10 +1,10 @@
 //jshint esversion: 6
 import React from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
-import Message from './Message'
+import Message from './Message';
 
 
-const Messages = ({ messages, nickname }) => {
+const Messages = ({ messages, nickname}) => {
     return (
         <div className='message-container'>
             <ScrollToBottom>

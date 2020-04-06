@@ -1,6 +1,7 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
-import {  useLocation } from 'react-router-dom'
+import {  useLocation } from 'react-router-dom';
+import { InputGroup } from 'reactstrap';
 import axios from 'axios';
 import queryString from 'query-string';
 import io from 'socket.io-client';
@@ -23,6 +24,8 @@ const Chat = () => {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [question, setQuestion] = useState([]);
+    const [quest, setQuest] = useState("");
+    // const [questions, setQuestions] = useState([]);
  
     
     const endPoint  = 'http://localhost:4000';
@@ -56,6 +59,12 @@ const Chat = () => {
             setMessages([...messages, message]);
         });
     }, [messages]);
+
+    useEffect(() => {
+        socket.on("quest", (quest) => {
+            setMessages([...messages, quest]);
+        });
+    }, [messages]);
     
 /////////////////////////////////////////////////
 //question state
@@ -76,10 +85,19 @@ useEffect(() => {
   useEffect(() => {
     console.log(question);
   },[question]);
-  
-  const selectQuestion = (e) => {
-    setQuestion(e.target.value);
-    };
+
+
+
+useEffect(() => {
+
+    if(quest) {
+        socket.emit("sendQuestion", quest, () => setQuest(""));
+    }
+    console.log(quest);
+}, [quest]);
+
+
+
 
 
 
@@ -90,7 +108,7 @@ useEffect(() => {
         if(message) {
             socket.emit("sendMessage", message, () => setMessage(""));
         }
-        console.log(message, messages)
+        console.log(message, messages);
     };
 
     
@@ -98,7 +116,15 @@ useEffect(() => {
     return (
         <div className='page-wrapper'>
             <Navbar nickname= {nickname} roomID={roomID} />
-            <Questions question={question} selectQuestion={selectQuestion} />
+            <div>
+                <InputGroup className='pt-4'>
+                    <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
+                    <option className='qst-list'>Pick a question</option> 
+                    {question.map((question) => <option className='qst-list' key={question.key} value={question.q} questNickname={nickname} >{question.q}</option>)} 
+                    </select>
+                </InputGroup>
+            </div>
+            {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
             <Messages messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>

@@ -1,17 +1,18 @@
+//jshint esversion: 6
 import React from 'react'
-import Messages from './Messages'
+// import Messages from './Messages';
 
 //user && text props destructured from message prop
-const Message = ({message: { user, text }, nickname}) =>{
+const Message = ({message: {user, text}, nickname}) =>{
     //parameter to check active user on the device
-    let isSentbyCurrentUser = false
+    let isSentbyCurrentUser = false;
 
     //remove whitespace around name
     let trimmedName = nickname.trim().toLowerCase();
 
     //confirms which user is active on that device
     if (user === trimmedName) {
-        isSentbyCurrentUser = true
+        isSentbyCurrentUser = true;
     }
     
     return (
