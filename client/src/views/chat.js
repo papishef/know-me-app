@@ -118,8 +118,8 @@ useEffect(() => {
             <div>
                 <InputGroup className='pt-4'>
                     <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
-                    <option className='qst-list'>Pick a question</option> 
-                    {question.map((question) => <option className='qst-list' key={question.key} value={question.q} questNickname={nickname} >{question.q}</option>)} 
+                    <option style={{maxWidth:'100vw'}} className='qst-list'>Pick a question</option> 
+                    {question.map((question) => <option style={{maxWidth:'100vw'}} className='qst-list' key={question.key} value={question.q} questNickname={nickname} >{question.q}</option>)} 
                     </select>
                 </InputGroup>
             </div>
