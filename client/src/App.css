@@ -36,9 +36,7 @@
 }
 
 .myMessages {
-
-  
-
+  text-align: right;
 }
 
 .myMessages, .theirMessages {
@@ -53,12 +51,15 @@
 }
 .name-wrapper, .text-wrapper {
   display: inline;
+  max-width: 80vw;
 }
 .sentMessage, .recievedMessage {
   background: whitesmoke;
   border-radius: 10px;
   padding: 12px;
   display: inline-block !important;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 .message-container {
   max-height: 55vh !important;
