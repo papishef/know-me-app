@@ -11,6 +11,7 @@ import Invitation from './views/Invitation';
 import Chat from './views/chat';
 import TermsOfService from './views/TermsOfService'
 import HowToPlay from './views/HowToPlay';
+import Results from './views/Results';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
             </Route>
             <Route path="/how-to-play">
               <HowToPlay />
+            </Route>
+            <Route path="/results">
+              <Results />
             </Route>
         </Switch>
       </Router>
