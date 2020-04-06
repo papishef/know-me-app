@@ -6,7 +6,7 @@ import Message from './Message'
 
 const Messages = ({ messages, nickname }) => {
     return (
-        <div className='message-container border-2'>
+        <div className='message-container'>
             <ScrollToBottom>
                 {messages.map((message, i) => <div key={i}><Message message={message} nickname={nickname} /></div>)}
             </ScrollToBottom>
