@@ -1,6 +1,5 @@
 //jshint esversion: 6
-import React from 'react'
-// import Messages from './Messages';
+import React from 'react';
 
 //user && text props destructured from message prop
 const Message = ({message: {user, text}, nickname}) =>{
@@ -9,6 +8,7 @@ const Message = ({message: {user, text}, nickname}) =>{
 
     //remove whitespace around name
     let trimmedName = nickname.trim().toLowerCase();
+
 
     //confirms which user is active on that device
     if (user === trimmedName) {

@@ -39,7 +39,7 @@ import Footer from "./viewcomponents/Footer.js";
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log(error.response);
         });
     };
        

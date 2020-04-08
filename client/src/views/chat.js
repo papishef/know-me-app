@@ -8,7 +8,6 @@ import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
-import Questions from './viewcomponents/Questions';
 
 let socket;
 
@@ -24,6 +23,7 @@ const Chat = () => {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [question, setQuestion] = useState([]);
+    const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     // const [questions, setQuestions] = useState([]);
  
@@ -47,12 +47,19 @@ const Chat = () => {
             }
         });
 
+        
+    
         return () => {
             socket.emit("disconnect");
 
             socket.off();
         }
     }, [endPoint, location.search]);
+
+
+
+
+
 /////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
@@ -87,17 +94,34 @@ useEffect(() => {
   },[question]);
 
 
+  useEffect(() => {
+
+    const {nickname, roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
+    console.log(roomID);
+
+    axios.get(`http://localhost:4000/chat/${roomID}`)
+    .then(response => {
+        console.log(response.data.messagesInHistory);
+        setMessageHistory(response.data.messagesInHistory);
+    })
+    .catch(error => {
+        console.log(error.response);
+    });
+}, []);
+
+useEffect(() => { 
+    console.log(messageHistory);
+}, [messageHistory]);
+
+
 //
 useEffect(() => {
     if(quest) {
-        socket.emit("sendQuestion", quest, () => setQuest(""));
+        socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
     console.log(quest);
 }, [quest]);
-
-
-
-
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
@@ -105,7 +129,7 @@ useEffect(() => {
         e.preventDefault();
         //console.log(message)
         if(message) {
-            socket.emit("sendMessage", message, () => setMessage(""));
+            socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
         console.log(message, messages);
     };
@@ -124,7 +148,7 @@ useEffect(() => {
                 </InputGroup>
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
-            <Messages messages={messages} nickname={nickname} />
+            <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     );

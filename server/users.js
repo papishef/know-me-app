@@ -2,15 +2,15 @@
 const users = [];
 
 const addUser = ({ id, nickname, roomID }) => {
-  name = nickname.trim().toLowerCase();
-  room = roomID.trim().toLowerCase();
+  nickname = nickname.trim().toLowerCase();
+  roomID = roomID.trim().toLowerCase();
 
 
   const existingUser = users.find((user) => user.roomID === roomID && user.nickname === nickname);
 
 
   if(!nickname || !roomID) return { error: 'Username and room are required.' };
-  if(existingUser) return { error: 'Username is taken. Your activities will not be seen in this room and you will see no activity.' };
+  if(existingUser) return { error: 'Username is taken or you refreshed your page, login again to continue, this is in our bid to make sure you stay anonymous and your chats private. Your activities will not be seen in this room and you will see no activity until you login again.' };
   if(users.length>=2) return {error: "Room Over load. try another room or create yours and invite friends"};
 
   const user = { id, nickname, roomID };

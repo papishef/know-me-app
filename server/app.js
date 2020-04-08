@@ -84,16 +84,6 @@ mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useCreateIndex: true
 });
 
-const roomSchema = new mongoose.Schema({});
-
-/////DEFINE SCHEMA FOR ALL QUESTIONS ASKED PER USER//////////////
-const questionsAskedSchema = new mongoose.Schema({
-  id: String,
-  q: String,
-  category: String
-});
-
-const QuestionsAsked = mongoose.model("QuestionAsked", questionsAskedSchema);
 
 /////DEFINITION OF USER SCHEMA////////////////
 const userSchema = new mongoose.Schema({
@@ -107,11 +97,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Male", "Female"]
   },
-  dateAdded: {
-    type: Date,
-    default: Date.now
-  },
-  questAskedbyThisUser: [questionsAskedSchema]
+
 }, {
   timestamps: true
 });
@@ -136,16 +122,30 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(User.deserializeUser());
 
-
-
-///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
-app.get("/chat?", (req, res) => {
-  const roomEndpoint = req.params.roomID;
-    res.send({
-      allQuestions
-    });
- 
+/////DEFINITION OF USER SCHEMA////////////////
+const chatSchema = new mongoose.Schema({
+  message: {
+    type: String
+  },
+  sender: {
+    type: String
+  },
+  room: {
+    type: String
+  },
+}, {
+  timestamps: true
 });
+
+///Delete inactive user after 604800 seconds or 1 week
+chatSchema.index({
+  createdAt: chatSchema.lastLogin
+}, {
+  expireAfterSeconds: 604800
+});
+
+const Chat = mongoose.model("Chat", chatSchema);
+
 
 io.on('connection', function (socket) {
 
@@ -163,6 +163,7 @@ io.on('connection', function (socket) {
       roomID
     });
 
+
     if (error) return callback(error);
 
     //Admin message to all new users
@@ -173,26 +174,34 @@ io.on('connection', function (socket) {
     //Admin message to existin user when a new user joins the room
     socket.broadcast.to(user.roomID).emit("message", {
       user: "PlayRoom",
-      text: `${user.nickname} has joined entered your Room, Break the ice by asking them a question`
+      text: `${user.nickname} has entered your Room, Break the ice by asking them a question`
     });
 
     socket.join(user.roomID);
     callback();
   });
   //Expecting a message to be sent 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
+    //save questions asked to chat history
     io.to(user.roomID).emit("message", {user: user.nickname, text: message});
+    let messageHistory = new Chat({ message: message, sender: user.nickname, room: roomID});
+    messageHistory.save();
     callback();
   });
 //Expecting a question to be sent
-  socket.on("sendQuestion", (quest, callback) => {
+  socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
+    //save questions asked to chat history
       io.to(userQuest.roomID).emit("quest", {user: userQuest.nickname, text: quest});
       console.log(quest);
+      let questionHistory = new Chat({ message: quest, sender: userQuest.nickname, room: roomID});
+      questionHistory.save();
       callback();
     // }
   });
+
+
 
 
   socket.on("disconnect", () => {
@@ -224,7 +233,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.redirect('/chat?');
+          res.redirect('/chat/:roomID');
         }
       });
 
@@ -239,7 +248,7 @@ app.post("/signIn", (req, res) => {
           res.send(err);
         }
         req.user.dateAdded = Date.now;
-        res.redirect('/chat?');
+        res.redirect('/chat/:roomID');
       });
     } else {
       return (err);
@@ -250,9 +259,26 @@ app.post("/signIn", (req, res) => {
 
 
 app.get("/questions", (req, res) => {
-  res.send({
+  res.json({
     allQuestions
   });
+});
+
+
+///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
+app.get("/chat/:roomID", (req, res) => {
+  // const roomID = req.body.roomID;
+  console.log(req.params.roomID);
+
+  Chat.find({ room: req.params.roomID}, (error, messagesInHistory) => {
+    if(messagesInHistory) {
+      console.log(messagesInHistory);
+      res.json({messagesInHistory});
+    } else if (error) {
+      console.log(error);
+    }
+  });
+ 
 });
 
 app.get("/", (req, res) => {
