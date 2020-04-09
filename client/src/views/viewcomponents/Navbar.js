@@ -1,6 +1,6 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
-// import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Nav,
     NavLink, 
     Dropdown,
@@ -10,19 +10,22 @@ import { Nav,
 import SmallLogo from '../../assets/logo-sm.png';
 import DropIcon from '../../assets/drop-icon.png';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 
 const Navbar = ({roomID}) => {
-  // const [isEnded, setIsEnded] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
 
-  // const endPoint  = 'http://localhost:4000';
-  // socket = io(endPoint);
-    
-//   const handleSessionEnd = e => {
-//     setIsEnded(true);
-// };  
+const endGame = () => {
+  setIsEnded(true);
+};
 
+//Delete all chats from room when session ends
+  useEffect(() => {
 
+    axios.delete(`http://localhost:4000/delete/${roomID}`);
+
+  }, [isEnded]);
 
     //dropdown state and hooks
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -44,7 +47,8 @@ const Navbar = ({roomID}) => {
                     <NavLink className='text-dark' href='/invite'>Invite</NavLink>
                     </DropdownItem>
                     <DropdownItem>
-                    <NavLink href= {`/results/${roomID}`} className='text-dark' >End Session</NavLink>
+                    <button onClick={endGame} style={{backgroundColor: "red",}} >End Session</button>
+                    { isEnded && <Redirect to = {`/results/${roomID}`} /> }
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>

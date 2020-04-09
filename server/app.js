@@ -257,7 +257,7 @@ io.on('connection', function (socket) {
     if (user) {
       io.to(user.roomID).emit("message", {
         user: "PlayRoom",
-        text: `${user.nickname} has left`
+        text: `${user.nickname} is offline, shhhh!!`
       });
     }
 
@@ -278,8 +278,6 @@ app.post("/signIn", (req, res) => {
         username: _.lowerCase(req.body.nickname.trim()),
         gender: req.body.gender
       });
-
-      ///know which block got executed
 
       const password = _.lowerCase(req.body.nickname);
 
@@ -319,7 +317,7 @@ app.get("/questions", (req, res) => {
   });
 });
 
-/////////SEND CHAT HISTORY
+/////////SEND CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
   // const roomID = req.body.roomID;
   console.log(req.params.roomID);
@@ -339,10 +337,9 @@ app.get("/chat/:roomID", (req, res) => {
 
 });
 
-/////////////get results and delete data///////
-app.get("/results/:roomID", (req, res) => {
+/////////////delete room chat history//////
+app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect
-console.log(req.params.roomID);
 
   Chat.deleteMany({
     room: req.params.roomID
