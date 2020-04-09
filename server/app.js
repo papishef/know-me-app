@@ -141,7 +141,7 @@ const chatSchema = new mongoose.Schema({
 chatSchema.index({
   createdAt: Date.now
 }, {
-  expireAfterSeconds: 604800
+  expireAfterSeconds: 259200
 });
 
 const Chat = mongoose.model("Chat", chatSchema);
@@ -257,7 +257,7 @@ io.on('connection', function (socket) {
     if (user) {
       io.to(user.roomID).emit("message", {
         user: "PlayRoom",
-        text: `${user.nickname} has left`
+        text: `${user.nickname} is offline, shhhh!!`
       });
     }
 
@@ -278,8 +278,6 @@ app.post("/signIn", (req, res) => {
         username: _.lowerCase(req.body.nickname.trim()),
         gender: req.body.gender
       });
-
-      ///know which block got executed
 
       const password = _.lowerCase(req.body.nickname);
 
@@ -319,8 +317,7 @@ app.get("/questions", (req, res) => {
   });
 });
 
-
-///////////////NO PAGE OTHER THAN HOMEPAGE/SIGN IN PAAGE WILL BE RENDERED IF USER IS NOT LOGGED IN
+/////////SEND CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
   // const roomID = req.body.roomID;
   console.log(req.params.roomID);
@@ -329,7 +326,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: req.params.roomID
   }, (error, messagesInHistory) => {
     if (messagesInHistory) {
-      console.log(messagesInHistory);
+
       res.json({
         messagesInHistory
       });
@@ -340,11 +337,12 @@ app.get("/chat/:roomID", (req, res) => {
 
 });
 
-/////////////get results and delete data///////
-app.get("/results/:roomID", (req, res) => {
+/////////////delete room chat history//////
+app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect
+
   Chat.deleteMany({
-    room: user.roomID
+    room: req.params.roomID
   }, (error) => {
     if (error) return (error);
   });

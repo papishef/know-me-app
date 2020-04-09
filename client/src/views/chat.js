@@ -51,11 +51,11 @@ const Chat = () => {
 
         
     
-        // return () => {
-        //     socket.emit("disconnect");
+        return () => {
+            socket.emit("disconnect");
 
-        //     socket.off();
-        // }
+            // socket.off();
+        }
     }, [endPoint, location.search]);
 
     
@@ -113,7 +113,7 @@ useEffect(() => {
         console.log(error.response);
     });
 }, []);
-
+//Test message history rendering
 useEffect(() => { 
     console.log(messageHistory);
 }, [messageHistory]);
@@ -149,9 +149,15 @@ useEffect(() => {
             
             <div>
                 <InputGroup className='pt-4'>
+<<<<<<< HEAD
                     <select className='qst-wrapper' data-cat={qtype} value={quest} onChange={(e) => {setQuest(e.target.value); setQtype(e.target.dataCat)} }>
                     <option style={{maxWidth:'100vw'}} className='qst-list'>Pick a question</option> 
                     {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q} data-cat={question.category} onClick={(e) => setQtype(e.target.cat)} >{index + 1}. {question.q}</option>)} 
+=======
+                    <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
+                    <option className='qst-list'>Pick a question</option> 
+                    {question.map((question, index) => <option style={{backgroundColor: "#a83297", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.Q}  >{index + 1}. {question.q}</option>)} 
+>>>>>>> a0b4360d126770192d99e5cae7546cc598325cd8
                     </select>
                 </InputGroup>
             </div>
