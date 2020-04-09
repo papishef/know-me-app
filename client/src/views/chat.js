@@ -25,7 +25,8 @@ const Chat = () => {
     const [question, setQuestion] = useState([]);
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
-
+    const [qtype, setQtype] = useState("");
+    
     // const [questions, setQuestions] = useState([]);
  
     
@@ -121,9 +122,9 @@ useEffect(() => {
 //Sending Question to the server
 useEffect(() => {
     if(quest) {
-        socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
+        socket.emit("sendQuestion", quest, roomID,  () => setQuest(""));
     }
-    console.log(quest);
+    console.log(qtype);
 }, [quest]);
 
 
@@ -148,9 +149,9 @@ useEffect(() => {
             
             <div>
                 <InputGroup className='pt-4'>
-                    <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
+                    <select className='qst-wrapper' data-cat={qtype} value={quest} onChange={(e) => {setQuest(e.target.value); setQtype(e.target.dataCat)} }>
                     <option style={{maxWidth:'100vw'}} className='qst-list'>Pick a question</option> 
-                    {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q}  >{index + 1}. {question.q} {question.category}</option>)} 
+                    {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q} data-cat={question.category} onClick={(e) => setQtype(e.target.cat)} >{index + 1}. {question.q}</option>)} 
                     </select>
                 </InputGroup>
             </div>
