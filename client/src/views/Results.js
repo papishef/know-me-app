@@ -9,12 +9,12 @@ export default function Results({roomID}) {
 
     const [resultData, setResultData] = useState({});
 
-
+    let socket;
 //question state
 useEffect(() => {
     axios.get(`http://localhost:4000/${roomID}`)
     .then(res => {
-      const data = res.data;
+      const data = res.data.resultData;
 
       setResultData(data);
 
@@ -25,6 +25,16 @@ useEffect(() => {
 
   },[]);
 
+  //on final disconect
+useEffect(() => {
+
+    return () => {
+        socket.emit("disconnect");
+        socket.off();
+    };
+
+  },[]);
+
 
 
     return (
@@ -32,7 +42,7 @@ useEffect(() => {
             <Container>
                 <div><img className='logo pt-4' src={Logo} alt='logo' /></div>
                 <Container className='pt-4'>
-                    <p className='text-light font-weight-bold text-center'>SCORE</p>  
+                    <p className='text-light font-weight-bold text-center'>SNEEK GIST🤐</p>  
                     <div className='container'>
                         <img src={Hot} className='mx-auto smiley d-inline-block' alt='#'/>
                         <p className='h2 font-weight-bold text-white pt-3 text-center'>89%</p>

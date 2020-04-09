@@ -1,6 +1,6 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Nav,
     NavLink, 
     Dropdown,
@@ -11,27 +11,18 @@ import SmallLogo from '../../assets/logo-sm.png';
 import DropIcon from '../../assets/drop-icon.png';
 import io from 'socket.io-client';
 
-let socket;
 
 const Navbar = ({roomID}) => {
-  const [isEnded, setIsEnded] = useState(false);
+  // const [isEnded, setIsEnded] = useState(false);
 
-  const endPoint  = 'http://localhost:4000';
-  socket = io(endPoint);
+  // const endPoint  = 'http://localhost:4000';
+  // socket = io(endPoint);
     
-  const handleSessionEnd = e => {
-    setIsEnded(true);
+//   const handleSessionEnd = e => {
+//     setIsEnded(true);
+// };  
 
 
-};  
-
-useEffect(() => {
-  return () => {
-    socket.emit("disconnect");
-    socket.off();
-
-};
-}, [handleSessionEnd]);
 
     //dropdown state and hooks
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -52,9 +43,8 @@ useEffect(() => {
                     <DropdownItem>
                     <NavLink className='text-dark' href='/invite'>Invite</NavLink>
                     </DropdownItem>
-                    {isEnded && <Redirect  to= {`/results/${roomID}`} />}
-                    <DropdownItem onClick={handleSessionEnd}>
-                    <NavLink className='text-dark' >End Session</NavLink>
+                    <DropdownItem>
+                    <NavLink href= {`/results/${roomID}`} className='text-dark' >End Session</NavLink>
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
