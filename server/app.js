@@ -105,7 +105,7 @@ const userSchema = new mongoose.Schema({
 
 ///Delete inactive user after 604800 seconds or 1 week
 userSchema.index({
-  createdAt: userSchema.lastLogin
+  createdAt: Date.now
 }, {
   expireAfterSeconds: 604800
 });
@@ -122,7 +122,7 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(User.deserializeUser());
 
-/////DEFINITION OF USER SCHEMA////////////////
+/////DEFINITION OF CHAT HISTORY SCHEMA////////////////
 const chatSchema = new mongoose.Schema({
   message: {
     type: String
@@ -139,12 +139,37 @@ const chatSchema = new mongoose.Schema({
 
 ///Delete inactive user after 604800 seconds or 1 week
 chatSchema.index({
-  createdAt: chatSchema.lastLogin
+  createdAt: Date.now
 }, {
   expireAfterSeconds: 604800
 });
 
 const Chat = mongoose.model("Chat", chatSchema);
+
+
+/////DEFINITION OF CHAT HISTORY SCHEMA////////////////
+const questionsAskedSchema = new mongoose.Schema({
+  message: {
+    type: String
+  },
+  sender: {
+    type: String
+  },
+  room: {
+    type: String
+  },
+}, {
+  timestamps: true
+});
+
+///Delete inactive user after 604800 seconds or 1 week
+questionsAskedSchema.index({
+  createdAt: Date.now
+}, {
+  expireAfterSeconds: 604800
+});
+
+const QuestionAsked = mongoose.model("QuestionAsked", questionsAskedSchema);
 
 
 io.on('connection', function (socket) {
@@ -184,33 +209,63 @@ io.on('connection', function (socket) {
   socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
     //save questions asked to chat history
-    io.to(user.roomID).emit("message", {user: user.nickname, text: message});
-    let messageHistory = new Chat({ message: message, sender: user.nickname, room: roomID});
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
+      text: message
+    });
+    let messageHistory = new Chat({
+      message: message,
+      sender: user.nickname,
+      room: roomID
+    });
     messageHistory.save();
     callback();
   });
-//Expecting a question to be sent
+  //Expecting a question to be sent
   socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
     //save questions asked to chat history
-      io.to(userQuest.roomID).emit("quest", {user: userQuest.nickname, text: quest});
-      console.log(quest);
-      let questionHistory = new Chat({ message: quest, sender: userQuest.nickname, room: roomID});
-      questionHistory.save();
-      callback();
+    io.to(userQuest.roomID).emit("quest", {
+      user: userQuest.nickname,
+      text: quest
+    });
+    console.log(quest);
+    //save questions to chats schema
+    let questionHistory = new Chat({
+      message: quest,
+      sender: userQuest.nickname,
+      room: roomID
+    });
+    questionHistory.save();
+    //save questions for results page
+    let questForCalc = new QuestionAsked({
+      message: quest,
+      sender: userQuest.nickname,
+      room: roomID
+    });
+    questForCalc.save();
+    callback();
     // }
   });
 
 
 
 
-  socket.on("disconnect", () => {
-    console.log("user left!!!");
+  socket.on("disconnect", (roomID) => {
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.roomID).emit("message", {
+        user: "PlayRoom",
+        text: `${user.nickname} has left`
+      });
+    }
+
   });
 });
 
 
-
+//LOGIN AND REG. ROUTES////
 app.post("/signIn", (req, res) => {
 
   //check database if username exists
@@ -257,7 +312,7 @@ app.post("/signIn", (req, res) => {
 
 });
 
-
+///Get all questions
 app.get("/questions", (req, res) => {
   res.json({
     allQuestions
@@ -270,16 +325,31 @@ app.get("/chat/:roomID", (req, res) => {
   // const roomID = req.body.roomID;
   console.log(req.params.roomID);
 
-  Chat.find({ room: req.params.roomID}, (error, messagesInHistory) => {
-    if(messagesInHistory) {
+  Chat.find({
+    room: req.params.roomID
+  }, (error, messagesInHistory) => {
+    if (messagesInHistory) {
       console.log(messagesInHistory);
-      res.json({messagesInHistory});
+      res.json({
+        messagesInHistory
+      });
     } else if (error) {
       console.log(error);
     }
   });
- 
+
 });
+
+/////////////get results and delete data///////
+app.get("/results/:roomID", (req, res) => {
+  ////delete messages after disconnect
+  Chat.deleteMany({
+    room: user.roomID
+  }, (error) => {
+    if (error) return (error);
+  });
+})
+
 
 app.get("/", (req, res) => {
   res.send("Server started successfully with no errors");

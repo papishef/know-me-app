@@ -2,12 +2,12 @@
 //jshint esversion: 6
 const allQuestions = [
    {
-    id: "1",
+    id: 1,
     q: "If a genie could grant your most important wish, what would it be?",
     category: "personal"
   },
   {
-    id: "2",
+    id: 2,
     q: "What is your greatest fear?",
     category: "personal"
   },

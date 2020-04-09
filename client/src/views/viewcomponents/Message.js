@@ -28,7 +28,7 @@ const Message = ({message: {user, text}, nickname}) =>{
         )
         :(
             <div className='theirMessages'>
-                <p className='reciever'>{trimmedName}</p>
+                <p className='reciever'>{user}</p>
                 <span className = 'text-wrapper'>
                     <div className='recievedMessage'>{text}</div>
                 </span>

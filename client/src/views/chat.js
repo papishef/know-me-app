@@ -1,6 +1,6 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
-import {  useLocation } from 'react-router-dom';
+import {  useLocation, Redirect } from 'react-router-dom';
 import { InputGroup } from 'reactstrap';
 import axios from 'axios';
 import queryString from 'query-string';
@@ -25,6 +25,7 @@ const Chat = () => {
     const [question, setQuestion] = useState([]);
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
+
     // const [questions, setQuestions] = useState([]);
  
     
@@ -49,12 +50,14 @@ const Chat = () => {
 
         
     
-        return () => {
-            socket.emit("disconnect");
+        // return () => {
+        //     socket.emit("disconnect");
 
-            socket.off();
-        }
+        //     socket.off();
+        // }
     }, [endPoint, location.search]);
+
+    
 
 
 
@@ -115,7 +118,7 @@ useEffect(() => {
 }, [messageHistory]);
 
 
-//
+//Sending Question to the server
 useEffect(() => {
     if(quest) {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
@@ -134,16 +137,20 @@ useEffect(() => {
         console.log(message, messages);
     };
 
+
+
     
-//////////////////////////////////////////////////
+/////////////Return page/////////////
     return (
         <div className='page-wrapper'>
-            <Navbar nickname= {nickname} roomID={roomID} />
+
+            <Navbar nickname= {nickname} roomID={roomID}  />
+            
             <div>
                 <InputGroup className='pt-4'>
                     <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
                     <option style={{maxWidth:'100vw'}} className='qst-list'>Pick a question</option> 
-                    {question.map((question) => <option style={{maxWidth:'100vw'}} className='qst-list' key={question.key} value={question.q} questNickname={nickname} >{question.q}</option>)} 
+                    {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q}  >{index + 1}. {question.q} {question.category}</option>)} 
                     </select>
                 </InputGroup>
             </div>

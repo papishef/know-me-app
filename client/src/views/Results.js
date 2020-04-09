@@ -1,9 +1,32 @@
-import React from 'react';
+//jshint esversion: 6
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import Logo from '../assets/playroom-logo.png';
 import { Container, NavLink, Button } from 'reactstrap';
-import Hot from '../assets/smiley.png'
+import Hot from '../assets/smiley.png';
 
-export default function Results() {
+export default function Results({roomID}) {
+
+    const [resultData, setResultData] = useState({});
+
+
+//question state
+useEffect(() => {
+    axios.get(`http://localhost:4000/${roomID}`)
+    .then(res => {
+      const data = res.data;
+
+      setResultData(data);
+
+    })
+    .catch(error => {
+      console.log(error);
+  });
+
+  },[]);
+
+
+
     return (
         <div className='page-wrapper'>
             <Container>
