@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Logo from '../assets/playroom-logo.png';
-import { Container, NavLink, Button } from 'reactstrap';
+import { Container, Button } from 'reactstrap';
 import { useLocation, Redirect } from 'react-router-dom';
 import Hot from '../assets/sex2.png';
 import Love from '../assets/smiley.png';
@@ -61,10 +61,11 @@ const endCurrentGame = () => {
                 <Container className='pt-4'>
                     <p className='text-light font-weight-bold text-center'>SNEEK GIST🤐</p>  
                     <div className='container'>
-                        {resultData === 'casual' ? <img src={Casual} className='mx-auto smiley d-inline-block' alt='#'/>
-                        : resultData === 'sexual' ? <img src={Hot} className='mx-auto smiley d-inline-block' alt='#'/>
-                        : <img src={Love} className='mx-auto smiley d-inline-block' alt='#'/>}
-
+                        <div className='smiley-wrapper'>
+                            {resultData === 'casual' ? <img src={Casual} className='mx-auto smiley' alt='#'/>
+                            : resultData === 'sexual' ? <img src={Hot} className='mx-auto smiley' alt='#'/>
+                            : <img src={Love} className='mx-auto smiley' alt='#'/>}
+                        </div>
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>}
@@ -74,15 +75,9 @@ const endCurrentGame = () => {
                         : <p className='text-light text-center pt-3'>Someone's crushing on you</p>}
 
                     </div>
-                    <div className='row pt-4'>
-                        <div className='col-4'>
-                            <Button style={{background: 'transparent', border: 'solid 2px white'}}>End</Button>
-                        </div>
-                        <div className='col-3'></div>
-                        <div className='col-5'>
-                            <Button style={{background: 'transparent', border: 'solid 2px white'}} onClick={endCurrentGame} >Play again</Button>
-                            { playAgain && <Redirect to = "/" /> }
-                        </div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Button style={{background: 'transparent', border: 'solid 2px white'}} onClick={endCurrentGame} >Play again</Button>
+                        { playAgain && <Redirect to = "/" /> }
                     </div>
                 </Container>
             </Container>

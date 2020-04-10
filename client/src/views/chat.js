@@ -1,6 +1,6 @@
 //jshint esversion: 6
 import React, {useState, useEffect} from 'react';
-import {  useLocation, Redirect } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import { InputGroup } from 'reactstrap';
 import axios from 'axios';
 import queryString from 'query-string';
