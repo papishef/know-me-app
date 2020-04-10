@@ -45,7 +45,7 @@ const Chat = () => {
 
         socket.emit("join", {nickname, roomID}, (error) => {
             if(error) {
-                alert(error);
+                alert(error.response);
             }
         });
 
@@ -57,11 +57,6 @@ const Chat = () => {
             // socket.off();
         }
     }, [endPoint, location.search]);
-
-    
-
-
-
 
 
 /////////////////////////////////////////////////
@@ -88,7 +83,7 @@ useEffect(() => {
 
     })
     .catch(error => {
-      console.log(error.response);
+      console.log(error.response.data);
   });
 
   },[]);
@@ -110,7 +105,7 @@ useEffect(() => {
         setMessageHistory(response.data.messagesInHistory);
     })
     .catch(error => {
-        console.log(error.response);
+        console.log(error.response.data);
     });
 }, []);
 //Test message history rendering

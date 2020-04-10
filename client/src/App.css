@@ -86,7 +86,7 @@
   word-wrap: break-word;
 }
 .message-container {
-  max-height: 55vh !important;
+  max-height: 65vh !important;
   max-width: 100vw !important;
   overflow-x: hidden;
   overflow-y: scroll;
