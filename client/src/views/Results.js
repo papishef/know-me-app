@@ -75,7 +75,6 @@ const endCurrentGame = () => {
                             { playAgain && <Redirect to = "/" /> }
                         </div>
                     </div>
-
                 </Container>
             </Container>
         </div>
