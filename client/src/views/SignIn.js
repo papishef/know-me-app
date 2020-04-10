@@ -56,7 +56,7 @@ const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
 
                     {/* user form */}
                     <form className='pt-4 form-wrapper' onSubmit={handleSubmit}>
-                   <Bounce> <div style={{fontSize: 24, position: "relative", bottom: 50, marginLeft: 400, color: "#E962EA", fontWeight: 600, fontFamily: "CombiNumerals" }}>18+</div></Bounce>
+                   <Bounce> <div style={{fontSize: 24, position: "relative", bottom: 50, left: 10, color: "#E962EA", fontWeight: 600, fontFamily: "CombiNumerals" }}>18+</div></Bounce>
                         <InputGroup className='pt-4'>
                             <Input 
                             color='light'

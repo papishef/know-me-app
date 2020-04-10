@@ -21,7 +21,7 @@ const Message = ({message: {user, text}, nickname}) =>{
             <div className='myMessages'>
                     <p className='sender'>{trimmedName}</p>
                 <span className = 'text-wrapper'>
-                    <div className='sentMessage'>{text}</div>
+                    <div style={{background: '#9b25cd'}} className='sentMessage text-light'>{text}</div>
                 </span>
                 
             </div>
@@ -30,7 +30,7 @@ const Message = ({message: {user, text}, nickname}) =>{
             <div className='theirMessages'>
                 <p className='reciever'>{user}</p>
                 <span className = 'text-wrapper'>
-                    <div className='recievedMessage'>{text}</div>
+                    <div style={{background: 'whitesmoke'}} className='recievedMessage'>{text}</div>
                 </span>
             </div>
         )

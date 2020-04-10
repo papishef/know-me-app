@@ -58,7 +58,6 @@ useEffect(() => {
                             <Button style={{background: 'transparent', border: 'solid 2px white'}}>Play again</Button>
                         </div>
                     </div>
-
                 </Container>
             </Container>
         </div>

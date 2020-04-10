@@ -2,12 +2,12 @@
 import React from 'react';
 
 //user && text props destructured from message prop
-const Message = ({messageH, nickname}) =>{
+const Message = ({messageH, sender, nickname}) =>{
     //parameter to check active user on the device
     let isSentbyCurrentUser = false;
 
     //remove whitespace around name
-    let trimmedName = nickname.trim().toLowerCase();
+    let trimmedName = sender.trim().toLowerCase();
 
 
     //confirms which user is active on that device
@@ -21,15 +21,15 @@ const Message = ({messageH, nickname}) =>{
             <div className='myMessages'>
                     <p className='sender'>{trimmedName}</p>
                 <span className = 'text-wrapper'>
-                    <div className='sentMessage'>{messageH}</div>
+                    <div style={{background: '#9b25cd'}} className='sentMessage text-light'>{messageH}</div>
                 </span>
             </div>
         )
         :(
             <div className='theirMessages'>
-                <p className='reciever'>{nickname}</p>
+                <p className='reciever'>{sender}</p>
                 <span className = 'text-wrapper'>
-                    <div className='recievedMessage'>{messageH}</div>
+                    <div style={{background: 'whitesmoke'}} className='recievedMessage'>{messageH}</div>
                 </span>
             </div>
         )
