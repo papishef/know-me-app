@@ -46,7 +46,9 @@ const endGame = () => {
                     <img src={DropIcon} alt='#' />
                     </DropdownToggle>
                 <DropdownMenu className='drp-content'>
-                    <DropdownItem>How to play</DropdownItem>
+                    <DropdownItem href='/how-to-play'>
+                      <NavLink>How to play</NavLink>
+                    </DropdownItem>
                     <DropdownItem>
                     <NavLink className='text-dark' href='/invite'>Invite</NavLink>
                     </DropdownItem>

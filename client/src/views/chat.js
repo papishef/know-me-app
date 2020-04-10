@@ -157,7 +157,7 @@ useEffect(() => {
                 <InputGroup className='pt-4'>
                     <select className='qst-wrapper' value={quest} onChange={e => {setQuest(e.target.value); setQuestionCategory(e.target.childNodes[e.target.selectedIndex].getAttribute("category"))}}>
                     <option className='qst-list'>Pick a question</option> 
-                    {question.map((question, index) => <option style={{backgroundColor: "#a83297", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.q} category={question.category} >{index + 1}. {question.q}</option>)} 
+                    {question.map((question, index) => <option style={{backgroundColor: "#c525cd", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.q} category={question.category} >{index + 1}. {question.q}</option>)} 
                     </select>
                 </InputGroup>
             </div>
