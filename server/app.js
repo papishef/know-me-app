@@ -149,7 +149,7 @@ const Chat = mongoose.model("Chat", chatSchema);
 
 /////DEFINITION OF CHAT HISTORY SCHEMA////////////////
 const questionsAskedSchema = new mongoose.Schema({
-  message: {
+  category: {
     type: String
   },
   sender: {
@@ -229,7 +229,6 @@ io.on('connection', function (socket) {
       user: userQuest.nickname,
       text: quest
     });
-    console.log(quest);
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
@@ -237,18 +236,23 @@ io.on('connection', function (socket) {
       room: roomID
     });
     questionHistory.save();
-    //save questions for results page
-    let questForCalc = new QuestionAsked({
-      message: quest,
-      sender: userQuest.nickname,
-      room: roomID
-    });
-    questForCalc.save();
+
     callback();
     // }
   });
 
+// save question categories for results calculation
+  socket.on("sendCategory", (questionCategory, roomID) => {
+    //save questions for results page
+    const userQuestCategory = getUser(socket.id);
 
+    let questForCalc = new QuestionAsked({
+      category: questionCategory,
+      sender: userQuestCategory.nickname,
+      room: roomID
+    });
+    questForCalc.save();
+  });
 
 
   socket.on("disconnect", (roomID) => {
@@ -300,7 +304,6 @@ app.post("/signIn", (req, res) => {
         if (err) {
           res.send(err);
         }
-        req.user.dateAdded = Date.now;
         res.redirect('/chat/:roomID');
       });
     } else {
@@ -319,9 +322,7 @@ app.get("/questions", (req, res) => {
 
 /////////SEND CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
-  // const roomID = req.body.roomID;
-  console.log(req.params.roomID);
-
+ 
   Chat.find({
     room: req.params.roomID
   }, (error, messagesInHistory) => {

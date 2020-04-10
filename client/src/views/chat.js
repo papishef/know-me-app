@@ -25,6 +25,7 @@ const Chat = () => {
     const [question, setQuestion] = useState([]);
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
+    const [questionCategory, setQuestionCategory] = useState("");
 
     // const [questions, setQuestions] = useState([]);
  
@@ -120,11 +121,23 @@ useEffect(() => {
 
 //Sending Question to the server
 useEffect(() => {
-    if(quest) {
+
+     if(quest) {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
-    console.log(quest);
+
 }, [quest]);
+
+
+
+// save question categories for results calculation
+useEffect(() => {
+
+    if(questionCategory) {
+        socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
+    }
+    console.log(questionCategory);
+}, [questionCategory]);
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
@@ -134,7 +147,6 @@ useEffect(() => {
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
-        console.log(message, messages);
     };
 
 
@@ -148,9 +160,9 @@ useEffect(() => {
             
             <div>
                 <InputGroup className='pt-4'>
-                    <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
+                    <select className='qst-wrapper' value={quest} onChange={e => {setQuest(e.target.value); setQuestionCategory(e.target.childNodes[e.target.selectedIndex].getAttribute("category"))}}>
                     <option className='qst-list'>Pick a question</option> 
-                    {question.map((question, index) => <option style={{backgroundColor: "#a83297", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.Q}  >{index + 1}. {question.q}</option>)} 
+                    {question.map((question, index) => <option style={{backgroundColor: "#a83297", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.q} category={question.category} >{index + 1}. {question.q}</option>)} 
                     </select>
                 </InputGroup>
             </div>

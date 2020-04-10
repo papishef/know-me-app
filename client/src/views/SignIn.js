@@ -30,7 +30,6 @@ import Footer from "./viewcomponents/Footer.js";
 
         e.preventDefault();
         preventswitch(e);
-        console.log(input);
         axios.post("http://localhost:4000/signIn", input)
         .then(response => {
             console.log(response.data);
