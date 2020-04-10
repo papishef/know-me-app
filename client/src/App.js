@@ -9,9 +9,10 @@ import './App.css';
 import SignIn from './views/SignIn';
 import Invitation from './views/Invitation';
 import Chat from './views/chat';
-import TermsOfService from './views/TermsOfService'
+import TermsOfService from './views/TermsOfService';
 import HowToPlay from './views/HowToPlay';
 import Results from './views/Results';
+import PrivacyPolicy from './views/viewcomponents/PrivacyPolicy';
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path="/results">
               <Results />
+            </Route>
+            <Route path="/privacy">
+              <PrivacyPolicy />
             </Route>
         </Switch>
       </Router>
