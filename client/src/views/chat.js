@@ -88,13 +88,13 @@ useEffect(() => {
 
     })
     .catch(error => {
-      console.log(error);
+      console.log(error.response);
   });
 
   },[]);
 ///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
   useEffect(() => {
-    console.log(question);
+    //console.log(question);
   },[question]);
 
 
@@ -102,7 +102,7 @@ useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    console.log(roomID);
+    //console.log(roomID);
 
     axios.get(`http://localhost:4000/chat/${roomID}`)
     .then(response => {
@@ -115,7 +115,7 @@ useEffect(() => {
 }, []);
 //Test message history rendering
 useEffect(() => { 
-    console.log(messageHistory);
+    //console.log(messageHistory);
 }, [messageHistory]);
 
 
@@ -124,7 +124,7 @@ useEffect(() => {
     if(quest) {
         socket.emit("sendQuestion", quest, roomID,  () => setQuest(""));
     }
-    console.log(qtype);
+    //console.log(qtype);
 }, [quest]);
 
 
@@ -135,7 +135,7 @@ useEffect(() => {
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
-        console.log(message, messages);
+        //console.log(message, messages);
     };
 
 
@@ -149,15 +149,9 @@ useEffect(() => {
             
             <div>
                 <InputGroup className='pt-4'>
-<<<<<<< HEAD
-                    <select className='qst-wrapper' data-cat={qtype} value={quest} onChange={(e) => {setQuest(e.target.value); setQtype(e.target.dataCat)} }>
+                    <select className='qst-wrapper' dataCat={qtype} value={quest} onChange={(e) => {setQuest(e.target.value); setQtype(e.target.dataCat)} }>
                     <option style={{maxWidth:'100vw'}} className='qst-list'>Pick a question</option> 
-                    {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q} data-cat={question.category} onClick={(e) => setQtype(e.target.cat)} >{index + 1}. {question.q}</option>)} 
-=======
-                    <select className='qst-wrapper' value={quest} onChange={(e) => setQuest(e.target.value)}>
-                    <option className='qst-list'>Pick a question</option> 
-                    {question.map((question, index) => <option style={{backgroundColor: "#a83297", borderWidth: 1, borderColor: "#420439" }} className='qst-list' key={index + 1} value={question.Q}  >{index + 1}. {question.q}</option>)} 
->>>>>>> a0b4360d126770192d99e5cae7546cc598325cd8
+                    {question.map((question, index) => <option style={{maxWidth:'100vw'}} className='qst-list' key={index + 1} value={question.q} dataCat={question.category}>{index + 1}. {question.q}</option>)} 
                     </select>
                 </InputGroup>
             </div>

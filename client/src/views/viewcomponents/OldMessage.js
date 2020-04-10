@@ -23,7 +23,6 @@ const Message = ({messageH, nickname}) =>{
                 <span className = 'text-wrapper'>
                     <div className='sentMessage'>{messageH}</div>
                 </span>
-                
             </div>
         )
         :(
