@@ -7,6 +7,11 @@ import { Container, Input, InputGroup, Button } from 'reactstrap';
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Footer from "./viewcomponents/Footer.js";
+import styled, { keyframes } from "styled-components";
+import { bounce } from "react-animations";
+
+
+const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
 
 
 // sign in component
@@ -51,7 +56,7 @@ import Footer from "./viewcomponents/Footer.js";
 
                     {/* user form */}
                     <form className='pt-4 form-wrapper' onSubmit={handleSubmit}>
-
+                   <Bounce> <div style={{fontSize: 24, position: "relative", bottom: 50, marginLeft: 400, color: "#E962EA", fontWeight: 600, fontFamily: "CombiNumerals" }}>18+</div></Bounce>
                         <InputGroup className='pt-4'>
                             <Input 
                             color='light'
@@ -76,9 +81,10 @@ import Footer from "./viewcomponents/Footer.js";
                              <option value="Female">Female</option>
                         </select>
                         </InputGroup>
-                        <div className='text-white pt-4'>
+                        
+                        <div className='text-white pt-4' style={{fontSize: 12}}>
                         <strong>Disclaimer:</strong> Nickname should be kept private,
-                         it would be used to identify you when you log in and out of the game.
+                         it would be used to identify you subsequently.
                     </div>
                         <br />
 
@@ -98,9 +104,9 @@ import Footer from "./viewcomponents/Footer.js";
                     {/* additional information */}
 
 
-                    <div className='text-white pt-2'>
-                        By submiting, I agree to your <Link to={`/terms`} style={{color: "purple"}}><strong>Terms of service</strong></Link> and 
-                        <Link to={`/privacy`} style={{color: "purple"}}><strong> Privacy Policy</strong></Link>
+                    <div className='text-white pt-2' style={{fontSize: 12}}>
+                        We know you won't, but we strongly recommend the <Link to={`/terms`} style={{color: "purple"}}><strong>Terms of service</strong></Link> and 
+                        <Link to={`/privacy`} style={{color: "purple"}}><strong> Privacy policy</strong></Link>
                     </div>
                     <div className='text-white pt-2'>
                         Learn <Link to='/how-to-play' style={{color: "purple"}}><strong>How to play</strong></Link>
@@ -111,5 +117,7 @@ import Footer from "./viewcomponents/Footer.js";
             </div>
         )
 }
+
+
 
 export default Signin;
