@@ -3,18 +3,28 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Logo from '../assets/playroom-logo.png';
 import { Container, NavLink, Button } from 'reactstrap';
+import { useLocation, Redirect } from 'react-router-dom';
 import Hot from '../assets/smiley.png';
+import queryString from 'query-string';
 
-export default function Results({roomID}) {
+export default function Results() {
+
+    const location = useLocation();
 
     const [resultData, setResultData] = useState({});
+    const [playAgain, setPlayAgain] = useState(false);
+    const [roomID, setRoomID] = useState("");
 
-    let socket;
-//question state
+
+  //question state
 useEffect(() => {
-    axios.get(`http://localhost:4000/${roomID}`)
+
+    const {roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
+
+    axios.get(`http://localhost:4000/results/${roomID}`)
     .then(res => {
-      const data = res.data.resultData;
+      const data = res.data;
 
       setResultData(data);
 
@@ -25,15 +35,21 @@ useEffect(() => {
 
   },[]);
 
-  //on final disconect
-useEffect(() => {
+  useEffect(() => {
+    console.log(resultData);
+  });
 
-    return () => {
-        socket.emit("disconnect");
-        socket.off();
-    };
+  
+const endCurrentGame = () => {
+    setPlayAgain(true);
+};
 
-  },[]);
+    //Delete all question history from database
+    useEffect(() => {
+
+        axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
+    
+    }, [playAgain]);
 
 
 
@@ -55,7 +71,8 @@ useEffect(() => {
                         </div>
                         <div className='col-3'></div>
                         <div className='col-5'>
-                            <Button style={{background: 'transparent', border: 'solid 2px white'}}>Play again</Button>
+                            <Button style={{background: 'transparent', border: 'solid 2px white'}} onClick={endCurrentGame} >Play again</Button>
+                            { playAgain && <Redirect to = "/" /> }
                         </div>
                     </div>
 

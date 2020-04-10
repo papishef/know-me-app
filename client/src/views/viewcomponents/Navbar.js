@@ -13,24 +13,37 @@ import io from 'socket.io-client';
 import axios from 'axios';
 
 
+
 const Navbar = ({roomID}) => {
   const [isEnded, setIsEnded] = useState(false);
   const [modal, setModal] = useState(false);
-  
+   //dropdown state and hooks
+   const [dropdownOpen, setDropdownOpen] = useState(false);
+   let socket;
+
+   socket = io("http://localhost:4000");
 
 const endGame = () => {
   setIsEnded(true);
 };
 
-//Delete all chats from room when session ends
+  //on final disconect
   useEffect(() => {
 
-    axios.delete(`http://localhost:4000/delete/${roomID}`);
+    return () => {
+        socket.emit("disconnect");
+        socket.off();
+    };
 
-  }, [isEnded]);
+  },[isEnded]);
 
-    //dropdown state and hooks
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    //Delete all chats from room when session ends
+    useEffect(() => {
+
+      axios.delete(`http://localhost:4000/delete/${roomID}`);
+  
+    }, [isEnded]);
+   
     //dropdown toggle function
     const toggle = () => setDropdownOpen(prevState => !prevState);
     const trigger = () => setModal(!modal);
@@ -55,7 +68,7 @@ const endGame = () => {
                       <Button color="danger" onClick={trigger}>End Session</Button>
                       <Modal isOpen={modal} toggle={trigger}>
                         <ModalBody>
-                        Once session ends, the chat room shall be closed and all stored data shall be deleted<br />
+                        Once session ends, the chat ends and all stored message history between room users shall be deleted<br />
                         Do you still wish to continue?
                         </ModalBody>
                         <ModalFooter>
@@ -65,7 +78,7 @@ const endGame = () => {
                       </Modal>
                     </div>
                     {/* <button onClick={endGame} style={{backgroundColor: "red",}} >End Session</button> */}
-                    { isEnded && <Redirect to = {`/results/${roomID}`} /> }
+                    { isEnded && <Redirect to = {`/results/?roomID=${roomID}`} /> }
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>

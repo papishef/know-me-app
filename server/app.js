@@ -341,13 +341,63 @@ app.get("/chat/:roomID", (req, res) => {
 /////////////delete room chat history//////
 app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect
-
   Chat.deleteMany({
     room: req.params.roomID
   }, (error) => {
     if (error) return (error);
   });
-})
+});
+
+//////////////Send results data to user////////////////
+app.get("/results/:roomID", (req, res) => {
+
+    QuestionAsked.find({room: req.params.roomID}, (error, foundQuestions) => {
+
+    }).then((foundQuestions) => {
+      const categoryArray = foundQuestions.map(newArray => newArray.category);
+
+
+      if (categoryArray.length == 0) {
+        return null;
+      } else {
+        var modeMap = {};
+        var maxEl = categoryArray[0], maxCount = 1;
+        var seventyPercent = Math.floor(categoryArray.length * (70/100));
+
+        for (let index = 0; index < seventyPercent; index++) {
+          var el = categoryArray[index];
+          if (modeMap[el] == null) 
+            modeMap[el] = 1;
+            else modeMap[el]++;
+
+            if (modeMap[el] > maxCount) {
+              maxEl = el;
+              maxCount = modeMap[el];
+            }
+        }
+        console.log(maxEl);
+        // return maxEl;
+        res.json({maxEl});
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    
+
+});
+
+
+/////////////delete room question history//////
+app.delete("/deleteQuestHistory/:roomID", (req, res) => {
+ 
+  QuestionAsked.deleteMany({
+    room: req.params.roomID
+  }, (error) => {
+    if (error) return (error);
+  });
+});
 
 
 app.get("/", (req, res) => {
