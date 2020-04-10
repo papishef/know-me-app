@@ -4,7 +4,9 @@ import axios from 'axios';
 import Logo from '../assets/playroom-logo.png';
 import { Container, NavLink, Button } from 'reactstrap';
 import { useLocation, Redirect } from 'react-router-dom';
-import Hot from '../assets/smiley.png';
+import Hot from '../assets/sex2.png';
+import Love from '../assets/smiley.png';
+import Casual from '../assets/social.png';
 import queryString from 'query-string';
 
 export default function Results() {
@@ -15,7 +17,6 @@ export default function Results() {
     const [playAgain, setPlayAgain] = useState(false);
     const [roomID, setRoomID] = useState("");
 
-
   //question state
 useEffect(() => {
 
@@ -25,8 +26,8 @@ useEffect(() => {
     axios.get(`http://localhost:4000/results/${roomID}`)
     .then(res => {
       const data = res.data;
-
-      setResultData(data);
+        //console.log(data)
+      setResultData(data.maxEl);
 
     })
     .catch(error => {
@@ -60,10 +61,18 @@ const endCurrentGame = () => {
                 <Container className='pt-4'>
                     <p className='text-light font-weight-bold text-center'>SNEEK GIST🤐</p>  
                     <div className='container'>
-                        <img src={Hot} className='mx-auto smiley d-inline-block' alt='#'/>
-                        <p className='h2 font-weight-bold text-white pt-3 text-center'>89%</p>
-                        <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
-                        <p className='text-light text-center pt-3'>Don't fuck this up!!!</p>
+                        {resultData === 'casual' ? <img src={Casual} className='mx-auto smiley d-inline-block' alt='#'/>
+                        : resultData === 'sexual' ? <img src={Hot} className='mx-auto smiley d-inline-block' alt='#'/>
+                        : <img src={Love} className='mx-auto smiley d-inline-block' alt='#'/>}
+
+                        {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
+                        : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
+                        : <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>}
+                        
+                        {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt?</p>
+                        : resultData === 'sexual' ? <p className='text-light text-center pt-3'>Don't fuck this up!!!</p>
+                        : <p className='text-light text-center pt-3'>Someone's crushing on you</p>}
+
                     </div>
                     <div className='row pt-4'>
                         <div className='col-4'>
