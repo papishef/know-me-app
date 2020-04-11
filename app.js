@@ -18,6 +18,7 @@ const cookieParser = require("cookie-parser");
 const _ = require("lodash");
 const cors = require("cors");
 const io = require("socket.io").listen(server);
+const path = require("path");
 
 const {
   addUser,
@@ -56,7 +57,7 @@ app.use(
 );
 
 
-
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(cookieParser());
 const session = require('express-session')({
@@ -400,4 +401,11 @@ app.delete("/deleteQuestHistory/:roomID", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Server started successfully with no errors");
+});
+
+
+app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+ });
 });
