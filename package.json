@@ -15,6 +15,9 @@
   },
   "author": "Sheriff Malebo",
   "license": "ISC",
+  "engines": {
+    "node": "v12.13.1"
+  },
   "bugs": {
     "url": "https://github.com/papishef/know-me-app/issues"
   },
