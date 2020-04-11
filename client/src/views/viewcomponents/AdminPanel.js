@@ -1,4 +1,5 @@
-import React from 'react'
+//jshint esversion: 6
+import React from 'react';
 
 export default function AdminPanel() {
     return (
@@ -6,5 +7,5 @@ export default function AdminPanel() {
             <p className='font-weight-bold 
             text-center text-white'>nickname's turn</p>
         </div>
-    )
-}
+    );
+};

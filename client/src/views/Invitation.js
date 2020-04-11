@@ -18,7 +18,7 @@ export default function Invitation() {
             <div style={{maxWidth: '80vw', margin: 'auto'}}>  
                 <span className='p-4'>  
                     <Button style={{background: 'white'}} block>
-                        <NavLink className='text-dark' href="https://wa.me/?text=I'm%20interested%20in%20your%20car%20for%20sale" target='blank'>
+                        <NavLink className='text-dark' href="https://wa.me/?text=playroom.live" target='blank'>
                             <img className='social-icon' src={Whatsapp} alt='#' />
                             Whatsapp
                         </NavLink>
@@ -26,7 +26,7 @@ export default function Invitation() {
                 </span>
                 <span className='p-4'>
                     <Button className='bg-primary' block>
-                        <NavLink className='text-light' href="http://m.me/mybot?ref=joinmyroom"  target='blank'>
+                        <NavLink className='text-light' href="http://m.me/mybot?ref=playroom.live"  target='blank'>
                             <img className='social-icon' src={Facebook} alt='#' />
                             Facebook
                         </NavLink>

@@ -1,5 +1,5 @@
 //jshint esversion: 6
-import React from 'react'
+import React from 'react';
 import {
     InputGroup,
 } from 'reactstrap';

@@ -23,7 +23,7 @@ useEffect(() => {
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
-    axios.get(`http://localhost:4000/results/${roomID}`)
+    axios.get(`https://limitless-river-10398.herokuapp.com/results/${roomID}`)
     .then(res => {
       const data = res.data;
         //console.log(data)
@@ -48,7 +48,7 @@ const endCurrentGame = () => {
     //Delete all question history from database
     useEffect(() => {
 
-        axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
+        axios.delete(`https://limitless-river-10398.herokuapp.com/deleteQuestHistory/${roomID}`);
     
     }, [playAgain]);
 
@@ -70,9 +70,9 @@ const endCurrentGame = () => {
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>}
                         
-                        {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt?</p>
-                        : resultData === 'sexual' ? <p className='text-light text-center pt-3'>Don't fuck this up!!!</p>
-                        : <p className='text-light text-center pt-3'>Someone's crushing on you</p>}
+                        {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
+                        : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
+                        : <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>}
 
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

@@ -13,7 +13,7 @@ export default function HowToPlay() {
                 <ul style={{listStyle: 'decimal'}}>
                     <li>PlayRoom is an adults only question and answer game to help you know a person better</li>
                     <li>Every user is required to register or join a room they were invited to using the landing page form</li>
-                    <li>Only two users can be in a room at a time, and for your privacy we advise that you only give out a room ID once and only when not play or after you have ended a session with a previous user.</li>
+                    <li>Only two users can be in a room at a time, and for your privacy we advise that you only give out a room ID once and only when not within an active game session or after you have ended a session with a previous user.</li>
                     <li>To play with multiple users at a time, you can create several rooms in several browser windows with the same nickname</li>
                     <li>The idea behind the game is that a user picks a question of choice from the questions dropdown menu for the other user to answer, and vice versa.</li>
                     <li>You can leave the game at anytime and return to continue the session as long as you do not end the session manually</li>

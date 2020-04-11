@@ -30,7 +30,7 @@ const Chat = () => {
     // const [questions, setQuestions] = useState([]);
  
     
-    const endPoint  = 'http://localhost:4000';
+    const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
 ///////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const {nickname, roomID} = queryString.parse(location.search);
@@ -75,7 +75,7 @@ const Chat = () => {
 /////////////////////////////////////////////////
 //question state
 useEffect(() => {
-    axios.get(`http://localhost:4000/questions`)
+    axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
     .then(res => {
       const data = res.data.allQuestions;
 
@@ -99,7 +99,7 @@ useEffect(() => {
     setRoomID(roomID);
     //console.log(roomID);
 
-    axios.get(`http://localhost:4000/chat/${roomID}`)
+    axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
     .then(response => {
         console.log(response.data.messagesInHistory);
         setMessageHistory(response.data.messagesInHistory);
