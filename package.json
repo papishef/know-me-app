@@ -1,7 +1,7 @@
 {
   "name": "know-me-app",
   "version": "1.0.0",
-  "proxy": "http://localhost:3000",
+  "proxy": "https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com",
   "description": "Get to know a new friend of the opposite sex better (18+)",
   "main": "app.js",
   "scripts": {

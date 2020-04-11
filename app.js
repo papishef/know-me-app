@@ -16,7 +16,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const cookieParser = require("cookie-parser");
 const _ = require("lodash");
-// const server = http.createServer(server);
 const cors = require("cors");
 const io = require("socket.io").listen(server);
 
@@ -32,22 +31,22 @@ const allQuestions = require("./questions");
 
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com/");
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
+    return res.status(200).json({});
+  }
+  res.header("Access-Control-Allow-Origin", "https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com");
   res.header('Access-Control-Allow-Credentials', true);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
-    return res.status(200).json({});
-  }
   next();
 });
 
 app.use(cors());
 
-app.options('*', cors());
+app.options("https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com", cors());
 
 app.use(bodyParser.json());
 app.use(
