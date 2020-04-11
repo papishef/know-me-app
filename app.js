@@ -46,7 +46,7 @@ const allQuestions = require("./questions");
 
 app.use(cors());
 
-app.options("https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com", cors());
+app.options("*", cors());
 
 app.use(bodyParser.json());
 app.use(
