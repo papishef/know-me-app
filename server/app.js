@@ -32,7 +32,7 @@ const allQuestions = require("./questions");
 
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com/");
   res.header('Access-Control-Allow-Credentials', true);
   res.header(
     "Access-Control-Allow-Headers",
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
-app.options('http://localhost:3000/"', cors());
+app.options('https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com/', cors());
 
 app.use(bodyParser.json());
 app.use(
@@ -77,7 +77,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Database Connection
-mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
+mongoose.connect("mongodb+srv://admin-sheriff:Surprise1%40@kyiakyiadigital-c6jba.mongodb.net/PlayRoomDB", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -147,7 +147,7 @@ chatSchema.index({
 const Chat = mongoose.model("Chat", chatSchema);
 
 
-/////DEFINITION OF CHAT HISTORY SCHEMA////////////////
+/////DEFINITION OF QUESTIONS HISTORY SCHEMA////////////////
 const questionsAskedSchema = new mongoose.Schema({
   category: {
     type: String
@@ -375,7 +375,6 @@ app.get("/results/:roomID", (req, res) => {
               maxCount = modeMap[el];
             }
         }
-        console.log(maxEl);
         // return maxEl;
         res.json({maxEl});
       }
