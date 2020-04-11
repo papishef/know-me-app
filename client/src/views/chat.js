@@ -1,3 +1,4 @@
+//jshint esversion: 6
 import React, {useState, useEffect} from 'react';
 import {  useLocation } from 'react-router-dom';
 import { InputGroup } from 'reactstrap';
@@ -25,11 +26,11 @@ const Chat = () => {
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
 
-  
+    // const [questions, setQuestions] = useState([]);
  
     
     const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
-
+///////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const {nickname, roomID} = queryString.parse(location.search);
  
@@ -52,11 +53,12 @@ const Chat = () => {
         return () => {
             socket.emit("disconnect");
 
-  
+            // socket.off();
         }
     }, [endPoint, location.search]);
 
 
+/////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
             setMessages([...messages, message]);
@@ -69,6 +71,8 @@ const Chat = () => {
         });
     }, [messages]);
     
+/////////////////////////////////////////////////
+//question state
 useEffect(() => {
     axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
     .then(res => {
@@ -82,15 +86,17 @@ useEffect(() => {
   });
 
   },[]);
-
-
+///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
+  useEffect(() => {
+    //console.log(question);
+  },[question]);
 
 
   useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-   
+    //console.log(roomID);
 
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
     .then(response => {
@@ -101,11 +107,13 @@ useEffect(() => {
         console.log(error.response.data);
     });
 }, []);
+//Test message history rendering
+useEffect(() => { 
+    //console.log(messageHistory);
+}, [messageHistory]);
 
 
-
-
-
+//Sending Question to the server
 useEffect(() => {
 
      if(quest) {
@@ -116,7 +124,7 @@ useEffect(() => {
 
 
 
-
+// save question categories for results calculation
 useEffect(() => {
 
     if(questionCategory) {
@@ -126,9 +134,10 @@ useEffect(() => {
 }, [questionCategory]);
 
 
+    //handleSubmit and sendMessage conflicted so it's only sendMesage now
     const sendMessage = (e) => {
         e.preventDefault();
-     
+        //console.log(message)
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
@@ -136,7 +145,8 @@ useEffect(() => {
 
 
 
- 
+    
+/////////////Return page/////////////
     return (
         <div className='page-wrapper'>
 

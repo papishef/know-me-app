@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "./static/css/main.fe7a38ad.chunk.css",
-    "main.js": "./static/js/main.b84c58a8.chunk.js",
-    "main.js.map": "./static/js/main.b84c58a8.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.6b9d98e7.js",
-    "runtime-main.js.map": "./static/js/runtime-main.6b9d98e7.js.map",
-    "static/js/2.7db5d1be.chunk.js": "./static/js/2.7db5d1be.chunk.js",
-    "static/js/2.7db5d1be.chunk.js.map": "./static/js/2.7db5d1be.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.a0c7fbf5f7cf938f4889c1fffdd89133.js": "./precache-manifest.a0c7fbf5f7cf938f4889c1fffdd89133.js",
-    "service-worker.js": "./service-worker.js",
-    "static/css/main.fe7a38ad.chunk.css.map": "./static/css/main.fe7a38ad.chunk.css.map",
-    "static/js/2.7db5d1be.chunk.js.LICENSE.txt": "./static/js/2.7db5d1be.chunk.js.LICENSE.txt",
-    "static/media/App.css": "./static/media/bg-mob.e5e01885.png",
-    "static/media/facebook.svg": "./static/media/facebook.323ae6e1.svg",
-    "static/media/instagram.svg": "./static/media/instagram.15bc5470.svg",
-    "static/media/sex2.png": "./static/media/sex2.5ecf0de7.png",
-    "static/media/smiley.png": "./static/media/smiley.63990a3f.png",
-    "static/media/social.png": "./static/media/social.5ecf953f.png",
-    "static/media/whatsapp.svg": "./static/media/whatsapp.e254ed76.svg"
+    "main.css": "/static/css/main.fe331afd.chunk.css",
+    "main.js": "/static/js/main.4b9c7309.chunk.js",
+    "main.js.map": "/static/js/main.4b9c7309.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.35eb2b37.js",
+    "runtime-main.js.map": "/static/js/runtime-main.35eb2b37.js.map",
+    "static/js/2.52a30e70.chunk.js": "/static/js/2.52a30e70.chunk.js",
+    "static/js/2.52a30e70.chunk.js.map": "/static/js/2.52a30e70.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.9cf8d392a33d66d44853f8594463f2b2.js": "/precache-manifest.9cf8d392a33d66d44853f8594463f2b2.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.fe331afd.chunk.css.map": "/static/css/main.fe331afd.chunk.css.map",
+    "static/js/2.52a30e70.chunk.js.LICENSE.txt": "/static/js/2.52a30e70.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/bg-mob.e5e01885.png",
+    "static/media/facebook.svg": "/static/media/facebook.323ae6e1.svg",
+    "static/media/instagram.svg": "/static/media/instagram.15bc5470.svg",
+    "static/media/sex2.png": "/static/media/sex2.5ecf0de7.png",
+    "static/media/smiley.png": "/static/media/smiley.63990a3f.png",
+    "static/media/social.png": "/static/media/social.5ecf953f.png",
+    "static/media/whatsapp.svg": "/static/media/whatsapp.e254ed76.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.6b9d98e7.js",
-    "static/js/2.7db5d1be.chunk.js",
-    "static/css/main.fe7a38ad.chunk.css",
-    "static/js/main.b84c58a8.chunk.js"
+    "static/js/runtime-main.35eb2b37.js",
+    "static/js/2.52a30e70.chunk.js",
+    "static/css/main.fe331afd.chunk.css",
+    "static/js/main.4b9c7309.chunk.js"
   ]
 }
