@@ -17,7 +17,7 @@ const Message = ({message: {user, text}, nickname}) =>{
     
     return (
         //conditional rendering by active user. renders active user messages different from other user
-        isSentbyCurrentUser ? (
+        isSentbyCurrentUser === true ? (
             <div className='myMessages'>
                     <p className='sender'>{trimmedName}</p>
                 <span className = 'text-wrapper'>
@@ -26,14 +26,14 @@ const Message = ({message: {user, text}, nickname}) =>{
                 
             </div>
         )
-        :(
+        : isSentbyCurrentUser === false ? (
             <div className='theirMessages'>
                 <p className='reciever'>{user}</p>
                 <span className = 'text-wrapper'>
                     <div style={{background: 'whitesmoke'}} className='recievedMessage'>{text}</div>
                 </span>
             </div>
-        )
+        ) : null
         
     )
 }
