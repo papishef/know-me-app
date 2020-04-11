@@ -30,7 +30,7 @@ const allQuestions = require("./questions");
 
 app.use(cors());
 
-app.options("https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com", cors());
+// app.options("https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com", cors());
 
 app.use((req, res, next) => {
     if (req.method === "OPTIONS") {
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     return res.status(200).json({});
   }
   res.header("Access-Control-Allow-Origin", "https://5e9130a4f2fcfc702b9cb931--vigilant-kepler-e9b79c.netlify.com");
-  res.header('Access-Control-Allow-Credentials', false);
+  res.header('Access-Control-Allow-Credentials', true);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
