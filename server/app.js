@@ -45,7 +45,7 @@ const allQuestions = require("./questions");
 
 app.use(cors());
 
-app.options('http://localhost:3000/"', cors());
+app.options('http://localhost:5000/"', cors());
 
 app.use(bodyParser.json());
 app.use(
