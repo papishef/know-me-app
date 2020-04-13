@@ -23,7 +23,7 @@ useEffect(() => {
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
-    axios.get(`http://localhost:4000/results/${roomID}`)
+    axios.get(`https://limitless-river-10398.herokuapp.com/results/${roomID}`)
     .then(res => {
       const data = res.data;
         //console.log(data)
@@ -48,7 +48,7 @@ const endCurrentGame = () => {
     //Delete all question history from database
     useEffect(() => {
 
-        axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
+        axios.delete(`https://limitless-river-10398.herokuapp.com/deleteQuestHistory/${roomID}`);
     
     }, [playAgain, roomID]);
 

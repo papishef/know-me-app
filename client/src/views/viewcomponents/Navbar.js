@@ -21,7 +21,7 @@ const Navbar = ({roomID}) => {
    const [dropdownOpen, setDropdownOpen] = useState(false);
    let socket;
 
-   socket = io("http://localhost:4000");
+   socket = io("https://limitless-river-10398.herokuapp.com/");
 
 const endGame = () => {
   setIsEnded(true);
@@ -40,7 +40,7 @@ const endGame = () => {
     //Delete all chats from room when session ends
     useEffect(() => {
 
-      axios.delete(`http://localhost:4000/delete/${roomID}`);
+      axios.delete(`https://limitless-river-10398.herokuapp.com/delete/${roomID}`);
   
     }, [isEnded, roomID]);
    
