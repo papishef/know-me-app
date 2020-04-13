@@ -1,0 +1,40 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\PAPI SHEF\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'nodemon@latest',
+1 verbose cli   '--global',
+1 verbose cli   '--prefix',
+1 verbose cli   'C:\\Users\\PAPI',
+1 verbose cli   'SHEF\\Desktop\\Study',
+1 verbose cli   'Tools\\Udemy',
+1 verbose cli   'Course\\Web',
+1 verbose cli   'Development\\know-me-app\\client\\tmpnodejsnpm-cache\\_npx\\2912',
+1 verbose cli   '--loglevel',
+1 verbose cli   'error',
+1 verbose cli   '--json'
+1 verbose cli ]
+2 info using npm@6.14.4
+3 info using node@v12.13.1
+4 verbose npm-session d3490e65c34b6830
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData error for file:SHEF\Desktop\Study Could not install from "SHEF\Desktop\Study" as it does not contain a package.json file.
+8 silly fetchPackageMetaData error for file:Tools\Udemy Could not install from "Tools\Udemy" as it does not contain a package.json file.
+9 silly fetchPackageMetaData error for file:Course\Web Could not install from "Course\Web" as it does not contain a package.json file.
+10 silly fetchPackageMetaData error for file:Development\know-me-app\client\tmpnodejsnpm-cache\_npx\2912 Could not install from "Development\know-me-app\client\tmpnodejsnpm-cache\_npx\2912" as it does not contain a package.json file.
+11 http fetch GET 200 https://registry.npmjs.org/nodemon 4816ms
+12 http fetch GET 200 https://registry.npmjs.org/nodemon/-/nodemon-2.0.2.tgz 691ms
+13 silly pacote tag manifest for nodemon@latest fetched in 5545ms
+14 timing stage:rollbackFailedOptional Completed in 1ms
+15 timing stage:runTopLevelLifecycles Completed in 5562ms
+16 verbose stack Error: ENOENT: no such file or directory, open 'C:\Users\PAPI SHEF\Desktop\Study Tools\Udemy Course\Web Development\know-me-app\client\SHEF\Desktop\Study\package.json'
+17 verbose cwd C:\Users\PAPI SHEF\Desktop\Study Tools\Udemy Course\Web Development\know-me-app\client
+18 verbose Windows_NT 10.0.18362
+19 verbose argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\PAPI SHEF\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "install" "nodemon@latest" "--global" "--prefix" "C:\\Users\\PAPI" "SHEF\\Desktop\\Study" "Tools\\Udemy" "Course\\Web" "Development\\know-me-app\\client\\tmpnodejsnpm-cache\\_npx\\2912" "--loglevel" "error" "--json"
+20 verbose node v12.13.1
+21 verbose npm  v6.14.4
+22 error code ENOLOCAL
+23 error Could not install from "SHEF\Desktop\Study" as it does not contain a package.json file.
+24 verbose exit [ 1, true ]
