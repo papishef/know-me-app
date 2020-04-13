@@ -25,14 +25,14 @@ const Message = ({messageH, sender, nickname}) =>{
                 </span>
             </div>
         )
-        :(
+        : isSentbyCurrentUser === false ? (
             <div className='theirMessages'>
                 <p className='reciever'>{sender}</p>
                 <span className = 'text-wrapper'>
                     <div style={{background: 'whitesmoke'}} className='recievedMessage'>{messageH}</div>
                 </span>
             </div>
-        )
+        ) : null
         
     )
 }

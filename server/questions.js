@@ -2,14 +2,14 @@
 //jshint esversion: 6
 const allQuestions = [
    {
-    id: 1,
+    id: "1",
     q: "If a genie could grant your most important wish, what would it be?",
     category: "personal"
   },
   {
-    id: 2,
-    q: "What is your greatest fear?",
-    category: "personal"
+    id: "2",
+    q: "If you had to choose, would you be a dominatrix or a submissive?",
+    category: "sexual"
   },
   {
     id: "3",
@@ -19,7 +19,7 @@ const allQuestions = [
   {
     id: "4",
     q: "What do you do?",
-    category: "Professional"
+    category: "casual"
   },
   {
     id: "5",
@@ -34,7 +34,7 @@ const allQuestions = [
   {
     id: "7",
     q: "Have you ever smoked?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "8",
@@ -73,8 +73,8 @@ const allQuestions = [
   },
   {
     id: "15",
-    q: "Do you prefer romance novels to adventures?",
-    category: "casual"
+    q: "What’s your favorite part of a man’s body?",
+    category: "sexual"
   },
   {
     id: "16",
@@ -83,8 +83,8 @@ const allQuestions = [
   },
   {
     id: "17",
-    q: "When was the last time you cried?",
-    category: "personal"
+    q: "Have you ever had sex with two different people in one night?",
+    category: "sexual"
   },
   {
     id: "18",
@@ -104,7 +104,7 @@ const allQuestions = [
   {
     id: "21",
     q: "Are you an introvert or an extrovert?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "22",
@@ -134,7 +134,7 @@ const allQuestions = [
   {
     id: "27",
     q: "What is your most embarrassing moment?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "28",
@@ -198,8 +198,8 @@ const allQuestions = [
   },
   {
     id: "40",
-    q: "What is your major weakness?",
-    category: "personal"
+    q: "What is your favourite spot to be kissed?",
+    category: "sexual"
   },
   {
     id: "41",
@@ -238,8 +238,8 @@ const allQuestions = [
   },
   {
     id: "48",
-    q: "What is your position on sex before marriage?",
-    category: "casual"
+    q: "What do you need to happen for your orgasm to be absolutely mind-blowing?",
+    category: "sexual"
   },
   {
     id: "49",
@@ -253,8 +253,8 @@ const allQuestions = [
   },
   {
     id: "51",
-    q: "Where is the weirdest place you have ever had sex?",
-    category: "casual"
+    q: "What’s the dirtiest thing you’ve ever sexted someone?",
+    category: "sexual"
   },
   {
     id: "52",
@@ -294,12 +294,12 @@ const allQuestions = [
   {
     id: "59",
     q: "Are you a virgin?",
-    category: "personal"
+    category: "sexual"
   },
   {
     id: "60",
     q: "Between attention, sex and money, what do you crave most from a guy?",
-    category: "casual"
+    category: "sexual"
   },
   {
     id: "61",
@@ -333,8 +333,8 @@ const allQuestions = [
   },
   {
     id: "67",
-    q: "Do you have a celebrity crush?",
-    category: "casual"
+    q: "What’s one thing that you hesitated to try during sex but ended up loving?",
+    category: "sexual"
   },
   {
     id: "68",
@@ -443,8 +443,8 @@ const allQuestions = [
   },
   {
     id: "89",
-    q: "What is fulfillment for you?",
-    category: "personal"
+    q: "How did you learn to masturbate, and how old were you when you first succeeded?",
+    category: "sexual"
   },
   {
     id: "90",
@@ -468,8 +468,8 @@ const allQuestions = [
   },
   {
     id: "94",
-    q: "Have you ever sent your nude picture?",
-    category: "sexual"
+    q: "Are you more into beauty, or brains?",
+    category: "personal"
   },
   {
     id: "95",
@@ -493,8 +493,8 @@ const allQuestions = [
   },
   {
     id: "99",
-    q: "What turns you on?",
-    category: "sexual"
+    q: "Where is the weirdest place you have ever had sex?",
+    category: "casual"
   },
   {
     id: "100",
@@ -508,8 +508,8 @@ const allQuestions = [
   },
   {
     id: "102",
-    q: "What is your favourite spot to be kissed?",
-    category: "sexual"
+    q: "Do you prefer romance novels to adventures?",
+    category: "casual"
   },
   {
     id: "103",
@@ -523,8 +523,8 @@ const allQuestions = [
   },
   {
     id: "105",
-    q: "Has a stranger seen your boobs/dick mistakenly?",
-    category: "sexual"
+    q: "What wrong assumptions do people make about you",
+    category: "casual"
   },
   {
     id: "106",
@@ -555,6 +555,61 @@ const allQuestions = [
     id: "111",
     q: "What is your birth date?",
     category: "casual"
+  },
+  {
+    id: "112",
+    q: "What does it feel like when you orgasm?",
+    category: "sexual"
+  },
+  {
+    id: "113",
+    q: "What is your position on sex before marriage?",
+    category: "casual"
+  },
+  {
+    id: "114",
+    q: "Do you have a celebrity crush?",
+    category: "casual"
+  },
+  {
+    id: "115",
+    q: "What is fulfillment for you?",
+    category: "personal"
+  },
+  {
+    id: "116",
+    q: "What types of props have you used during sex?",
+    category: "sexual"
+  },
+  {
+    id: "117",
+    q: "What is your greatest fear?",
+    category: "personal"
+  },
+  {
+    id: "118",
+    q: "What turns you on?",
+    category: "sexual"
+  },
+  {
+    id: "119",
+    q: "What is your major weakness?",
+    category: "personal"
+  },
+  {
+    id: "120",
+    q: "Have you ever sent your nude picture?",
+    category: "sexual"
+  },
+  {
+    id: "121",
+    q: "Has a stranger seen your boobs/dick mistakenly?",
+    category: "sexual"
+  },
+  {
+    id: "122",
+    q: "When was the last time you cried?",
+    category: "personal"
   },
 
 ];

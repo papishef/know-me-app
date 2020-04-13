@@ -13,12 +13,12 @@ export default function Invitation() {
             <div><img className='logo pt-4' src={Logo} alt='#' /></div>
             <p className='text-white text-center display-4 font-weight-bold pt-4'>slickback</p>
             <p className='text-white text-center pt-4'>invite friends with your profile link so they can have fun with you.</p>
-            <p className='text-white text-center pt-4'>http://playroom.live/</p>
+            <p className='text-white text-center pt-4'>https://playroom.live/</p>
 
             <div style={{maxWidth: '80vw', margin: 'auto'}}>  
                 <span className='p-4'>  
                     <Button style={{background: 'white'}} block>
-                        <NavLink className='text-dark' href="https://wa.me/?text=I'm%20interested%20in%20your%20car%20for%20sale" target='blank'>
+                        <NavLink className='text-dark' href="https://wa.me/?text=https://5e9130a4f2fcfc702b9cb931--playroomlive.netlify.com" target='blank'>
                             <img className='social-icon' src={Whatsapp} alt='#' />
                             Whatsapp
                         </NavLink>
@@ -26,7 +26,7 @@ export default function Invitation() {
                 </span>
                 <span className='p-4'>
                     <Button className='bg-primary' block>
-                        <NavLink className='text-light' href="http://m.me/mybot?ref=joinmyroom"  target='blank'>
+                        <NavLink className='text-light' href="http://m.me/mybot?ref=https://5e9130a4f2fcfc702b9cb931--playroomlive.netlify.com"  target='blank'>
                             <img className='social-icon' src={Facebook} alt='#' />
                             Facebook
                         </NavLink>
