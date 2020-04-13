@@ -43,7 +43,7 @@ const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
             }
         })
         .catch(error => {
-            console.log(error.response);
+            console.error(error.message);
         });
     };
        

@@ -26,7 +26,6 @@ const Chat = () => {
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
-
     // const [questions, setQuestions] = useState([]);
  
     
@@ -40,8 +39,6 @@ const Chat = () => {
         console.log(nickname, roomID);
 
         socket = io(endPoint);
-
-        console.log(socket);
 
         socket.emit("join", {nickname, roomID}, (error) => {
             if(error) {

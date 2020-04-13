@@ -29,8 +29,6 @@ const {
 
 const allQuestions = require("./questions");
 
-
-
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header('Access-Control-Allow-Credentials', true);
@@ -383,8 +381,6 @@ app.get("/results/:roomID", (req, res) => {
     .catch((error) => {
       console.log(error);
     });
-
-    
 
 });
 
