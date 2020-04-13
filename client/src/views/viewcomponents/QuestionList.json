@@ -1,0 +1,542 @@
+[
+     {
+        "id":"1",
+        "question":"If a genie could grant your most important wish, what would it be?",
+        "questiontype": "casual"
+    },
+     {
+        "id":"2",
+        "question":"What is your greatest fear?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"3",
+        "question":"What do you do?",
+        "questiontype": "professional"
+    },
+    {
+        "id":"4",
+        "question":"If you were to die for someone, who would it be?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"5",
+        "question":"Who is that one person you can tell anything?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"6",
+        "question":"What is your full name?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"7",
+        "question":"Have you ever smoked?",
+        "questiontype": "social"
+    },
+    {
+        "id":"8",
+        "question":"Have you done oral sex before?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"9",
+        "question":"Do you love quickies",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"10",
+        "question":"What is your birthdate",
+        "questiontype": "casual"
+    },
+    {
+        "id":"11",
+        "question":"What is your favourite sex position?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"12",
+        "question":"If you had to travel far away for a long period, where would you rather go?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"13",
+        "question":"What is your current relationship status?",
+        "questiontype": "social"
+    },
+    {
+        "id":"14",
+        "question":"Do you think it is necessary to reveal your past to your current boyfriend/girlfriend?",
+        "questiontype": "social"
+    },
+    {
+        "id":"15",
+        "question":"Do you prefer romance novels to adventures?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"16",
+        "question":"Have you ever done hard drugs?",
+        "questiontype": "social"
+    },
+    {
+        "id":"17",
+        "question":"When was the last time you cried?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"18",
+        "question":"Do you have a female best friend or a male best friend?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"19",
+        "question":"Are you bi-sexual or heterosexual?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"20",
+        "question":"What part of your body do you think mostly attracts the opposite sex to you?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"21",
+        "question":"Are you an introvert or an extrovert?",
+        "questiontype": "social"
+    },
+    {
+        "id":"22",
+        "question":"What is your longest sex duration?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"23",
+        "question":"Between sex and romance, which do you enjoy most?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"24",
+        "question":"If I asked politely, would you watch porn with me?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"25",
+        "question":"What is your genre of music?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"26",
+        "question":"Do you prefer having sex with condoms or without condoms?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"27",
+        "question":"What is your most embarrassing moment?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"28",
+        "question":"If you had the opportunity to change anything about yourself, what would it be?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"29",
+        "question":"What is your worst mistake?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"30",
+        "question":"Are you a screamer or a moaner during sex?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"31",
+        "question":"What is that one thing you are very proud of?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"32",
+        "question":"What are you most grateful for?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"33",
+        "question":"Which would you rather prefer for relaxation; a book or movie?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"34",
+        "question":"Have you ever thought of committing suicide?",
+        "questiontype": "psychological"
+    },
+    {
+        "id":"35",
+        "question":"What is your favorite Television show?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"36",
+        "question":"What are you putting on at the moment?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"37",
+        "question":"Have you ever survived a life-threatening disease?",
+        "questiontype": "psychological"
+    },
+    {
+        "id":"38",
+        "question":"Do you prefer a light-skinned or a dark-skinned guy/girl?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"39",
+        "question":"Can you reveal all of your sexual history to your boyfriend/girlfriend?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"40",
+        "question":"What is your major weakness?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"41",
+        "question":"Have you ever gone back to an ex?",
+        "questiontype": "social"
+    },
+    {
+        "id":"42",
+        "question":"What is your G-spot?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"43",
+        "question":"Has your heart ever been broken?",
+        "questiontype": "social"
+    },
+    {
+        "id":"44",
+        "question":"Can you give a blowjob if your boyfriend/ girlfriend asks for it?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"45",
+        "question":"What is your ideal man/woman?",
+        "questiontype": "social"
+    },
+    {
+        "id":"46",
+        "question":"Have you ever asked a guy out?",
+        "questiontype": "social"
+    },
+    {
+        "id":"47",
+        "question":"How do you handle rejection?",
+        "questiontype": "social"
+    },
+    {
+        "id":"48",
+        "question":"What is your position on premarital sex?",
+        "questiontype": "social"
+    },
+    {
+        "id":"49",
+        "question":"What is your deal breaker in a relationship?",
+        "questiontype": "social"
+    },
+    {
+        "id":"50",
+        "question":"Would you forgive a cheating partner?",
+        "questiontype": "social"
+    },
+    {
+        "id":"51",
+        "question":"Where is the weirdest place you have ever had sex?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"52",
+        "question":"Have you ever had an abusive partner?",
+        "questiontype": "social"
+    },
+    {
+        "id":"53",
+        "question":"What advice would you give to your younger self?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"54",
+        "question":"Have you ever been sexually abused?",
+        "questiontype": "psychological"
+    },
+    {
+        "id":"55",
+        "question":"Have your ever had a near-death experience?",
+        "questiontype": "psychological"
+    },
+    {
+        "id":"56",
+        "question":"What  is your worst fear?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"57",
+        "question":"What is your most memorable moment yet?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"58",
+        "question":"If you had a pet, what would it be?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"59",
+        "question":"Are you a virgin?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"60",
+        "question":"Between attention, sex and money, what do you crave most from a guy? ",
+        "questiontype": "social"
+    },
+    {
+        "id":"61",
+        "question":"At what age did you have your first sex?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"62",
+        "question":"What are you fondly called?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"63",
+        "question":"Does having sex on a first date make you loose?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"64",
+        "question":"Have you ever cheated on your boyfriend/ girlfriend?",
+        "questiontype": "social"
+    },
+    {
+        "id":"65",
+        "question":"Have you ever had a one-night stand?",
+        "questiontype": "social"
+    },
+    {
+        "id":"66",
+        "question":"Are you good at playing games?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"67",
+        "question":"Do you have a celebrity crush?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"68",
+        "question":"Do you have a deep secret you can never ever let out?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"69",
+        "question":"What is that one bad habit you are addicted to",
+        "questiontype": "social"
+    },
+    {
+        "id":"70",
+        "question":"What is that one thing you cherish most in a guy/ girl?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"71",
+        "question":"What is your zodiac sign?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"72",
+        "question":"What is your bra size?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"73",
+        "question":"If you were an animal, which would you rather be?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"74",
+        "question":"What is the duration of your longest relationship?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"75",
+        "question":"Have you ever ever dated a person you never loved?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"76",
+        "question":"What is the most daring thing you have ever done?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"77",
+        "question":"What is your favorite number?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"78",
+        "question":"Have you ever crushed on your friend’s boyfriend/girlfriend?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"79",
+        "question":"How long can you stay without having sex?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"80",
+        "question":"What is that one thing you can’t  live without?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"81",
+        "question":"Can you stay in a room for a month with someone you love without sexually touching him/ her?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"82",
+        "question":"If you were to live without sex or money for the rest of your life,which would you rather choose?",
+        "questiontype": "social/sexual"
+    },
+    {
+        "id":"83",
+        "question":"Money, power, fame and sex, pick one",
+        "questiontype": "social/sexual"
+    },
+    {
+        "id":"84",
+        "question":"Would you date your friend’s ex?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"85",
+        "question":"How old are you?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"86",
+        "question":"What is fulfillment for you?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"87",
+        "question":"Can you initiate sex?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"88",
+        "question":"What are your hobbies?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"89",
+        "question":"What is your fondest memory?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"90",
+        "question":"do you watch porn?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"91",
+        "question":"Have you ever sent your nude picture?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"92",
+        "question":"Are you a dominant in bed?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"93",
+        "question":"What is your favourite food?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"94",
+        "question":"What is your saddest moment?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"95",
+        "question":"Do you like being explored sexually?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"96",
+        "question":"What turns you on sexually?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"97",
+        "question":"Are you a good kisser?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"98",
+        "question":"How many rounds can you go?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"99",
+        "question":"What is your favourite spot to be kissed?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"100",
+        "question":"Do you like PDA?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"101",
+        "question":"Have you ever masturbated?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"102",
+        "question":"Has a stranger seen your boobs/dick mistakenly?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"103",
+        "question":"What is your sexual fantasy?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"104",
+        "question":"Have you ever done “friends with benefits”?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"105",
+        "question":"If you could have sex with a celebrity, who would it be?",
+        "questiontype": "sexual"
+    },
+    {
+        "id":"106",
+        "question":"What are your special talents?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"107",
+        "question":"Have you ever wished you could start life all over again?",
+        "questiontype": "casual"
+    },
+    {
+        "id":"108",
+        "question":"What is your birthdate?",
+        "questiontype": "casual"
+    }   
+]
