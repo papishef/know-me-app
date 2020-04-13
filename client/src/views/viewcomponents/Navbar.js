@@ -59,13 +59,13 @@ const endGame = () => {
                     <img src={DropIcon} alt='#' />
                     </DropdownToggle>
                 <DropdownMenu className='drp-content'>
-                    <DropdownItem href='/how-to-play'>
-                      <NavLink>How to play</NavLink>
+                    <DropdownItem>
+                      <NavLink  href='/how-to-play'>How to play</NavLink>
                     </DropdownItem>
                     <DropdownItem>
                     <NavLink className='text-dark' href='/invite'>Invite</NavLink>
                     </DropdownItem>
-                    <DropdownItem>
+                    <DropdownItem tag='div'>
                     <div>
                       <Button color="danger" onClick={trigger}>End Session</Button>
                       <Modal isOpen={modal} toggle={trigger}>
