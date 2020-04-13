@@ -35,14 +35,14 @@ const endGame = () => {
         socket.off();
     };
 
-  },[isEnded]);
+  },[isEnded, socket]);
 
     //Delete all chats from room when session ends
     useEffect(() => {
 
       axios.delete(`http://localhost:4000/delete/${roomID}`);
   
-    }, [isEnded]);
+    }, [isEnded, roomID]);
    
     //dropdown toggle function
     const toggle = () => setDropdownOpen(prevState => !prevState);
@@ -53,7 +53,7 @@ const endGame = () => {
     <div>
       <div className='p-1'><img src={SmallLogo} alt='#' /></div>
       <Nav>
-        <NavLink className='text-light font-weight-bold'>🔥Room {roomID}</NavLink>
+        <NavLink className='text-light font-weight-bold'><span role="img"  aria-labelledby="fire">🔥</span>Room {roomID}</NavLink>
         <Dropdown className='ml-auto pr-2' isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle className='bg-transparent border-0'>
                     <img src={DropIcon} alt='#' />

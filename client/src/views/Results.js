@@ -34,7 +34,7 @@ useEffect(() => {
       console.log(error.response);
   });
 
-  },[]);
+},[location.search]);
 
   useEffect(() => {
     console.log(resultData);
@@ -50,7 +50,7 @@ const endCurrentGame = () => {
 
         axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
     
-    }, [playAgain]);
+    }, [playAgain, roomID]);
 
 
 
@@ -59,7 +59,7 @@ const endCurrentGame = () => {
             <Container>
                 <div><img className='logo pt-4' src={Logo} alt='logo' /></div>
                 <Container className='pt-4'>
-                    <p className='text-light font-weight-bold text-center'>SNEEK GIST🤐</p>  
+                    <p className='text-light font-weight-bold text-center'>SNEEK GIST<span role="img"  aria-labelledby="zip it">🤐</span></p>  
                     <div className='container'>
                         <div className='smiley-wrapper'>
                             {resultData === 'casual' ? <img src={Casual} className='mx-auto smiley' alt='#'/>

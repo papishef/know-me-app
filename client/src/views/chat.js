@@ -26,7 +26,6 @@ const Chat = () => {
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
-
     // const [questions, setQuestions] = useState([]);
  
     
@@ -40,8 +39,6 @@ const Chat = () => {
         console.log(nickname, roomID);
 
         socket = io(endPoint);
-
-        console.log(socket);
 
         socket.emit("join", {nickname, roomID}, (error) => {
             if(error) {
@@ -97,7 +94,7 @@ useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    //console.log(roomID);
+    console.log(nickname);
 
     axios.get(`http://localhost:4000/chat/${roomID}`)
     .then(response => {
@@ -107,7 +104,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, []);
+}, [location.search]);
 //Test message history rendering
 useEffect(() => { 
     //console.log(messageHistory);
@@ -121,9 +118,7 @@ useEffect(() => {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
 
-}, [quest]);
-
-
+}, [quest, roomID]);
 
 // save question categories for results calculation
 useEffect(() => {
@@ -132,7 +127,7 @@ useEffect(() => {
         socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
     }
     console.log(questionCategory);
-}, [questionCategory]);
+}, [questionCategory, roomID]);
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now

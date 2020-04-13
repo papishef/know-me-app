@@ -18,9 +18,9 @@ export default function HowToPlay() {
                     <li>The idea behind the game is that a user picks a question of choice from the questions dropdown menu for the other user to answer, and vice versa.</li>
                     <li>You can leave the game at anytime and return to continue the session as long as you do not end the session manually</li>
                     <li>To end session manually, user is required to access an end button from the hamburger menu on the right of the chat screen, which deletes all messages history between current users</li>
-                    <li>After session end, a result page with compatibility information and 2 cent advise is diplayed to help users make decision, if you require PlayRoom's advice.😉</li>
+                    <li>After session end, a result page with compatibility information and 2 cent advise is diplayed to help users make decision, if you require PlayRoom's advice.<span role="img" aria-labelledby="wink">😉</span></li>
                     <li style={{color: "red"}}>Remember to only share room ID once for your own privacy.</li>
-                    <li>Happy playing player...👉</li>
+                    <li>Happy playing player...<span role="img"  aria-labelledby="right-point">👉</span></li>
                 </ul>
             </div>
             </div>

@@ -382,8 +382,6 @@ app.get("/results/:roomID", (req, res) => {
       console.log(error);
     });
 
-    
-
 });
 
 
