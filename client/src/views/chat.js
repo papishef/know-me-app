@@ -9,7 +9,15 @@ import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
 
+import UIfx from 'uifx';
+import SendSound from '../assets/send.mp3';
+const snd = new UIfx(SendSound);
+
+
 let socket;
+
+//send alert
+
 
 
 const Chat = () => {
@@ -59,7 +67,7 @@ const Chat = () => {
 /////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
-            setMessages([...messages, message]);
+            setMessages([...messages, message]);snd.play()
         });
     }, [messages]);
 
@@ -137,6 +145,7 @@ useEffect(() => {
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
+        
     };
 
 
