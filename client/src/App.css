@@ -3,9 +3,10 @@
   margin-left: auto;
   margin-right: auto;
 }
-.login-wrapper, .form-wrapper {
+.login-wrapper {
   padding-top: 5rem !important;
 }
+
 
 .page-wrapper {
   background: url(./assets/bg-mob.png) center no-repeat !important;
