@@ -102,8 +102,6 @@ const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
 
 
                     {/* additional information */}
-
-
                     <div className='text-white pt-2' style={{fontSize: 12}}>
                         We know you won't, but we strongly recommend the <Link to={`/terms`} style={{color: "purple"}}><strong>Terms of service</strong></Link> and 
                         <Link to={`/privacy`} style={{color: "purple"}}><strong> Privacy policy</strong></Link>
