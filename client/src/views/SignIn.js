@@ -115,7 +115,7 @@ const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
                 </Container>
                 <Footer />
             </div>
-        )
+     )
 }
 
 
