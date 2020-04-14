@@ -79,7 +79,7 @@ const endGame = () => {
                         </ModalFooter>
                       </Modal>
                     </div>
-                    {/* <button onClick={endGame} style={{backgroundColor: "red",}} >End Session</button> */}
+
                     { isEnded && <Redirect to = {`/results/?roomID=${roomID}`} /> }
                     </DropdownItem>
                 </DropdownMenu>
