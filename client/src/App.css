@@ -33,7 +33,17 @@
 }
 
 .submit {
-  background: transparent !important;
+  background: #9b25cd !important;
+  background-position: center !important;
+  transition: background 1s !important;
+}
+.submit:hover {
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000% !important;
+}
+.submit:active {
+  background-color: #6eb9f7 !important;
+  background-size: 100% !important;
+  transition: background 0s !important;
 }
 .social-icon {
   width: 2rem;
