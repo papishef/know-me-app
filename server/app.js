@@ -256,7 +256,7 @@ io.on('connection', function (socket) {
 
 
   socket.on("disconnect", (roomID) => {
-    const user = removeUser(socket.id);
+    // const user = removeUser(socket.id);
 
     if (user) {
       io.to(user.roomID).emit("message", {
@@ -274,7 +274,7 @@ app.post("/signIn", (req, res) => {
 
   //check database if username exists
   User.findOne({
-    username: req.body.nickname.trim()
+    username: _.lowerCase(req.body.nickname.trim())
   }, (err, foundUser) => {
     if (!foundUser) {
       //if no previous session register user
@@ -290,7 +290,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.redirect('/chat/:roomID');
+          res.sendStatus(200);;
         }
       });
 
@@ -304,7 +304,7 @@ app.post("/signIn", (req, res) => {
         if (err) {
           res.send(err);
         }
-        res.redirect('/chat/:roomID');
+        res.sendStatus(200);
       });
     } else {
       return (err);
@@ -324,7 +324,7 @@ app.get("/questions", (req, res) => {
 app.get("/chat/:roomID", (req, res) => {
  
   Chat.find({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesInHistory) => {
     if (messagesInHistory) {
 
@@ -342,7 +342,7 @@ app.get("/chat/:roomID", (req, res) => {
 app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect
   Chat.deleteMany({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error) => {
     if (error) return (error);
   });
@@ -351,7 +351,7 @@ app.delete("/delete/:roomID", (req, res) => {
 //////////////Send results data to user////////////////
 app.get("/results/:roomID", (req, res) => {
 
-    QuestionAsked.find({room: req.params.roomID}, (error, foundQuestions) => {
+    QuestionAsked.find({room: _.lowerCase(req.params.roomID.trim())}, (error, foundQuestions) => {
 
     }).then((foundQuestions) => {
       const categoryArray = foundQuestions.map(newArray => newArray.category);
@@ -390,7 +390,7 @@ app.get("/results/:roomID", (req, res) => {
 app.delete("/deleteQuestHistory/:roomID", (req, res) => {
  
   QuestionAsked.deleteMany({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error) => {
     if (error) return (error);
   });
