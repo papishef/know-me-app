@@ -68,7 +68,7 @@ useEffect(() => {
         return () => {
             socket.emit("disconnect");
 
-            socket.off();
+            // socket.off();
         }
     }, [endPoint, location.search]);
 
