@@ -35,14 +35,14 @@ const endGame = () => {
         socket.off();
     };
 
-  },[isEnded, socket]);
+  },[isEnded]);
 
     //Delete all chats from room when session ends
     useEffect(() => {
 
       axios.delete(`https://limitless-river-10398.herokuapp.com/delete/${roomID}`);
   
-    }, [isEnded, roomID]);
+    }, [isEnded]);
    
     //dropdown toggle function
     const toggle = () => setDropdownOpen(prevState => !prevState);

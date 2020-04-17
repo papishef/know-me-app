@@ -16,9 +16,6 @@ const snd = new UIfx(SendSound);
 
 let socket;
 
-//send alert
-
-
 
 const Chat = () => {
     //location hooks from react-router-dom to manipulate platform route, path, location
@@ -27,24 +24,36 @@ const Chat = () => {
     // // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
-    // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [question, setQuestion] = useState([]);
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
-    // const [questions, setQuestions] = useState([]);
  
     
     const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
+
+/////////////////////////////////////////////////
+//question state
+useEffect(() => {
+    axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
+    .then(res => {
+      const data = res.data.allQuestions;
+      setQuestion(data);
+    })
+    .catch(error => {
+      console.log(error.response.data);
+  });
+
+  },[]);
+
 ///////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const {nickname, roomID} = queryString.parse(location.search);
  
         setNickname(nickname);
         setRoomID(roomID);
-        console.log(nickname, roomID);
 
         socket = io(endPoint);
 
@@ -59,7 +68,7 @@ const Chat = () => {
         return () => {
             socket.emit("disconnect");
 
-            // socket.off();
+            socket.off();
         }
     }, [endPoint, location.search]);
 
@@ -67,56 +76,32 @@ const Chat = () => {
 /////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
-            setMessages([...messages, message]);snd.play()
+            setMessages([...messages, message]);snd.play();
         });
     }, [messages]);
 
     useEffect(() => {
         socket.on("quest", (quest) => {
-            setMessages([...messages, quest]);
+            setMessages([...messages, quest]);snd.play();
         });
     }, [messages]);
     
-/////////////////////////////////////////////////
-//question state
-useEffect(() => {
-    axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
-    .then(res => {
-      const data = res.data.allQuestions;
-
-      setQuestion(data);
-
-    })
-    .catch(error => {
-      console.log(error.response.data);
-  });
-
-  },[]);
-///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
-  useEffect(() => {
-    //console.log(question);
-  },[question]);
 
 
   useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    console.log(nickname);
 
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
     .then(response => {
-        console.log(response.data.messagesInHistory);
         setMessageHistory(response.data.messagesInHistory);
     })
     .catch(error => {
         console.log(error.response.data);
     });
 }, [location.search]);
-//Test message history rendering
-useEffect(() => { 
-    //console.log(messageHistory);
-}, [messageHistory]);
+
 
 
 //Sending Question to the server
@@ -126,7 +111,7 @@ useEffect(() => {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
 
-}, [quest, roomID]);
+}, [quest]);
 
 // save question categories for results calculation
 useEffect(() => {
@@ -134,14 +119,13 @@ useEffect(() => {
     if(questionCategory) {
         socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
     }
-    console.log(questionCategory);
-}, [questionCategory, roomID]);
+}, [questionCategory]);
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
     const sendMessage = (e) => {
         e.preventDefault();
-        //console.log(message)
+ 
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
