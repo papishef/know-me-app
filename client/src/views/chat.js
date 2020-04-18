@@ -67,8 +67,9 @@ const Chat = () => {
 /////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
-            setMessages([...messages, message]);snd.play()
+            setMessages([...messages, message]);snd.play();
         });
+        if (messages.length > 7) return window.location.reload();
     }, [messages]);
 
     useEffect(() => {
