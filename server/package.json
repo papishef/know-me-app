@@ -1,7 +1,7 @@
 {
   "name": "know-me-app",
   "version": "1.0.0",
-  "proxy": "https://5e9130a4f2fcfc702b9cb931--playroomlive.netlify.com",
+  "proxy": "https://playroomlive.netlify.app",
   "description": "Get to know a new friend of the opposite sex better (18+)",
   "main": "app.js",
   "scripts": {
@@ -15,6 +15,9 @@
   },
   "author": "Sheriff Malebo",
   "license": "ISC",
+  "engines": {
+    "node": "v12.13.1"
+  },
   "bugs": {
     "url": "https://github.com/papishef/know-me-app/issues"
   },

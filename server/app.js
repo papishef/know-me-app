@@ -29,25 +29,25 @@ const {
 
 const allQuestions = require("./questions");
 
-
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://5e949b440db3ca000772e591--playroomlive.netlify.com/");
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
-    return res.status(200).json({});
-  }
-  next();
-});
-
 app.use(cors());
 
-app.options('https://5e949b440db3ca000772e591--playroomlive.netlify.com/', cors());
+// app.use((req, res, next) => {
+//     if (req.method === "OPTIONS") {
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
+//     return res.status(200).json({});
+//   }
+//   res.header("Access-Control-Allow-Origin", "https://playroomlive.netlify.app/");
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
+
+app.options("https://playroomlive.netlify.app", cors());
+
+
 
 app.use(bodyParser.json());
 app.use(
@@ -55,8 +55,6 @@ app.use(
     extended: true
   })
 );
-
-
 
 
 app.use(cookieParser());
@@ -256,7 +254,7 @@ io.on('connection', function (socket) {
 
 
   socket.on("disconnect", (roomID) => {
-    // const user = removeUser(socket.id);
+    const user = removeUser(socket.id);
 
     if (user) {
       io.to(user.roomID).emit("message", {
