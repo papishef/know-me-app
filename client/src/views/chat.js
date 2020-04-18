@@ -100,7 +100,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, [location.search]);
+}, []);
 
 
 

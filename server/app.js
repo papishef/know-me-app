@@ -320,12 +320,12 @@ app.get("/questions", (req, res) => {
 
 /////////SEND CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
- 
+
   Chat.find({
     room: _.lowerCase(req.params.roomID.trim())
-  }, (error, messagesInHistory) => {
-    if (messagesInHistory) {
-
+  }, (error, messagesHistory) => {
+    if (messagesHistory) {
+      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length);
       res.json({
         messagesInHistory
       });
