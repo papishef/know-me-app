@@ -92,10 +92,6 @@ useEffect(() => {
   });
 
   },[]);
-// ///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
-//   useEffect(() => {
-//     //console.log(question);
-//   },[question]);
 
 
 useEffect(() => {
@@ -111,11 +107,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, [location.search]);
-//Test message history rendering
-// useEffect(() => { 
-//     //console.log(messageHistory);
-// }, [messageHistory]);
+}, []);
 
 
 //Sending Question to the server
