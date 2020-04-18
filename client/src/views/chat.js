@@ -92,17 +92,16 @@ useEffect(() => {
   });
 
   },[]);
-///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
-  useEffect(() => {
-    //console.log(question);
-  },[question]);
+// ///This useEffect block triggers when the question variable changes from calling setQuestion in the first useEffect block///////////
+//   useEffect(() => {
+//     //console.log(question);
+//   },[question]);
 
 
-  useEffect(() => {
+useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    console.log(nickname);
 
     axios.get(`http://localhost:4000/chat/${roomID}`)
     .then(response => {
@@ -114,9 +113,9 @@ useEffect(() => {
     });
 }, [location.search]);
 //Test message history rendering
-useEffect(() => { 
-    //console.log(messageHistory);
-}, [messageHistory]);
+// useEffect(() => { 
+//     //console.log(messageHistory);
+// }, [messageHistory]);
 
 
 //Sending Question to the server
@@ -126,7 +125,7 @@ useEffect(() => {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
 
-}, [quest, roomID]);
+}, [quest]);
 
 // save question categories for results calculation
 useEffect(() => {
@@ -135,7 +134,7 @@ useEffect(() => {
         socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
     }
     console.log(questionCategory);
-}, [questionCategory, roomID]);
+}, [questionCategory]);
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
