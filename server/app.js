@@ -239,7 +239,7 @@ io.on('connection', function (socket) {
     // }
   });
 
-// save question categories for results calculation
+  // save question categories for results calculation
   socket.on("sendCategory", (questionCategory, roomID) => {
     //save questions for results page
     const userQuestCategory = getUser(socket.id);
@@ -318,14 +318,16 @@ app.get("/questions", (req, res) => {
   });
 });
 
+
 /////////SEND CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
- 
+
   Chat.find({
     room: _.lowerCase(req.params.roomID.trim())
-  }, (error, messagesInHistory) => {
-    if (messagesInHistory) {
-
+  }, (error, messagesHistory) => {
+    if (messagesHistory) {
+      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length);
+      console.log(messagesInHistory);
       res.json({
         messagesInHistory
       });
@@ -349,7 +351,9 @@ app.delete("/delete/:roomID", (req, res) => {
 //////////////Send results data to user////////////////
 app.get("/results/:roomID", (req, res) => {
 
-    QuestionAsked.find({room: _.lowerCase(req.params.roomID.trim())}, (error, foundQuestions) => {
+  QuestionAsked.find({
+      room: _.lowerCase(req.params.roomID.trim())
+    }, (error, foundQuestions) => {
 
     }).then((foundQuestions) => {
       const categoryArray = foundQuestions.map(newArray => newArray.category);
@@ -359,23 +363,26 @@ app.get("/results/:roomID", (req, res) => {
         return null;
       } else {
         var modeMap = {};
-        var maxEl = categoryArray[0], maxCount = 1;
-        var seventyPercent = Math.floor(categoryArray.length * (70/100));
+        var maxEl = categoryArray[0],
+          maxCount = 1;
+        var seventyPercent = Math.floor(categoryArray.length * (70 / 100));
 
         for (let index = 0; index < seventyPercent; index++) {
           var el = categoryArray[index];
-          if (modeMap[el] == null) 
+          if (modeMap[el] == null)
             modeMap[el] = 1;
-            else modeMap[el]++;
+          else modeMap[el]++;
 
-            if (modeMap[el] > maxCount) {
-              maxEl = el;
-              maxCount = modeMap[el];
-            }
+          if (modeMap[el] > maxCount) {
+            maxEl = el;
+            maxCount = modeMap[el];
+          }
         }
         console.log(maxEl);
         // return maxEl;
-        res.json({maxEl});
+        res.json({
+          maxEl
+        });
       }
     })
     .catch((error) => {
@@ -387,7 +394,7 @@ app.get("/results/:roomID", (req, res) => {
 
 /////////////delete room question history//////
 app.delete("/deleteQuestHistory/:roomID", (req, res) => {
- 
+
   QuestionAsked.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
   }, (error) => {
