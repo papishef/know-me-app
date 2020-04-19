@@ -165,7 +165,7 @@ useEffect(() => {
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
             <PacmanLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />
-            {loading && <p style={{position: "absolute", top: 300, textAlign: "justify"}}>eating up you chats... privacy first</p>}
+            {loading && <p style={{position: "absolute", top: 300, textAlign: "center", fontFamily: "Garamond", fontSize: "1.2rem"}}>eating up you chats... privacy first</p>}
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
