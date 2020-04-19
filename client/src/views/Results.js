@@ -8,6 +8,16 @@ import Hot from '../assets/sex2.png';
 import Love from '../assets/smiley.png';
 import Casual from '../assets/social.png';
 import queryString from 'query-string';
+import { css } from "@emotion/core";
+import RingLoader from "react-spinners/RingLoader";
+
+///css rules from emotion/core for ringloader
+const loaderCss = css `
+    display: block;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+`;
 
 export default function Results() {
 
@@ -16,10 +26,10 @@ export default function Results() {
     const [resultData, setResultData] = useState({});
     const [playAgain, setPlayAgain] = useState(false);
     const [roomID, setRoomID] = useState("");
+    const [loading, setLoading] = useState(true);
 
   //question state
 useEffect(() => {
-
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
@@ -29,6 +39,8 @@ useEffect(() => {
         //console.log(data)
       setResultData(data.maxEl);
 
+    }).then(() => {
+      setLoading(false);
     })
     .catch(error => {
       console.log(error.response);
@@ -70,12 +82,12 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
-                        : <p>Result Data Loading...</p>}
+                        : <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
                         
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
                         : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
-                        : <p>Result Data Loading...</p>}
+                        : null}
 
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
