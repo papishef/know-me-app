@@ -82,7 +82,7 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
-                        : <ClimbingBoxLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
+                        : <ClimbingBoxLoader css={loaderCss} size={25} color={"#c525cd"} loading={loading} />}
                         {loading && <p style={{zIndex: 9999, position: "absolute", top: 500, color: "white", left: 80, fontFamily: "Cursive", fontSize: 20, fontWeight: 700}}>Fetching result data...</p>}
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
