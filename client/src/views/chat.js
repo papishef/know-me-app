@@ -66,7 +66,7 @@ const Chat = () => {
             // socket.emit("disconnect");
             setLoading(false);
             // socket.off();
-        }
+        };
     }, [endPoint, location.search]);
 
 

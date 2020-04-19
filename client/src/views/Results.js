@@ -24,8 +24,8 @@ export default function Results() {
     const loaderCss = css `
       display: block;
       position: absolute;
-      top: 40%;
-      left: 40%;
+      top: 20%;
+      left: 20%;
     `;
 
   //question state
