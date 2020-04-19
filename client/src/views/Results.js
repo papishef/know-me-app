@@ -16,7 +16,7 @@ const loaderCss = css `
     display: block;
     position: absolute;
     top: 40%;
-    left: 15%;
+    left: 25%;
 `;
 
 export default function Results() {
