@@ -33,7 +33,7 @@ app.use(cors());
 app.options("https://playroomlive.netlify.app", cors());
 
 app.use((req, res, next) => {
-    if (req.method === "OPTIONS") {
+  if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
     return res.status(200).json({});
   }
@@ -198,7 +198,7 @@ io.on('connection', function (socket) {
     //Admin message to existin user when a new user joins the room
     socket.broadcast.to(user.roomID).emit("message", {
       user: "PlayRoom",
-      text: `${user.nickname} has entered your Room, Break the ice by asking them a question`
+      text: `${user.nickname} has entered the Room, Break the ice by asking them a question`
     });
 
     socket.join(user.roomID);
@@ -207,27 +207,23 @@ io.on('connection', function (socket) {
   //Expecting a message to be sent 
   socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
-    //save questions asked to chat history
-    io.to(user.roomID).emit("message", {
-      user: user.nickname,
-      text: message
-    });
+    ///save message to history
     let messageHistory = new Chat({
       message: message,
       sender: user.nickname,
       room: roomID
     });
     messageHistory.save();
+    //send message to room users
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
+      text: message
+    });
     callback();
   });
   //Expecting a question to be sent
   socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
-    //save questions asked to chat history
-    io.to(userQuest.roomID).emit("quest", {
-      user: userQuest.nickname,
-      text: quest
-    });
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
@@ -235,12 +231,15 @@ io.on('connection', function (socket) {
       room: roomID
     });
     questionHistory.save();
-
+    //send question to room users
+    io.to(userQuest.roomID).emit("quest", {
+      user: userQuest.nickname,
+      text: quest
+    });
     callback();
-    // }
   });
 
-// save question categories for results calculation
+  // save question categories for results calculation
   socket.on("sendCategory", (questionCategory, roomID) => {
     //save questions for results page
     const userQuestCategory = getUser(socket.id);
@@ -289,7 +288,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.sendStatus(200);;
+          res.sendStatus(200);
         }
       });
 
@@ -326,7 +325,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 4, messagesHistory.length);
+      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 3, messagesHistory.length);
       res.json({
         messagesInHistory
       });
@@ -350,7 +349,9 @@ app.delete("/delete/:roomID", (req, res) => {
 //////////////Send results data to user////////////////
 app.get("/results/:roomID", (req, res) => {
 
-    QuestionAsked.find({room: _.lowerCase(req.params.roomID.trim())}, (error, foundQuestions) => {
+  QuestionAsked.find({
+      room: _.lowerCase(req.params.roomID.trim())
+    }, (error, foundQuestions) => {
 
     }).then((foundQuestions) => {
       const categoryArray = foundQuestions.map(newArray => newArray.category);
@@ -360,22 +361,25 @@ app.get("/results/:roomID", (req, res) => {
         return null;
       } else {
         var modeMap = {};
-        var maxEl = categoryArray[0], maxCount = 1;
-        var seventyPercent = Math.floor(categoryArray.length * (70/100));
+        var maxEl = categoryArray[0],
+          maxCount = 1;
+        var seventyPercent = Math.floor(categoryArray.length * (70 / 100));
 
         for (let index = 0; index < seventyPercent; index++) {
           var el = categoryArray[index];
-          if (modeMap[el] == null) 
+          if (modeMap[el] == null)
             modeMap[el] = 1;
-            else modeMap[el]++;
+          else modeMap[el]++;
 
-            if (modeMap[el] > maxCount) {
-              maxEl = el;
-              maxCount = modeMap[el];
-            }
+          if (modeMap[el] > maxCount) {
+            maxEl = el;
+            maxCount = modeMap[el];
+          }
         }
         // return maxEl;
-        res.json({maxEl});
+        res.json({
+          maxEl
+        });
       }
     })
     .catch((error) => {
@@ -387,7 +391,7 @@ app.get("/results/:roomID", (req, res) => {
 
 /////////////delete room question history//////
 app.delete("/deleteQuestHistory/:roomID", (req, res) => {
- 
+
   QuestionAsked.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
   }, (error) => {
