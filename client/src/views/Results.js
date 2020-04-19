@@ -8,6 +8,8 @@ import Hot from '../assets/sex2.png';
 import Love from '../assets/smiley.png';
 import Casual from '../assets/social.png';
 import queryString from 'query-string';
+import { css } from "@emotion/core";
+import RingLoader from "react-spinners/RingLoader";
 
 export default function Results() {
 
@@ -16,6 +18,15 @@ export default function Results() {
     const [resultData, setResultData] = useState({});
     const [playAgain, setPlayAgain] = useState(false);
     const [roomID, setRoomID] = useState("");
+    const [loading, setLoading] = useState(true);
+
+    ///css rules from emotion/core for ringloader
+    const loaderCss = css `
+      display: block;
+      position: absolute;
+      top: 40%;
+      left: 40%;
+    `;
 
   //question state
 useEffect(() => {
@@ -29,6 +40,8 @@ useEffect(() => {
         //console.log(data)
       setResultData(data.maxEl);
 
+    }).then(() => {
+      setLoading(false);
     })
     .catch(error => {
       console.log(error.response);
@@ -64,15 +77,18 @@ const endCurrentGame = () => {
                         <div className='smiley-wrapper'>
                             {resultData === 'casual' ? <img src={Casual} className='mx-auto smiley' alt='#'/>
                             : resultData === 'sexual' ? <img src={Hot} className='mx-auto smiley' alt='#'/>
-                            : <img src={Love} className='mx-auto smiley' alt='#'/>}
+                            : resultData === 'personal' ? <img src={Love} className='mx-auto smiley' alt='#'/>
+                            : null}
                         </div>
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
-                        : <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>}
+                        : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
+                        : <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
                         
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt?</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>Don't fuck this up!!!</p>
-                        : <p className='text-light text-center pt-3'>Someone's crushing on you</p>}
+                        : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you</p> 
+                        : null}
 
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

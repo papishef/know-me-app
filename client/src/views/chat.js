@@ -8,16 +8,21 @@ import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
-
+import { css } from "@emotion/core";
+import RingLoader from "react-spinners/RingLoader";
 import UIfx from 'uifx';
 import SendSound from '../assets/send.mp3';
 const snd = new UIfx(SendSound);
 
 
 let socket;
-
-//send alert
-
+///css rules from emotion/core for ringloader
+const loaderCss = css `
+    display: block;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+`;
 
 
 const Chat = () => {
@@ -34,6 +39,7 @@ const Chat = () => {
     const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
+    const [loading, setLoading] = useState(false);
     // const [questions, setQuestions] = useState([]);
  
     
@@ -57,8 +63,8 @@ const Chat = () => {
         
     
         return () => {
-            socket.emit("disconnect");
-
+            // socket.emit("disconnect");
+            setLoading(false);
             // socket.off();
         }
     }, [endPoint, location.search]);
@@ -69,7 +75,10 @@ const Chat = () => {
         socket.on("message", (message) => {
             setMessages([...messages, message]);snd.play();
         });
-        if (messages.length > 7) return window.location.reload();
+        if (messages.length > 6) {
+            setLoading(true);
+            return window.location.reload(true);
+        }
     }, [messages]);
 
     useEffect(() => {
@@ -89,7 +98,7 @@ useEffect(() => {
 
     })
     .catch(error => {
-      console.log(error.response.data);
+      console.log(error.response);
   });
 
   },[]);
@@ -106,7 +115,7 @@ useEffect(() => {
         setMessageHistory(response.data.messagesInHistory);
     })
     .catch(error => {
-        console.log(error.response.data);
+        console.log(error.response);
     });
 }, []);
 
@@ -158,6 +167,7 @@ useEffect(() => {
                 </InputGroup>
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
+            <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
