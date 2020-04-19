@@ -16,7 +16,7 @@ const loaderCss = css `
     display: block;
     position: absolute;
     top: 40%;
-    left: 25%;
+    left: 35%;
 `;
 
 export default function Results() {
@@ -83,7 +83,7 @@ const endCurrentGame = () => {
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
                         : <ClimbingBoxLoader css={loaderCss} size={25} color={"#c525cd"} loading={loading} />}
-                        {loading && <p style={{zIndex: 9999, position: "absolute", top: 500, color: "white", left: 90, fontFamily: "Cursive", fontSize: 20, fontWeight: 700}}>Fetching result data...</p>}
+                        {loading && <p style={{zIndex: 9999, position: "absolute", top: 500, color: "white", left: 100, fontFamily: "Cursive", fontSize: 20, fontWeight: 700}}>Fetching result data...</p>}
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
                         : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
