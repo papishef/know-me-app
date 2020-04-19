@@ -78,7 +78,7 @@ useEffect(() => {
         socket.on("message", (message) => {
             setMessages([...messages, message]);snd.play();
         });
-        if (messages.length > 7) return window.location.reload();
+        if (messages.length > 5) return window.location.reload();
     }, [messages]);
 
     useEffect(() => {
