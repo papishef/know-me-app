@@ -319,7 +319,7 @@ app.get("/questions", (req, res) => {
 });
 
 
-/////////SEND CHAT History//////////
+/////////SEND MINI CHAT History//////////
 app.get("/chat/:roomID", (req, res) => {
 
   Chat.find({
@@ -329,6 +329,23 @@ app.get("/chat/:roomID", (req, res) => {
       const messagesInHistory = messagesHistory.slice(messagesHistory.length - 3, messagesHistory.length);
       res.json({
         messagesInHistory
+      });
+    } else if (error) {
+      console.log(error);
+    }
+  });
+
+});
+
+/////////SEND FULL CHAT History//////////
+app.get("/history/:roomID", (req, res) => {
+
+  Chat.find({
+    room: _.lowerCase(req.params.roomID.trim())
+  }, (error, foundHistory) => {
+    if (foundHistory) {
+      res.json({
+        foundHistory
       });
     } else if (error) {
       console.log(error);
