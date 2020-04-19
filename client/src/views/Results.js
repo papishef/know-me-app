@@ -15,8 +15,8 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 const loaderCss = css `
     display: block;
     position: absolute;
-    top: 20%;
-    left: 20%;
+    top: 40%;
+    left: 15%;
 `;
 
 export default function Results() {
