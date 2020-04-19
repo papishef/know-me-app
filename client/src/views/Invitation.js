@@ -18,7 +18,7 @@ export default function Invitation() {
             <div style={{maxWidth: '80vw', margin: 'auto'}}>  
                 <span className='p-4'>  
                     <Button style={{background: 'white'}} block>
-                        <NavLink className='text-dark' href="https://wa.me/?text=https://5e949b440db3ca000772e591--playroomlive.netlify.com/" target='blank'>
+                        <NavLink className='text-dark' href="https://wa.me/?text=https://www.playroom.live" target='blank'>
                             <img className='social-icon' src={Whatsapp} alt='#' />
                             Whatsapp
                         </NavLink>
@@ -26,7 +26,7 @@ export default function Invitation() {
                 </span>
                 <span className='p-4'>
                     <Button className='bg-primary' block>
-                        <NavLink className='text-light' href="http://m.me/mybot?ref=https://5e949b440db3ca000772e591--playroomlive.netlify.com/"  target='blank'>
+                        <NavLink className='text-light' href="http://m.me/mybot?ref=https://www.playroom.live"  target='blank'>
                             <img className='social-icon' src={Facebook} alt='#' />
                             Facebook
                         </NavLink>
@@ -34,7 +34,7 @@ export default function Invitation() {
                 </span>
                 <span className='p-4'>
                     <Button style={{background: 'transparent', border: 'solid 2px pink'}} block>
-                        <NavLink className='text-light' href="http://instagram.com/" target='blank'>
+                        <NavLink className='text-light' href="http://instagram.com/?ref=https://www.playroom.live" target='blank'>
                             <img className='social-icon' src={Instagram} alt='#' />
                             Instagram
                         </NavLink>

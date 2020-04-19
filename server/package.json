@@ -1,7 +1,7 @@
 {
   "name": "know-me-app",
   "version": "1.0.0",
-  "proxy": "https://playroomlive.netlify.app",
+  "proxy": "https://www.playroom.live",
   "description": "Get to know a new friend of the opposite sex better (18+)",
   "main": "app.js",
   "scripts": {

@@ -30,14 +30,14 @@ const {
 const allQuestions = require("./questions");
 
 app.use(cors());
-app.options("https://playroomlive.netlify.app", cors());
+app.options("https://www.playroom.live", cors());
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
     return res.status(200).json({});
   }
-  res.header("Access-Control-Allow-Origin", "https://playroomlive.netlify.app");
+  res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
   res.header('Access-Control-Allow-Credentials', true);
   res.header(
     "Access-Control-Allow-Headers",

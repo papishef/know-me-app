@@ -11,7 +11,7 @@ import MyInput from './viewcomponents/Input';
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import UIfx from 'uifx';
-import SendSound from '../assets/send.mp3';
+import SendSound from '../assets/clearly.mp3';
 const snd = new UIfx(SendSound);
 
 
@@ -146,8 +146,6 @@ useEffect(() => {
         
     };
 
-
-
     
 /////////////Return page/////////////
     return (
@@ -165,7 +163,7 @@ useEffect(() => {
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
             <PacmanLoader css={loaderCss} size={100} color={"#c525cd"} loading={loading} />
-            {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 20, fontWeight: 700}}>eating up your chats... privacy first</p>}
+            {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>eating up your chats... privacy first</p>}
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
