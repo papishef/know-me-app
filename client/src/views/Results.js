@@ -9,7 +9,7 @@ import Love from '../assets/smiley.png';
 import Casual from '../assets/social.png';
 import queryString from 'query-string';
 import { css } from "@emotion/core";
-import PacmanLoader from "react-spinners/RingLoader";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 ///css rules from emotion/core for ringloader
 const loaderCss = css `
