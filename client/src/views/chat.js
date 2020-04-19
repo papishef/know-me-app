@@ -9,19 +9,20 @@ import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
 import { css } from "@emotion/core";
-import RingLoader from "react-spinners/RingLoader";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import UIfx from 'uifx';
 import SendSound from '../assets/send.mp3';
 const snd = new UIfx(SendSound);
 
 
 let socket;
+
 ///css rules from emotion/core for ringloader
 const loaderCss = css `
     display: block;
     position: absolute;
-    top: 20%;
-    left: 20%;
+    top: 40%;
+    left: 15%;
 `;
 
 
@@ -32,7 +33,6 @@ const Chat = () => {
     // // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
-    // const [gender, setGender] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [question, setQuestion] = useState([]);
@@ -40,17 +40,30 @@ const Chat = () => {
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
     const [loading, setLoading] = useState(false);
-    // const [questions, setQuestions] = useState([]);
  
     
     const endPoint  = 'http://localhost:4000';
+
+/////////////////////////////////////////////////
+//question state
+useEffect(() => {
+    axios.get(`http://localhost:4000/questions`)
+    .then(res => {
+      const data = res.data.allQuestions;
+      setQuestion(data);
+    })
+    .catch(error => {
+      console.log(error.response.data);
+  });
+
+  },[]);
+
 ///////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const {nickname, roomID} = queryString.parse(location.search);
  
         setNickname(nickname);
         setRoomID(roomID);
-        console.log(nickname, roomID);
 
         socket = io(endPoint);
 
@@ -66,7 +79,7 @@ const Chat = () => {
             // socket.emit("disconnect");
             setLoading(false);
             // socket.off();
-        };
+        }
     }, [endPoint, location.search]);
 
 
@@ -75,7 +88,7 @@ const Chat = () => {
         socket.on("message", (message) => {
             setMessages([...messages, message]);snd.play();
         });
-        if (messages.length > 6) {
+        if (messages.length > 5) {
             setLoading(true);
             return window.location.reload(true);
         }
@@ -83,41 +96,26 @@ const Chat = () => {
 
     useEffect(() => {
         socket.on("quest", (quest) => {
-            setMessages([...messages, quest]);
+            setMessages([...messages, quest]);snd.play();
         });
     }, [messages]);
     
-/////////////////////////////////////////////////
-//question state
-useEffect(() => {
-    axios.get(`http://localhost:4000/questions`)
-    .then(res => {
-      const data = res.data.allQuestions;
-
-      setQuestion(data);
-
-    })
-    .catch(error => {
-      console.log(error.response);
-  });
-
-  },[]);
 
 
-useEffect(() => {
+  useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
     axios.get(`http://localhost:4000/chat/${roomID}`)
     .then(response => {
-        console.log(response.data.messagesInHistory);
         setMessageHistory(response.data.messagesInHistory);
     })
     .catch(error => {
-        console.log(error.response);
+        console.log(error.response.data);
     });
 }, []);
+
 
 
 //Sending Question to the server
@@ -135,14 +133,13 @@ useEffect(() => {
     if(questionCategory) {
         socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
     }
-    console.log(questionCategory);
 }, [questionCategory]);
 
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
     const sendMessage = (e) => {
         e.preventDefault();
-        //console.log(message)
+ 
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
@@ -167,7 +164,8 @@ useEffect(() => {
                 </InputGroup>
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
-            <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />
+            <PacmanLoader css={loaderCss} size={100} color={"#c525cd"} loading={loading} />
+            {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 20, fontWeight: 700}}>eating up your chats... privacy first</p>}
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
