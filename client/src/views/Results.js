@@ -9,7 +9,15 @@ import Love from '../assets/smiley.png';
 import Casual from '../assets/social.png';
 import queryString from 'query-string';
 import { css } from "@emotion/core";
-import RingLoader from "react-spinners/RingLoader";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+
+///css rules from emotion/core for ringloader
+const loaderCss = css `
+    display: block;
+    position: absolute;
+    top: 40%;
+    left: 35%;
+`;
 
 export default function Results() {
 
@@ -20,17 +28,8 @@ export default function Results() {
     const [roomID, setRoomID] = useState("");
     const [loading, setLoading] = useState(true);
 
-    ///css rules from emotion/core for ringloader
-    const loaderCss = css `
-      display: block;
-      position: absolute;
-      top: 20%;
-      left: 20%;
-    `;
-
   //question state
 useEffect(() => {
-
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
@@ -83,11 +82,11 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
-                        : <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
-                        
-                        {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt?</p>
-                        : resultData === 'sexual' ? <p className='text-light text-center pt-3'>Don't fuck this up!!!</p>
-                        : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you</p> 
+                        : <ClimbingBoxLoader css={loaderCss} size={25} color={"#c525cd"} loading={loading} />}
+                        {loading && <p className= "text-center ml-3" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 20, fontWeight: 700}}>Fetching result data... Please wait</p>}
+                        {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
+                        : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
+                        : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
                         : null}
 
                     </div>
