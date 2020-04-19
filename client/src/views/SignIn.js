@@ -70,7 +70,7 @@ const Bounce = styled.div`animation: 3s ${keyframes `${bounce}`} infinite`;
                             <Input 
                             color='light'
                             className='form-input' 
-                            name='roomID' placeholder="Invitation ID"  
+                            name='roomID' placeholder="New Room/Invitation ID"  
                             type="string"  onChange={handleChange} />
                         </InputGroup>
                         <br />

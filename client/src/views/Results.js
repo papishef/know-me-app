@@ -9,7 +9,7 @@ import Love from '../assets/smiley.png';
 import Casual from '../assets/social.png';
 import queryString from 'query-string';
 import { css } from "@emotion/core";
-import RingLoader from "react-spinners/RingLoader";
+import PacmanLoader from "react-spinners/RingLoader";
 
 ///css rules from emotion/core for ringloader
 const loaderCss = css `
@@ -82,7 +82,7 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
-                        : <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
+                        : <PacmanLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />}
                         
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>

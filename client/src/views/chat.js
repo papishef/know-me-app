@@ -9,7 +9,7 @@ import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
 import { css } from "@emotion/core";
-import RingLoader from "react-spinners/RingLoader";
+import PacmanLoader from "react-spinners/RingLoader";
 import UIfx from 'uifx';
 import SendSound from '../assets/send.mp3';
 const snd = new UIfx(SendSound);
@@ -164,7 +164,8 @@ useEffect(() => {
                 </InputGroup>
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
-            <RingLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />
+            <PacmanLoader css={loaderCss} size={250} color={"#c525cd"} loading={loading} />
+            {loading && <p style={{position: "absolute", top: 300, textAlign: "justify"}}>eating up you chats... privacy first</p>}
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
