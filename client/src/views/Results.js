@@ -70,12 +70,12 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light font-weight-bold text-center pt-3'>PARTY BUDDY</p>
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
-                        : null}
+                        : <p>Result Data Loading...</p>}
                         
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
                         : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
-                        : null}
+                        : <p>Result Data Loading...</p>}
 
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
