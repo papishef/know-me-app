@@ -86,9 +86,9 @@ useEffect(() => {
              setMessages([...messages, message]);snd.play();
      });
      if (messages.length > 7) {
-         setLoading(true);
-         setMessages({messages: []});
-         setLoading(false);
+        //  setLoading(true);
+         setMessages(messages.length = 0);
+        //  setLoading(false);
         // return window.location.reload(true);
     }
 }, [messages]);
