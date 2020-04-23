@@ -86,14 +86,12 @@ useEffect(() => {
 /////////////////////////////////////////////////
     useEffect(() => {
         socket.on("message", (message) => {
-            if (messages.length > 7) {
-                 setLoading(true);
-                return window.location.reload(true);
-            } else {
                 setMessages([...messages, message]);snd.play();
-            }
         });
-
+        if (messages.length > 7) {
+            setLoading(true);
+           return window.location.reload(true);
+       }
     }, [messages]);
 
     useEffect(() => {
