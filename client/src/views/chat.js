@@ -90,7 +90,7 @@ useEffect(() => {
         });
         if (messages.length > 5) {
             // setLoading(true);
-            setMessages([]);
+            setMessages(lastMessage => [...lastMessage]);
             // return window.location.reload(true);
             axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
             .then(response => {
@@ -112,7 +112,7 @@ useEffect(() => {
 
   useEffect(() => {
 
-    const {nickname, roomID} = queryString.parse(location.search);
+    const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
