@@ -90,6 +90,13 @@ useEffect(() => {
          setMessages(messages.length = 0);
         //  setLoading(false);
         // return window.location.reload(true);
+        axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
+        .then(response => {
+            setMessageHistory(response.data.messagesInHistory);
+        })
+        .catch(error => {
+            console.log(error.response.data);
+        });
     }
 }, [messages]);
 
