@@ -61,6 +61,7 @@ useEffect(() => {
 ///////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const {nickname, roomID} = queryString.parse(location.search);
+        console.log(location);
  
         setNickname(nickname);
         setRoomID(roomID);
