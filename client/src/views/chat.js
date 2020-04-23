@@ -89,8 +89,16 @@ useEffect(() => {
             setMessages([...messages, message]);snd.play();
         });
         if (messages.length > 5) {
-            setLoading(true);
-            return window.location.reload(true);
+            // setLoading(true);
+            setMessages([]);
+            // return window.location.reload(true);
+            axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
+            .then(response => {
+                setMessageHistory(response.data.messagesInHistory);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            });
         }
     }, [messages]);
 
@@ -138,11 +146,11 @@ useEffect(() => {
 
     //handleSubmit and sendMessage conflicted so it's only sendMesage now
     const sendMessage = (e) => {
-        e.preventDefault();
  
         if(message) {
             socket.emit("sendMessage", message, roomID, () => setMessage(""));
         }
+        e.preventDefault();
         
     };
 
