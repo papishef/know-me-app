@@ -30,25 +30,22 @@ const {
 const allQuestions = require("./questions");
 
 app.use(cors());
-app.options("https://www.playroom.live", cors());
 
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
+    return res.status(200).json({});
+  }
+  res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
-// app.use((req, res, next) => {
-//   if (req.method === "OPTIONS") {
-//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
-//     return res.status(200).json({});
-//   }
-//   res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
-//   res.header('Access-Control-Allow-Credentials', true);
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//   );
-//   next();
-// });
-
-
-
+app.options("*", cors());
 
 
 app.use(bodyParser.json());
@@ -82,6 +79,9 @@ mongoose.connect("mongodb+srv://admin-sheriff:Surprise1%40@kyiakyiadigital-c6jba
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true
+})
+.catch((error) => {
+  console.log(error);
 });
 
 
@@ -326,7 +326,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length - 1);
+      const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
       res.json({
         messagesInHistory
       });
@@ -338,7 +338,7 @@ app.get("/chat/:roomID", (req, res) => {
 });
 
 /////////////delete room chat history//////
-app.delete("/delete/:roomID", (req, res) => {
+app.delete("/delete/:roomID", cors(), (req, res) => {
   ////delete messages after disconnect
   Chat.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
@@ -391,7 +391,7 @@ app.get("/results/:roomID", (req, res) => {
 
 
 /////////////delete room question history//////
-app.delete("/deleteQuestHistory/:roomID", (req, res) => {
+app.delete("/deleteQuestHistory/:roomID", cors(), (req, res) => {
 
   QuestionAsked.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
