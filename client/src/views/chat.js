@@ -56,54 +56,50 @@ useEffect(() => {
       console.log(error.response.data);
   });
 
-  },[]);
+},[]);
 
 ///////////////////////////////////////////////////////////////////////
-    useEffect(() => {
-        const {nickname, roomID} = queryString.parse(location.search);
-        console.log(location);
+useEffect(() => {
+    const {nickname, roomID} = queryString.parse(location.search);
+    console.log(location);
  
-        setNickname(nickname);
-        setRoomID(roomID);
-
-        socket = io(endPoint);
-
-        socket.emit("join", {nickname, roomID}, (error) => {
-            if(error) {
-                alert(error.response);
-            }
-        });
-
-        
-    
-        return () => {
-            // socket.emit("disconnect");
-            setLoading(false);
-            // socket.off();
+    setNickname(nickname);
+    setRoomID(roomID)   
+    socket = io(endPoint)   
+    socket.emit("join", {nickname, roomID}, (error) => {
+        if(error) {
+            alert(error.response);
         }
-    }, [endPoint, location.search]);
+    });  
+
+    return () => {
+        // socket.emit("disconnect");
+        setLoading(false);
+        // socket.off();
+    }
+}, [endPoint, location.search]);
 
 
 /////////////////////////////////////////////////
-    useEffect(() => {
-        socket.on("message", (message) => {
-                setMessages([...messages, message]);snd.play();
-        });
-        if (messages.length > 7) {
-            setLoading(true);
-           return window.location.reload(true);
-       }
-    }, [messages]);
+useEffect(() => {
+     socket.on("message", (message) => {
+             setMessages([...messages, message]);snd.play();
+     });
+     if (messages.length > 7) {
+         setLoading(true);
+        return window.location.reload(true);
+    }
+}, [messages]);
 
-    useEffect(() => {
-        socket.on("quest", (quest) => {
-            setMessages([...messages, quest]);snd.play();
-        });
-    }, [messages]);
+useEffect(() => {
+    socket.on("quest", (quest) => {
+        setMessages([...messages, quest]);snd.play();
+    });
+}, [messages]);
     
 
 
-  useEffect(() => {
+useEffect(() => {
 
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
@@ -137,15 +133,15 @@ useEffect(() => {
 }, [questionCategory]);
 
 
-    //handleSubmit and sendMessage conflicted so it's only sendMesage now
-    const sendMessage = (e) => {
- 
-        if(message) {
-            socket.emit("sendMessage", message, roomID, () => setMessage(""));
-        }
-        e.preventDefault();
-        
-    };
+//handleSubmit and sendMessage conflicted so it's only sendMesage now
+const sendMessage = (e) => {
+
+    if(message) {
+        socket.emit("sendMessage", message, roomID, () => setMessage(""));
+    }
+    e.preventDefault();
+    
+};
 
     
 /////////////Return page/////////////
