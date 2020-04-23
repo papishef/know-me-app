@@ -33,19 +33,19 @@ app.use(cors());
 app.options("https://www.playroom.live", cors());
 
 
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
-    return res.status(200).json({});
-  }
-  res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   if (req.method === "OPTIONS") {
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
+//     return res.status(200).json({});
+//   }
+//   res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
 
 
 
@@ -326,7 +326,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length);
+      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length - 1);
       res.json({
         messagesInHistory
       });
