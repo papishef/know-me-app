@@ -326,7 +326,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 3, messagesHistory.length);
+      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length);
       res.json({
         messagesInHistory
       });
