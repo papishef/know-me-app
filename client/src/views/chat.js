@@ -87,8 +87,9 @@ useEffect(() => {
     useEffect(() => {
         socket.on("message", (message) => {
             if (messages.length > 7) {
-                setMessages([...messages.slice(messages.length-3, messages.length), message]);snd.play();
-                setLoading(true);
+                setMessageHistory([...messages]);snd.play();
+                setMessages([message]);
+                // setLoading(true);
                 // return window.location.reload(true);
             } else {
                 setMessages([...messages, message]);snd.play();
