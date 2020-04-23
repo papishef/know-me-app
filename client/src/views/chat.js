@@ -87,7 +87,9 @@ useEffect(() => {
      });
      if (messages.length > 7) {
          setLoading(true);
-        return window.location.reload(true);
+         setMessages({messages: []});
+         setLoading(false);
+        // return window.location.reload(true);
     }
 }, [messages]);
 
