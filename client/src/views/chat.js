@@ -90,7 +90,8 @@ useEffect(() => {
         });
         if (messages.length > 5) {
             // setLoading(true);
-            setMessages(lastMessage => [...lastMessage]);
+            messages.length = 0;
+            setMessages(lastMessage => lastMessage.slice(lastMessage.length-1, lastMessage.length));
             // return window.location.reload(true);
             axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
             .then(response => {
