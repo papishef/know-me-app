@@ -87,7 +87,7 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-         setMessages(prevMessages => [messages[prevMessages.length]]);
+         setMessages([message]);
 
         axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
