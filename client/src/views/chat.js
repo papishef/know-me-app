@@ -87,14 +87,14 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-         setMessages(messages.length = 1);
+         setMessages(messages.length = 0);
 
         axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
         })
         .catch(error => {
-            console.log(error.response.data);
+            console.log(error.response);
         });
     }
 }, [messages]);
