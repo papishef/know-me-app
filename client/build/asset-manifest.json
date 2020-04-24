@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.40245ea5.chunk.css",
+    "main.js": "/static/js/main.cfabbc2a.chunk.js",
+    "main.js.map": "/static/js/main.cfabbc2a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.511660eb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.511660eb.js.map",
+    "static/js/2.c9fd989d.chunk.js": "/static/js/2.c9fd989d.chunk.js",
+    "static/js/2.c9fd989d.chunk.js.map": "/static/js/2.c9fd989d.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e679212719f8534e7c512bf9794308df.js": "/precache-manifest.e679212719f8534e7c512bf9794308df.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.40245ea5.chunk.css.map": "/static/css/main.40245ea5.chunk.css.map",
+    "static/js/2.c9fd989d.chunk.js.LICENSE.txt": "/static/js/2.c9fd989d.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/bg-mob.e5e01885.png",
+    "static/media/clearly.mp3": "/static/media/clearly.a431eaad.mp3",
+    "static/media/facebook.svg": "/static/media/facebook.323ae6e1.svg",
+    "static/media/instagram.svg": "/static/media/instagram.15bc5470.svg",
+    "static/media/sex2.png": "/static/media/sex2.5ecf0de7.png",
+    "static/media/smiley.png": "/static/media/smiley.63990a3f.png",
+    "static/media/social.png": "/static/media/social.5ecf953f.png",
+    "static/media/whatsapp.svg": "/static/media/whatsapp.e254ed76.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.511660eb.js",
+    "static/js/2.c9fd989d.chunk.js",
+    "static/css/main.40245ea5.chunk.css",
+    "static/js/main.cfabbc2a.chunk.js"
+  ]
+}

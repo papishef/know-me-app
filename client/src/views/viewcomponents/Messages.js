@@ -9,7 +9,7 @@ import OldMessage from './OldMessage';
 
 
 
-const Messages = ({ messages, nickname, messageHistory, sender}) => {
+const Messages = ({ messages, nickname, messageHistory}) => {
 
 
 
@@ -17,7 +17,7 @@ const Messages = ({ messages, nickname, messageHistory, sender}) => {
 
     const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    };
   useEffect(scrollToBottom, [messages]);
 
     return (
@@ -28,7 +28,7 @@ const Messages = ({ messages, nickname, messageHistory, sender}) => {
              <hr style={{border: 'solid 1.5px #f5f5f5'}} />
            </div> */}
            <div> {messages && messages.map((message, i) => <div key={i}><Message message={message} nickname={nickname} /></div>)}</div>
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} className='pt-3 pb-0' />
         </div>
     )
 }

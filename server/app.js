@@ -30,6 +30,7 @@ const {
 const allQuestions = require("./questions");
 
 app.use(cors());
+app.options("*", cors());
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
@@ -45,7 +46,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.options("*", cors());
 
 
 app.use(bodyParser.json());
@@ -338,7 +338,7 @@ app.get("/chat/:roomID", (req, res) => {
 });
 
 /////////////delete room chat history//////
-app.delete("/delete/:roomID", cors(), (req, res) => {
+app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect
   Chat.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
@@ -391,7 +391,7 @@ app.get("/results/:roomID", (req, res) => {
 
 
 /////////////delete room question history//////
-app.delete("/deleteQuestHistory/:roomID", cors(), (req, res) => {
+app.delete("/deleteQuestHistory/:roomID", (req, res) => {
 
   QuestionAsked.deleteMany({
     room: _.lowerCase(req.params.roomID.trim())
