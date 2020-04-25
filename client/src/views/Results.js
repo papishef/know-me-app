@@ -87,7 +87,8 @@ const endCurrentGame = () => {
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
                         : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
-                        : <div>No result data found</div>}
+                        : resultData === '' || null || [] ? <div>No result data found</div>
+                        : null}
 
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

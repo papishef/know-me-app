@@ -87,25 +87,21 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-        setMessages(messages.length = null);  
+        setMessages(messages.length = 0);
+        axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
+        .then(response => {
+            setMessageHistory(response.data.messagesInHistory);
+        })
+        .catch(error => {
+            console.log(error.response);
+        }); 
     }
 }, [messages, roomID, location.search]);
 
-const emptyMessages = () => {
-    if (messages.length === null || 0) return true;
-};
+// const emptyMessages = () => {
+//     if (messages.length === null || 0) return true;
+// };
 
-useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
-    axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
-    .then(response => {
-        setMessageHistory(response.data.messagesInHistory);
-    })
-    .catch(error => {
-        console.log(error.response);
-    });
-}, [emptyMessages, roomID]);
 
 useEffect(() => {
     socket.on("quest", (quest) => {
@@ -127,7 +123,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, [location.search]);
+}, []);
 
 useEffect(() => {
     console.log(messageHistory);
