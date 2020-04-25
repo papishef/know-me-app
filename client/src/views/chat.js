@@ -64,8 +64,8 @@ useEffect(() => {
     console.log(location);
  
     setNickname(nickname);
-    setRoomID(roomID)   
-    socket = io(endPoint)   
+    setRoomID(roomID);   
+    socket = io(endPoint);   
     socket.emit("join", {nickname, roomID}, (error) => {
         if(error) {
             alert(error.response);
@@ -73,10 +73,9 @@ useEffect(() => {
     });  
 
     return () => {
-        // socket.emit("disconnect");
-        setLoading(false);
+        socket.emit("disconnect");
         // socket.off();
-    }
+    };
 }, [endPoint, location.search]);
 
 
@@ -87,8 +86,6 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-         setMessages(messages.length = 0);
-
         axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
@@ -96,6 +93,7 @@ useEffect(() => {
         .catch(error => {
             console.log(error.response);
         });
+        setMessages(messages.length = 0);
     }
 }, [messages]);
 
@@ -143,12 +141,10 @@ useEffect(() => {
 
 //handleSubmit and sendMessage conflicted so it's only sendMesage now
 const sendMessage = (e) => {
-
+    e.preventDefault();
     if(message) {
         socket.emit("sendMessage", message, roomID, () => setMessage(""));
     }
-    e.preventDefault();
-    
 };
 
     

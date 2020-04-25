@@ -32,7 +32,7 @@ const allQuestions = require("./questions");
 app.use(cors());
 app.options("*", cors());
 
-app.use((req, res, next) => {
+app.options("*", (req, res, next) => {
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
     return res.status(200).json({});
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, application/json"
   );
   next();
 });
@@ -214,7 +214,10 @@ io.on('connection', function (socket) {
       sender: user.nickname,
       room: roomID
     });
-    messageHistory.save();
+    messageHistory.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
     //send message to room users
     io.to(user.roomID).emit("message", {
       user: user.nickname,
@@ -231,7 +234,10 @@ io.on('connection', function (socket) {
       sender: userQuest.nickname,
       room: roomID
     });
-    questionHistory.save();
+    questionHistory.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
     //send question to room users
     io.to(userQuest.roomID).emit("quest", {
       user: userQuest.nickname,
@@ -250,7 +256,10 @@ io.on('connection', function (socket) {
       sender: userQuestCategory.nickname,
       room: roomID
     });
-    questForCalc.save();
+    questForCalc.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
   });
 
 
@@ -289,7 +298,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.sendStatus(200);
+          res.statusCode(200);
         }
       });
 
@@ -303,7 +312,7 @@ app.post("/signIn", (req, res) => {
         if (err) {
           res.send(err);
         }
-        res.sendStatus(200);
+        res.statusCode(200);
       });
     } else {
       return (err);
@@ -326,7 +335,7 @@ app.get("/chat/:roomID", (req, res) => {
     room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length);
+      const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
       res.json({
         messagesInHistory
       });
