@@ -22,7 +22,7 @@ const Messages = ({ messages, nickname, messageHistory}) => {
 
     return (
         <div className='message-container'>
-          <div>{messageHistory && messageHistory.map((messageHistory, i) => <div key={i}><OldMessage messageH={messageHistory.message} sender={messageHistory.sender} nickname={nickname} /></div>)}</div>  
+          <div>{messageHistory.map((messageHistory, i) => <div key={i}><OldMessage messageH={messageHistory.message} sender={messageHistory.sender} nickname={nickname} /></div>)}</div>  
            {/* <div>
              <p style={{fontSize: '0.7rem', color: '#f5f5f5', fontWeight: 'bold', textAlign: 'center'}}>older messages</p>
              <hr style={{border: 'solid 1.5px #f5f5f5'}} />

@@ -61,7 +61,6 @@ useEffect(() => {
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
-    console.log(location);
  
     setNickname(nickname);
     setRoomID(roomID);   
@@ -81,21 +80,26 @@ useEffect(() => {
 
 /////////////////////////////////////////////////
 useEffect(() => {
+    const {roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
      socket.on("message", (message) => {
              setMessages([...messages, message]);snd.play();
      });
      if (messages.length > 3) {
         //  setLoading(true);
-        axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
+        messages.length = null
+        .then(() => {
+            axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`);
+        })
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
         })
         .catch(error => {
             console.log(error.response);
         });
-        setMessages(messages.length = 0);
+        
     }
-}, [messages]);
+}, [messages, roomID, location.search]);
 
 useEffect(() => {
     socket.on("quest", (quest) => {
@@ -117,7 +121,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, []);
+}, [location.search]);
 
 
 
@@ -128,7 +132,7 @@ useEffect(() => {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
 
-}, [quest]);
+}, [quest, roomID]);
 
 // save question categories for results calculation
 useEffect(() => {
@@ -136,7 +140,7 @@ useEffect(() => {
     if(questionCategory) {
         socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
     }
-}, [questionCategory]);
+}, [questionCategory, roomID]);
 
 
 //handleSubmit and sendMessage conflicted so it's only sendMesage now
