@@ -87,7 +87,7 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-        setMessages(messages.length = 0);
+        messages.length = 0;
         axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
@@ -96,12 +96,7 @@ useEffect(() => {
             console.log(error.response);
         }); 
     }
-}, [messages, roomID, location.search]);
-
-// const emptyMessages = () => {
-//     if (messages.length === null || 0) return true;
-// };
-
+}, [messages]);
 
 useEffect(() => {
     socket.on("quest", (quest) => {
@@ -109,7 +104,6 @@ useEffect(() => {
     });
 }, [messages]);
     
-
 
 useEffect(() => {
 
@@ -123,7 +117,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response.data);
     });
-}, []);
+});
 
 useEffect(() => {
     console.log(messageHistory);
