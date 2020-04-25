@@ -90,7 +90,7 @@ useEffect(() => {
         messages.length = null;
             axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
-            setMessageHistory(response.data.messagesInHistory);
+            setMessages(response.data.messagesInHistory);
         })
         .catch(error => {
             console.log(error.response);
