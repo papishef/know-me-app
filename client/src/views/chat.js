@@ -87,10 +87,8 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-        messages.length = null
-        .then(() => {
-            axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`);
-        })
+        messages.length = null;
+            axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
         })
