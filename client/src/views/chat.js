@@ -80,7 +80,7 @@ useEffect(() => {
 
 /////////////////////////////////////////////////
 useEffect(() => {
-    const {roomID} = queryString.parse(location.search);
+    const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
      socket.on("message", (message) => {
              setMessages([...messages, message]);snd.play();
@@ -96,6 +96,8 @@ const emptyMessages = () => {
 };
 
 useEffect(() => {
+    const {nickname, roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
     .then(response => {
         setMessageHistory(response.data.messagesInHistory);
@@ -115,7 +117,7 @@ useEffect(() => {
 
 useEffect(() => {
 
-    const {roomID} = queryString.parse(location.search);
+    const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
