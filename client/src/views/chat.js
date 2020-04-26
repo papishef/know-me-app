@@ -108,7 +108,7 @@ useEffect(() => {
     setRoomID(roomID);
 
     if (messages.length > 2) {
-        messages.length = 0;
+        messages.length = 1;
         const fetchHistory = async () => {
             setLoading(true);
             try {
