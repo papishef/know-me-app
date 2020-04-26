@@ -108,11 +108,8 @@ useEffect(() => {
     setRoomID(roomID);
 
     if (messages.length > 3) {
-        const remainingMessage = () => {
-           return messages.slice(messages.length);
-        };
-
-        setMessages(remainingMessage);
+ 
+        setMessages(messages[messages.length - 1]);
         const fetchHistory = async () => {
             // setLoading(true);
             try {
