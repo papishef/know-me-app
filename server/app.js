@@ -298,7 +298,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.statusCode(200);
+          res.sendStatus(200);
         }
       });
 
@@ -312,7 +312,7 @@ app.post("/signIn", (req, res) => {
         if (err) {
           res.send(err);
         }
-        res.statusCode(200);
+        res.sendStatus(200);
       });
     } else {
       return (err);
