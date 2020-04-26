@@ -1,4 +1,5 @@
 //jshint esversion: 6
+//jshint esversion: 8
 import React, {useState, useEffect} from 'react';
 import {  useLocation } from 'react-router-dom';
 import { InputGroup } from 'reactstrap';
@@ -96,30 +97,37 @@ useEffect(() => {
 
 /////////////////////////////////////////////////
 useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
+
      socket.on("message", (message) => {
              setMessages([...messages, message]);snd.play();
      });
-    //  if (messages.length > 3) {
-        //  setLoading(true);
-            messages.length = 0;
-
-        axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
-        .then(response => {
-            setMessageHistory(response.data.messagesInHistory);
-        })
-        .catch(error => {
-            console.log(error.response);
-        }); 
-    // }
 },[messages]);
 
 useEffect(() => {
-    socket.on("quest", (quest) => {
-        setMessages([...messages, quest]);
-    });
+    const {nickname, roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
+
+    if (messages.length > 2) {
+        messages.length = 0;
+        const fetchHistory = async () => {
+            setLoading(true);
+            try {
+                const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
+                setMessageHistory(result.data.messagesInHistory);
+            } catch (error) {
+                console.log(error);
+            }
+            setLoading(false);
+        };
+        fetchHistory();
+    }
 }, [messages]);
+
+useEffect(() => {
+    socket.on("quest", (quest) => {
+        setMessages(messages => [...messages, quest]);
+    });
+}, [quest]);
     
 
 
@@ -170,7 +178,7 @@ const sendMessage = (e) => {
             </div>
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
             <PacmanLoader css={loaderCss} size={100} color={"#c525cd"} loading={loading} />
-            {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>eating up your chats... privacy first</p>}
+            {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>Loading...</p>}
             <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
