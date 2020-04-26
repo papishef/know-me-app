@@ -107,18 +107,21 @@ useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
-    if (messages.length > 2) {
-        messages.length = 0;
-        setMessages(message);
+    if (messages.length > 3) {
+        const remainingMessage = () => {
+           return messages.slice(messages.length, messages.length + 1);
+        };
+
+        setMessages(remainingMessage);
         const fetchHistory = async () => {
-            setLoading(true);
+            // setLoading(true);
             try {
                 const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
                 setMessageHistory(result.data.messagesInHistory);
             } catch (error) {
                 console.log(error);
             }
-            setLoading(false);
+            // setLoading(false);
         };
         fetchHistory();
     }
