@@ -101,7 +101,7 @@ useEffect(() => {
      socket.on("message", (message) => {
              setMessages([...messages, message]);snd.play();
      });
-     if (messages.length > 3) {
+    //  if (messages.length > 3) {
         //  setLoading(true);
             messages.length = 0;
 
@@ -112,7 +112,7 @@ useEffect(() => {
         .catch(error => {
             console.log(error.response);
         }); 
-    }
+    // }
 },[messages]);
 
 useEffect(() => {
