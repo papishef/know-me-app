@@ -109,7 +109,7 @@ useEffect(() => {
 
     if (messages.length > 3) {
  
-        setMessages(messages.pop());
+        setMessages([messages.pop()]);
         const fetchHistory = async () => {
             // setLoading(true);
             try {
@@ -126,9 +126,9 @@ useEffect(() => {
 
 useEffect(() => {
     socket.on("quest", (quest) => {
-        setMessages(messages => [...messages, quest]);
+        setMessages([...messages, quest]);
     });
-}, [quest]);
+}, [messages]);
     
 
 
