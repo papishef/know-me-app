@@ -109,7 +109,7 @@ useEffect(() => {
 
     if (messages.length > 3) {
         const remainingMessage = () => {
-           return messages.slice(messages.length, messages.length + 1);
+           return messages.slice(messages.length);
         };
 
         setMessages(remainingMessage);
