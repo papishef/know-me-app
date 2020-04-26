@@ -109,7 +109,7 @@ useEffect(() => {
 
     if (messages.length > 3) {
  
-        setMessages(messages = messages[messages.length - 1]);
+        messages = messages[messages.length - 1];
         const fetchHistory = async () => {
             // setLoading(true);
             try {
