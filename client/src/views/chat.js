@@ -72,7 +72,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response);
     });
-},[location.search]);
+},[]);
 
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
@@ -103,10 +103,8 @@ useEffect(() => {
      });
      if (messages.length > 3) {
         //  setLoading(true);
-        socket.on("message", () => {
-            messages.length = 0;snd.play();
-        });
-        
+            messages.length = 0;
+
         axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
         .then(response => {
             setMessageHistory(response.data.messagesInHistory);
