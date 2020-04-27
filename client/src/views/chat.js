@@ -109,13 +109,12 @@ useEffect(() => {
    
     if (messages.length > 3) {
         let lastMessage = messages.pop();
-        // setMessages([lastMessage]);
-        messages.length = 0;
+        setMessages([lastMessage]);
         const fetchHistory = async () => {
             // setLoading(true);
             try {
                 const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
-                setMessages(result.data.messagesInHistory);
+                setMessageHistory(result.data.messagesInHistory);
             } catch (error) {
                 console.log(error);
             }
