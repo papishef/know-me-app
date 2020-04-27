@@ -2,14 +2,14 @@
 //jshint esversion: 6
 const allQuestions = [
    {
-    id: 1,
+    id: "1",
     q: "If a genie could grant your most important wish, what would it be?",
     category: "personal"
   },
   {
-    id: 2,
-    q: "What is your greatest fear?",
-    category: "personal"
+    id: "2",
+    q: "If you had to choose, would you be a dominatrix or a submissive?",
+    category: "sexual"
   },
   {
     id: "3",
@@ -19,7 +19,7 @@ const allQuestions = [
   {
     id: "4",
     q: "What do you do?",
-    category: "Professional"
+    category: "casual"
   },
   {
     id: "5",
@@ -34,7 +34,7 @@ const allQuestions = [
   {
     id: "7",
     q: "Have you ever smoked?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "8",
@@ -73,8 +73,8 @@ const allQuestions = [
   },
   {
     id: "15",
-    q: "Do you prefer romance novels to adventures?",
-    category: "casual"
+    q: "What’s your favorite part of a man’s body?",
+    category: "sexual"
   },
   {
     id: "16",
@@ -83,8 +83,8 @@ const allQuestions = [
   },
   {
     id: "17",
-    q: "When was the last time you cried?",
-    category: "personal"
+    q: "Have you ever had sex with two different people in one night?",
+    category: "sexual"
   },
   {
     id: "18",
@@ -104,7 +104,7 @@ const allQuestions = [
   {
     id: "21",
     q: "Are you an introvert or an extrovert?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "22",
@@ -134,7 +134,7 @@ const allQuestions = [
   {
     id: "27",
     q: "What is your most embarrassing moment?",
-    category: "social"
+    category: "casual"
   },
   {
     id: "28",
@@ -198,8 +198,8 @@ const allQuestions = [
   },
   {
     id: "40",
-    q: "What is your major weakness?",
-    category: "personal"
+    q: "What is your favourite spot to be kissed?",
+    category: "sexual"
   },
   {
     id: "41",
@@ -238,8 +238,8 @@ const allQuestions = [
   },
   {
     id: "48",
-    q: "What is your position on sex before marriage?",
-    category: "casual"
+    q: "What do you need to happen for your orgasm to be absolutely mind-blowing?",
+    category: "sexual"
   },
   {
     id: "49",
@@ -253,8 +253,8 @@ const allQuestions = [
   },
   {
     id: "51",
-    q: "Where is the weirdest place you have ever had sex?",
-    category: "casual"
+    q: "What’s the dirtiest thing you’ve ever sexted someone?",
+    category: "sexual"
   },
   {
     id: "52",
@@ -294,12 +294,12 @@ const allQuestions = [
   {
     id: "59",
     q: "Are you a virgin?",
-    category: "personal"
+    category: "sexual"
   },
   {
     id: "60",
     q: "Between attention, sex and money, what do you crave most from a guy?",
-    category: "casual"
+    category: "sexual"
   },
   {
     id: "61",
@@ -333,8 +333,8 @@ const allQuestions = [
   },
   {
     id: "67",
-    q: "Do you have a celebrity crush?",
-    category: "casual"
+    q: "What’s one thing that you hesitated to try during sex but ended up loving?",
+    category: "sexual"
   },
   {
     id: "68",
@@ -388,173 +388,213 @@ const allQuestions = [
   },
   {
     id: "78",
-    q: "Have you ever ever dated a person you never loved?",
-    category: "sexual"
-  },
-  {
-    id: "79",
-    q: "What is the most daring thing you have ever done?",
-    category: "casual"
-  },
-  {
-    id: "80",
-    q: "What is your favorite number?",
-    category: "casual"
-  },
-  {
-    id: "81",
     q: "Have you ever crushed on your friend’s boyfriend/girlfriend?",
     category: "sexual"
   },
   {
-    id: "82",
+    id: "79",
     q: "How long can you stay without having sex?",
     category: "personal"
   },
   {
-    id: "83",
+    id: "80",
     q: "What is that one thing you can’t live without?",
     category: "casual"
   },
   {
-    id: "84",
+    id: "81",
     q: "Can you stay in a room for a month with someone you love without sexually touching him/her?",
     category: "sexual"
   },
   {
-    id: "85",
+    id: "82",
     q: "If you were to live without sex or money for the rest of your life, which would you rather choose?",
     category: "casual"
   },
   {
-    id: "86",
+    id: "83",
     q: "Money, power, fame and sex, pick two.",
     category: "casual"
   },
   {
-    id: "87",
+    id: "84",
     q: "Would you date your friend’s ex?",
     category: "personal"
   },
   {
-    id: "88",
+    id: "85",
     q: "How old are you?",
     category: "casual"
   },
   {
-    id: "89",
-    q: "What is fulfillment for you?",
-    category: "personal"
+    id: "86",
+    q: "How did you learn to masturbate, and how old were you when you first succeeded?",
+    category: "sexual"
   },
   {
-    id: "90",
+    id: "87",
     q: "Can you initiate sex?",
     category: "personal"
   },
   {
-    id: "91",
+    id: "88",
     q: "What are your hobbies?",
     category: "casual"
   },
   {
-    id: "92",
+    id: "89",
     q: "What is your fondest memory?",
     category: "casual"
   },
   {
-    id: "93",
+    id: "90",
     q: "Do you watch porn?",
     category: "sexual"
   },
   {
-    id: "94",
-    q: "Have you ever sent your nude picture?",
-    category: "sexual"
+    id: "91",
+    q: "Are you more into beauty, or brains?",
+    category: "personal"
   },
   {
-    id: "95",
+    id: "92",
     q: "Are you dominant in bed?",
     category: "sexual"
   },
   {
-    id: "96",
+    id: "93",
     q: "What is your favourite food?",
     category: "casual"
   },
   {
-    id: "97",
+    id: "94",
     q: "What is your saddest moment?",
     category: "personal"
   },
   {
-    id: "98",
+    id: "95",
     q: "Do you like being explored sexually?",
     category: "sexual"
   },
   {
-    id: "99",
-    q: "What turns you on?",
-    category: "sexual"
+    id: "96",
+    q: "Where is the weirdest place you have ever had sex?",
+    category: "casual"
   },
   {
-    id: "100",
+    id: "97",
     q: "Are you a good kisser?",
     category: "sexual"
   },
   {
-    id: "101",
+    id: "98",
     q: "How many rounds of sex can you go?",
     category: "sexual"
   },
   {
-    id: "102",
-    q: "What is your favourite spot to be kissed?",
-    category: "sexual"
+    id: "99",
+    q: "Do you prefer romance novels to adventures?",
+    category: "casual"
   },
   {
-    id: "103",
+    id: "100",
     q: "Do you like PDA?",
     category: "sexual"
   },
   {
-    id: "104",
+    id: "101",
     q: "Have you ever masturbated?",
     category: "sexual"
   },
   {
-    id: "105",
-    q: "Has a stranger seen your boobs/dick mistakenly?",
-    category: "sexual"
+    id: "102",
+    q: "What wrong assumptions do people make about you",
+    category: "casual"
   },
   {
-    id: "106",
+    id: "103",
     q: "What is your sexual fantasy?",
     category: "sexual"
   },
   {
-    id: "107",
+    id: "104",
     q: "Have you ever done friends with benefits?",
     category: "casual"
   },
   {
-    id: "108",
+    id: "105",
     q: "If you could have sex with a celebrity, who would it be?",
     category: "sexual"
   },
   {
-    id: "109",
+    id: "106",
     q: "What are your special talents?",
     category: "casual"
   },
   {
-    id: "110",
+    id: "107",
     q: "Have you ever wished you could start life all over again?",
     category: "personal"
   },
   {
-    id: "111",
+    id: "108",
     q: "What is your birth date?",
     category: "casual"
+  },
+  {
+    id: "109",
+    q: "What does it feel like when you orgasm?",
+    category: "sexual"
+  },
+  {
+    id: "110",
+    q: "What is your position on sex before marriage?",
+    category: "casual"
+  },
+  {
+    id: "111",
+    q: "Do you have a celebrity crush?",
+    category: "casual"
+  },
+  {
+    id: "112",
+    q: "What is fulfillment for you?",
+    category: "personal"
+  },
+  {
+    id: "113",
+    q: "What types of props have you used during sex?",
+    category: "sexual"
+  },
+  {
+    id: "114",
+    q: "What is your greatest fear?",
+    category: "personal"
+  },
+  {
+    id: "115",
+    q: "What turns you on?",
+    category: "sexual"
+  },
+  {
+    id: "116",
+    q: "What is your major weakness?",
+    category: "personal"
+  },
+  {
+    id: "117",
+    q: "Have you ever sent your nude picture?",
+    category: "sexual"
+  },
+  {
+    id: "118",
+    q: "Has a stranger seen your boobs/dick mistakenly?",
+    category: "sexual"
+  },
+  {
+    id: "119",
+    q: "When was the last time you cried?",
+    category: "personal"
   },
 
 ];

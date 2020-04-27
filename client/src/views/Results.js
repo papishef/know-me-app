@@ -10,6 +10,7 @@ import Casual from '../assets/social.png';
 import queryString from 'query-string';
 import { css } from "@emotion/core";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+import io from 'socket.io-client';
 
 ///css rules from emotion/core for ringloader
 const loaderCss = css `
@@ -18,6 +19,8 @@ const loaderCss = css `
     top: 40%;
     left: 35%;
 `;
+
+let socket;
 
 export default function Results() {
 
@@ -48,6 +51,26 @@ useEffect(() => {
 
 },[location.search]);
 
+    //Delete all chats from room when session ends
+  useEffect(() => {
+    const {roomID} = queryString.parse(location.search);
+    setRoomID(roomID);
+    axios.delete(`http://localhost:4000/delete/${roomID}`)
+    .then((err, res) => {
+      if (err) throw err;
+      return res;
+    });
+  }, [location.search]);
+
+  //on final disconect
+  useEffect(() => {
+    socket = io("http://localhost:4000/");
+    return () => {
+        socket.emit("disconnect");
+        socket.off();
+    };
+  },[]);
+
   useEffect(() => {
     console.log(resultData);
   });
@@ -57,12 +80,10 @@ const endCurrentGame = () => {
     setPlayAgain(true);
 };
 
-    //Delete all question history from database
-    useEffect(() => {
-
-        axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
-    
-    }, [playAgain, roomID]);
+//Delete all question history from database
+useEffect(() => {
+    axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
+}, [playAgain, roomID]);
 
 
 
@@ -83,10 +104,11 @@ const endCurrentGame = () => {
                         : resultData === 'sexual' ? <p className='text-light font-weight-bold text-center pt-3'>SMASH</p>
                         : resultData === 'personal' ? <p className='text-light font-weight-bold text-center pt-3'>RELATIONSHIP</p>
                         : <ClimbingBoxLoader css={loaderCss} size={25} color={"#c525cd"} loading={loading} />}
-                        {loading && <p className= "text-center ml-3" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 20, fontWeight: 700}}>Fetching result data... Please wait</p>}
+                        {loading && <p className= "text-center ml-3" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>Fetching result data... Please wait</p>}
                         {resultData === 'casual' ? <p className='text-light text-center pt-3'>Can you roll a blunt? Cuz this bloke is definitely a friend to keep!</p>
                         : resultData === 'sexual' ? <p className='text-light text-center pt-3'>There is a lot of sexual energy between you two you know, and here at PlayRoom we call that a smash!!! 80 percent chance to get laid and 20 percent chance you fuck it up.</p>
                         : resultData === 'personal' ? <p className='text-light text-center pt-3'>Someone's crushing on you, something sweet might just brew up between you two... We will wait and see.</p>
+                        : resultData === null ? <div>No result data found</div>
                         : null}
 
                     </div>

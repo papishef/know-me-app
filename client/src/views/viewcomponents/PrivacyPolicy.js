@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
               <li>Be 18 years or older,</li>
               <li>Learn <Link to='/how-to-play' style={{color: "purple"}}><strong>How to play</strong></Link></li>
           </ul>
-          <p>We do not save messages history after you end a game session or use cookies for anything but user authentication to keep your chats private. <br />Happy playing...😎</p>
+          <p>We do not save messages history after you end a game session or use cookies for anything but user authentication to keep your chats private. <br />Happy playing...<span role="img"  aria-labelledby="cool">😎</span></p>
         </div>
     )
 }

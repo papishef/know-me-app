@@ -29,23 +29,22 @@ const {
 
 const allQuestions = require("./questions");
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-//   res.header('Access-Control-Allow-Credentials', true);
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//   );
-//   if (req.method === "OPTIONS") {
-//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
-//     return res.status(200).json({});
-//   }
-//   next();
-// });
-
 app.use(cors());
+app.options("*", cors());
 
-app.options('http://localhost:3000/"', cors());
+app.options("*", (req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT ,DELETE, PATCH");
+    return res.status(200).json({});
+  }
+  res.header("Access-Control-Allow-Origin", "https://www.playroom.live");
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, application/json"
+  );
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(
@@ -53,8 +52,6 @@ app.use(
     extended: true
   })
 );
-
-
 
 
 app.use(cookieParser());
@@ -75,11 +72,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Database Connection
-mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
+mongoose.connect("mongodb+srv://admin-sheriff:Surprise1%40@kyiakyiadigital-c6jba.mongodb.net/PlayRoomDB", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true
+})
+.catch((error) => {
+  console.log(error);
 });
 
 
@@ -145,7 +145,7 @@ chatSchema.index({
 const Chat = mongoose.model("Chat", chatSchema);
 
 
-/////DEFINITION OF CHAT HISTORY SCHEMA////////////////
+/////DEFINITION OF QUESTIONS HISTORY SCHEMA////////////////
 const questionsAskedSchema = new mongoose.Schema({
   category: {
     type: String
@@ -197,7 +197,7 @@ io.on('connection', function (socket) {
     //Admin message to existin user when a new user joins the room
     socket.broadcast.to(user.roomID).emit("message", {
       user: "PlayRoom",
-      text: `${user.nickname} has entered your Room, Break the ice by asking them a question`
+      text: `${user.nickname} has entered the Room, Break the ice by asking them a question`
     });
 
     socket.join(user.roomID);
@@ -206,37 +206,42 @@ io.on('connection', function (socket) {
   //Expecting a message to be sent 
   socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
-    //save questions asked to chat history
-    io.to(user.roomID).emit("message", {
-      user: user.nickname,
-      text: message
-    });
+    ///save message to history
     let messageHistory = new Chat({
       message: message,
       sender: user.nickname,
       room: roomID
     });
-    messageHistory.save();
+    messageHistory.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
+    //send message to room users
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
+      text: message
+    });
     callback();
   });
   //Expecting a question to be sent
   socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
-    //save questions asked to chat history
-    io.to(userQuest.roomID).emit("quest", {
-      user: userQuest.nickname,
-      text: quest
-    });
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
       sender: userQuest.nickname,
       room: roomID
     });
-    questionHistory.save();
-
+    questionHistory.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
+    //send question to room users
+    io.to(userQuest.roomID).emit("quest", {
+      user: userQuest.nickname,
+      text: quest
+    });
     callback();
-    // }
   });
 
   // save question categories for results calculation
@@ -249,7 +254,10 @@ io.on('connection', function (socket) {
       sender: userQuestCategory.nickname,
       room: roomID
     });
-    questForCalc.save();
+    questForCalc.save((error) => {
+      if (error) // ...
+      console.log(error);
+    });
   });
 
 
@@ -288,7 +296,7 @@ app.post("/signIn", (req, res) => {
           return (err);
           // res.redirect("/signin?" + nickname&roomID);
         } else {
-          res.sendStatus(200);;
+          res.sendStatus(200);
         }
       });
 
@@ -318,15 +326,14 @@ app.get("/questions", (req, res) => {
   });
 });
 
-
-/////////SEND MINI CHAT History//////////
+/////////SEND CHAT mini History//////////
 app.get("/chat/:roomID", (req, res) => {
 
   Chat.find({
-    room: _.lowerCase(req.params.roomID.trim())
+    room: req.params.roomID
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory.length - 3, messagesHistory.length);
+      const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
       res.json({
         messagesInHistory
       });
@@ -337,15 +344,15 @@ app.get("/chat/:roomID", (req, res) => {
 
 });
 
-/////////SEND FULL CHAT History//////////
+/////////SEND CHAT full History//////////
 app.get("/history/:roomID", (req, res) => {
 
   Chat.find({
-    room: _.lowerCase(req.params.roomID.trim())
-  }, (error, foundHistory) => {
-    if (foundHistory) {
+    room: req.params.roomID
+  }, (error, messagesInHistory) => {
+    if (messagesInHistory) {
       res.json({
-        foundHistory
+        messagesInHistory
       });
     } else if (error) {
       console.log(error);
@@ -353,6 +360,7 @@ app.get("/history/:roomID", (req, res) => {
   });
 
 });
+
 
 /////////////delete room chat history//////
 app.delete("/delete/:roomID", (req, res) => {
@@ -394,7 +402,6 @@ app.get("/results/:roomID", (req, res) => {
             maxCount = modeMap[el];
           }
         }
-        console.log(maxEl);
         // return maxEl;
         res.json({
           maxEl
