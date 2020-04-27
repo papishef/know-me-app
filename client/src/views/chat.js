@@ -65,15 +65,14 @@ useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
-    axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
+    axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}`)
     .then(response => {
-        const history = response.data.messagesInHistory;
-        setMessageHistory(history);
+        setMessageHistory(response.data.messagesInHistory);
     })
     .catch(error => {
         console.log(error.response);
     });
-},[endPoint]);
+},[]);
 
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
@@ -129,12 +128,7 @@ useEffect(() => {
         setMessages([...messages, quest]);
     });
 }, [messages]);
-    
 
-
-useEffect(() => {
-    console.log(messageHistory);
-}, [messageHistory]);
 
 //Sending Question to the server
 useEffect(() => {
