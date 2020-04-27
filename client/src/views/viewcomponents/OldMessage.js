@@ -7,10 +7,10 @@ const Message = ({messageH, sender, nickname}) =>{
     let isSentbyCurrentUser = false;
 
     //remove whitespace around name
-    let trimmedName = sender.trim().toLowerCase();
+    let trimmedName = nickname.trim().toLowerCase();
 
     //confirms which user is active on that device
-    if (nickname === trimmedName) {
+    if (sender.trim().toLowerCase() === trimmedName) {
         isSentbyCurrentUser = true;
     }
     
@@ -24,14 +24,14 @@ const Message = ({messageH, sender, nickname}) =>{
                 </span>
             </div>
         )
-        : (
+        : !isSentbyCurrentUser ? (
             <div className='theirMessages'>
                 <p className='reciever'>{sender}</p>
                 <span className = 'text-wrapper'>
                     <div style={{background: 'whitesmoke'}} className='recievedMessage'>{messageH}</div>
                 </span>
             </div>
-        ) 
+        ) : null
         
     )
 }

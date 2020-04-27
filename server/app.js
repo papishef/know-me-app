@@ -210,7 +210,7 @@ io.on('connection', function (socket) {
     let messageHistory = new Chat({
       message: message,
       sender: user.nickname,
-      room: roomID
+      room: _.lowerCase(roomID.trim())
     });
     messageHistory.save((error) => {
       if (error) // ...
@@ -230,7 +230,7 @@ io.on('connection', function (socket) {
     let questionHistory = new Chat({
       message: quest,
       sender: userQuest.nickname,
-      room: roomID
+      room: _.lowerCase(roomID.trim())
     });
     questionHistory.save((error) => {
       if (error) // ...
@@ -252,7 +252,7 @@ io.on('connection', function (socket) {
     let questForCalc = new QuestionAsked({
       category: questionCategory,
       sender: userQuestCategory.nickname,
-      room: roomID
+      room: _.lowerCase(roomID.trim())
     });
     questForCalc.save((error) => {
       if (error) // ...
