@@ -106,8 +106,9 @@ useEffect(() => {
 useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    const lastMessage = messages.pop();
+   
     if (messages.length > 3) {
+        let lastMessage = messages.pop();
         setMessages([lastMessage]);
         const fetchHistory = async () => {
             // setLoading(true);
