@@ -46,8 +46,6 @@ app.options("*", (req, res, next) => {
   next();
 });
 
-
-
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -75,14 +73,14 @@ app.use(passport.session());
 
 // Database Connection
 mongoose.connect("mongodb+srv://admin-sheriff:Surprise1%40@kyiakyiadigital-c6jba.mongodb.net/PlayRoomDB", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+})
+.catch((error) => {
+  console.log(error);
+});
 
 
 /////DEFINITION OF USER SCHEMA////////////////
@@ -208,11 +206,6 @@ io.on('connection', function (socket) {
   //Expecting a message to be sent 
   socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
-    //send message to room users
-    io.to(user.roomID).emit("message", {
-      user: user.nickname,
-      text: message
-    });
     ///save message to history
     let messageHistory = new Chat({
       message: message,
@@ -221,18 +214,18 @@ io.on('connection', function (socket) {
     });
     messageHistory.save((error) => {
       if (error) // ...
-        console.log(error);
+      console.log(error);
+    });
+    //send message to room users
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
+      text: message
     });
     callback();
   });
   //Expecting a question to be sent
   socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
-    //send question to room users
-    io.to(userQuest.roomID).emit("quest", {
-      user: userQuest.nickname,
-      text: quest
-    });
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
@@ -241,7 +234,12 @@ io.on('connection', function (socket) {
     });
     questionHistory.save((error) => {
       if (error) // ...
-        console.log(error);
+      console.log(error);
+    });
+    //send question to room users
+    io.to(userQuest.roomID).emit("quest", {
+      user: userQuest.nickname,
+      text: quest
     });
     callback();
   });
@@ -258,7 +256,7 @@ io.on('connection', function (socket) {
     });
     questForCalc.save((error) => {
       if (error) // ...
-        console.log(error);
+      console.log(error);
     });
   });
 
@@ -328,14 +326,31 @@ app.get("/questions", (req, res) => {
   });
 });
 
-/////////SEND CHAT History//////////
+/////////SEND CHAT mini History//////////
 app.get("/chat/:roomID", (req, res) => {
 
   Chat.find({
-    room: _.lowerCase(req.params.roomID.trim())
+    room: req.params.roomID
   }, (error, messagesHistory) => {
     if (messagesHistory) {
       const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
+      res.json({
+        messagesInHistory
+      });
+    } else if (error) {
+      console.log(error);
+    }
+  });
+
+});
+
+/////////SEND CHAT full History//////////
+app.get("/history/:roomID", (req, res) => {
+
+  Chat.find({
+    room: req.params.roomID
+  }, (error, messagesInHistory) => {
+    if (messagesInHistory) {
       res.json({
         messagesInHistory
       });
