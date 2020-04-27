@@ -36,7 +36,7 @@ useEffect(() => {
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
 
-    axios.get(`https://limitless-river-10398.herokuapp.com/results/${roomID}`)
+    axios.get(`http://localhost:4000/results/${roomID}`)
     .then(res => {
       const data = res.data;
         //console.log(data)
@@ -55,7 +55,7 @@ useEffect(() => {
   useEffect(() => {
     const {roomID} = queryString.parse(location.search);
     setRoomID(roomID);
-    axios.delete(`https://limitless-river-10398.herokuapp.com/delete/${roomID}`)
+    axios.delete(`http://localhost:4000/delete/${roomID}`)
     .then((err, res) => {
       if (err) throw err;
       return res;
@@ -64,7 +64,7 @@ useEffect(() => {
 
   //on final disconect
   useEffect(() => {
-    socket = io("https://limitless-river-10398.herokuapp.com/");
+    socket = io("http://localhost:4000/");
     return () => {
         socket.emit("disconnect");
         socket.off();
@@ -80,12 +80,10 @@ const endCurrentGame = () => {
     setPlayAgain(true);
 };
 
-    //Delete all question history from database
-    useEffect(() => {
-
-        axios.delete(`https://limitless-river-10398.herokuapp.com/deleteQuestHistory/${roomID}`);
-    
-    }, [playAgain, roomID]);
+//Delete all question history from database
+useEffect(() => {
+    axios.delete(`http://localhost:4000/deleteQuestHistory/${roomID}`);
+}, [playAgain, roomID]);
 
 
 

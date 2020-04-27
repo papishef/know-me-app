@@ -43,12 +43,12 @@ const Chat = () => {
     // const [loading, setLoading] = useState(false);
  
     
-    const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
+    const endPoint  = 'http://localhost:4000/';
 
 /////////////////////////////////////////////////
 //question state
 useEffect(() => {
-    axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
+    axios.get(`http://localhost:4000/questions`)
     .then(res => {
       const data = res.data.allQuestions;
       setQuestion(data);
@@ -65,7 +65,7 @@ useEffect(() => {
     setRoomID(roomID);
     setNickname(nickname);
 
-    axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}`)
+    axios.get(`http://localhost:4000/history/${roomID}`)
     .then(response => {
         setMessageHistory(response.data.messagesInHistory);
     })
@@ -113,7 +113,7 @@ useEffect(() => {
         const fetchHistory = async () => {
             // setLoading(true);
             try {
-                const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
+                const result = await axios.get(`http://localhost:4000/chat/${roomID}`,);
                 setMessageHistory(result.data.messagesInHistory);
             } catch (error) {
                 console.log(error);
@@ -138,7 +138,7 @@ useEffect(() => {
         socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
     }
 
-}, [quest, roomID]);
+}, [quest]);
 
 // save question categories for results calculation
 useEffect(() => {
