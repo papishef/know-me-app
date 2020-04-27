@@ -73,7 +73,7 @@ useEffect(() => {
     .catch(error => {
         console.log(error.response);
     });
-},[location.search, endPoint]);
+},[]);
 
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
