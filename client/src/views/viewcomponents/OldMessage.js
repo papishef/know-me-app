@@ -24,7 +24,7 @@ const Message = ({messageH, sender, nickname}) =>{
                 </span>
             </div>
         )
-        : !isSentbyCurrentUser ? (
+        : isSentbyCurrentUser === false ? (
             <div className='theirMessages'>
                 <p className='reciever'>{sender}</p>
                 <span className = 'text-wrapper'>

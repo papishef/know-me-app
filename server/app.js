@@ -209,7 +209,7 @@ io.on('connection', function (socket) {
     ///save message to history
     let messageHistory = new Chat({
       message: message,
-      sender: user.nickname,
+      sender: _.lowerCase(user.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     messageHistory.save((error) => {
@@ -229,7 +229,7 @@ io.on('connection', function (socket) {
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
-      sender: userQuest.nickname,
+      sender: _.lowerCase(userQuest.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questionHistory.save((error) => {
@@ -251,7 +251,7 @@ io.on('connection', function (socket) {
 
     let questForCalc = new QuestionAsked({
       category: questionCategory,
-      sender: userQuestCategory.nickname,
+      sender: _.lowerCase(userQuestCategory.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questForCalc.save((error) => {
@@ -330,7 +330,7 @@ app.get("/questions", (req, res) => {
 app.get("/chat/:roomID", (req, res) => {
 
   Chat.find({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
       const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
@@ -348,7 +348,7 @@ app.get("/chat/:roomID", (req, res) => {
 app.get("/history/:roomID", (req, res) => {
 
   Chat.find({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesInHistory) => {
     if (messagesInHistory) {
       res.json({

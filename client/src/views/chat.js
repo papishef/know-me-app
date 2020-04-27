@@ -78,8 +78,8 @@ useEffect(() => {
 useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
  
-    setNickname(nickname);
-    setRoomID(roomID);   
+    setNickname(nickname.trim().toLowerCase());
+    setRoomID(roomID.trim().toLowerCase());   
     socket = io(endPoint);   
     socket.emit("join", {nickname, roomID}, (error) => {
         if(error) {

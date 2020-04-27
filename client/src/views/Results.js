@@ -60,7 +60,7 @@ useEffect(() => {
       if (err) throw err;
       return res;
     });
-  }, [location.search]);
+  }, []);
 
   //on final disconect
   useEffect(() => {
@@ -82,10 +82,11 @@ const endCurrentGame = () => {
 
     //Delete all question history from database
     useEffect(() => {
-
-        axios.delete(`https://limitless-river-10398.herokuapp.com/deleteQuestHistory/${roomID}`);
+      const {roomID} = queryString.parse(location.search);
+      setRoomID(roomID);
+      axios.delete(`https://limitless-river-10398.herokuapp.com/deleteQuestHistory/${roomID}`);
     
-    }, [playAgain, roomID]);
+    }, [playAgain]);
 
 
 
