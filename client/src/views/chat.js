@@ -63,7 +63,7 @@ useEffect(() => {
 useEffect(() => {
 
     const {nickname, roomID} = queryString.parse(location.search);
-    // setRoomID(roomID);
+    setRoomID(roomID);
 
     axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`)
     .then(response => {
