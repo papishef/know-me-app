@@ -108,17 +108,15 @@ useEffect(() => {
     setNickname(nickname);
    
     if (messages.length > 3) {
-        let lastMessage = messages.pop();
-        setMessages([lastMessage]);
+        // let lastMessage = messages.pop();
+        messages.length = 0;
         const fetchHistory = async () => {
-            // setLoading(true);
             try {
                 const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
                 setMessageHistory(result.data.messagesInHistory);
             } catch (error) {
                 console.log(error);
             }
-            // setLoading(false);
         };
         fetchHistory();
     }
