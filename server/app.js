@@ -19,8 +19,8 @@ const _ = require("lodash");
 // const server = http.createServer(server);
 const cors = require("cors");
 const io = require("socket.io").listen(server);
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+// const session = require('express-session');
+// const MemoryStore = require('memorystore')(session);
 
 const {
   addUser,
@@ -58,20 +58,20 @@ app.use(
 
 app.use(cookieParser());
 
-const sharedsession = require("express-socket.io-session");
+// const sharedsession = require("express-socket.io-session");
 
-app.use(session({
-  secret: "thenameofthisappwasformerlyknowmeapp",
-  resave: false,
-  saveUninitialized: false,
-  store: new MemoryStore({
-    checkPeriod: 604800000 // prune expired entries every 24h
-  }),
-  cookie: {
-    maxAge: 604800000
-  }
-}));
-io.use(sharedsession(session));
+// app.use(session({
+//   secret: "thenameofthisappwasformerlyknowmeapp",
+//   resave: false,
+//   saveUninitialized: false,
+//   // store: new MemoryStore({
+//   //   checkPeriod: 604800000 // prune expired entries every 24h
+//   // }),
+//   cookie: {
+//     maxAge: 604800000
+//   }
+// }));
+// io.use(sharedsession(session));
 
 app.use(passport.initialize());
 app.use(passport.session());
