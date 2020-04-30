@@ -30,7 +30,7 @@ let socket;
 const Chat = () => {
     //location hooks from react-router-dom to manipulate platform route, path, location
     const location = useLocation();
-
+    
     // // Username and gender state hooks
     const [nickname, setNickname] = useState("");
     const [roomID, setRoomID] = useState("");
@@ -41,9 +41,8 @@ const Chat = () => {
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
     // const [loading, setLoading] = useState(false);
- 
     
-    const endPoint  = 'ws://limitless-river-10398.herokuapp.com/';
+    const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
 
 /////////////////////////////////////////////////
 //question state
