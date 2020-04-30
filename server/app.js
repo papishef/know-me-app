@@ -8,7 +8,7 @@ if (port == null || port == "") {
   port = 4000;
 }
 const server = app.listen(port, function (res) {
-  console.log("server is listening on" + port);
+  console.log("server is listening on " + port);
 });
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
