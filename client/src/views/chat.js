@@ -80,7 +80,7 @@ useEffect(() => {
  
     setNickname(nickname.trim().toLowerCase());
     setRoomID(roomID.trim().toLowerCase());   
-    socket = io(endPoint);   
+    socket = io(endPoint, {transports: ['websocket']});   
     socket.emit("join", {nickname, roomID}, (error) => {
         if(error) {
             alert(error.response);
