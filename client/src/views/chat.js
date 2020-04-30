@@ -43,7 +43,7 @@ const Chat = () => {
     // const [loading, setLoading] = useState(false);
  
     
-    const endPoint  = 'https://limitless-river-10398.herokuapp.com/';
+    const endPoint  = 'ws://limitless-river-10398.herokuapp.com/';
 
 /////////////////////////////////////////////////
 //question state

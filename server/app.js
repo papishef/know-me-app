@@ -186,7 +186,7 @@ io.on('connection', function (socket) {
       error,
       user
     } = addUser({
-      id: socket.id,
+      id: nickname,
       nickname,
       roomID
     });
