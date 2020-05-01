@@ -207,12 +207,12 @@ io.on('connection', function (socket) {
     callback();
   });
   //Expecting a message to be sent 
-  socket.on("sendMessage", (message, roomID, nickname, callback) => {
+  socket.on("sendMessage", (message, roomID, callback) => {
     const user = getUser(socket.id);
     ///save message to history
     let messageHistory = new Chat({
       message: message,
-      sender: _.lowerCase(nickname.trim()),
+      sender: _.lowerCase(user.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     messageHistory.save((error) => {
@@ -220,19 +220,19 @@ io.on('connection', function (socket) {
       console.log(error);
     });
     //send message to room users
-    io.to(roomID).emit("message", {
-      user: nickname,
+    io.to(user.roomID).emit("message", {
+      user: user.nickname,
       text: message
     });
     callback();
   });
   //Expecting a question to be sent
-  socket.on("sendQuestion", (quest, roomID, nickname, callback) => {
+  socket.on("sendQuestion", (quest, roomID, callback) => {
     const userQuest = getUser(socket.id);
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
-      sender: _.lowerCase(nickname.trim()),
+      sender: _.lowerCase(userQuest.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questionHistory.save((error) => {
@@ -240,21 +240,21 @@ io.on('connection', function (socket) {
       console.log(error);
     });
     //send question to room users
-    io.to(roomID).emit("quest", {
-      user: nickname,
+    io.to(userQuest.roomID).emit("quest", {
+      user: userQuest.nickname,
       text: quest
     });
     callback();
   });
 
   // save question categories for results calculation
-  socket.on("sendCategory", (questionCategory, roomID, nickname) => {
+  socket.on("sendCategory", (questionCategory, roomID) => {
     //save questions for results page
     const userQuestCategory = getUser(socket.id);
 
     let questForCalc = new QuestionAsked({
       category: questionCategory,
-      sender: _.lowerCase(nickname.trim()),
+      sender: _.lowerCase(userQuestCategory.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questForCalc.save((error) => {
@@ -264,7 +264,7 @@ io.on('connection', function (socket) {
   });
 
 
-  socket.on("disconnect", (roomID) => {
+  socket.on("disconnect", () => {
     const user = removeUser(socket.id);
 
     if (user) {
@@ -422,7 +422,6 @@ app.get("/results/:roomID", (req, res) => {
     });
 
 });
-
 
 /////////////delete room question history//////
 app.delete("/deleteQuestHistory/:roomID", (req, res) => {
