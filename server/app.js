@@ -220,8 +220,8 @@ io.on('connection', function (socket) {
       console.log(error);
     });
     //send message to room users
-    io.to(user.roomID).emit("message", {
-      user: user.nickname,
+    io.to(roomID).emit("message", {
+      user: nickname,
       text: message
     });
     callback();
@@ -240,8 +240,8 @@ io.on('connection', function (socket) {
       console.log(error);
     });
     //send question to room users
-    io.to(userQuest.roomID).emit("quest", {
-      user: userQuest.nickname,
+    io.to(roomID).emit("quest", {
+      user: nickname,
       text: quest
     });
     callback();
