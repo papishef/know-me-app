@@ -179,12 +179,12 @@ io.on('connection', function (socket) {
     //Admin message to all new users
     socket.emit("message", {
       user: "PlayRoom",
-      text: `Hello ${user.nickname}, Welcome to ${user.roomID}, any player can pick a question first, Refer to the how to play guide on the top right`
+      text: `Hello ${user.nickname}, Welcome to ${user.roomID}, any player can pick a question first, Refer to the how to play guide on the top right. There are ${getUsersInRoom(user.roomID)} users in room`
     });
     //Admin message to existin user when a new user joins the room
     socket.broadcast.to(user.roomID).emit("message", {
       user: "PlayRoom",
-      text: `${user.nickname} has entered the Room, Break the ice by asking them a question`
+      text: `${user.nickname} has entered the Room, Break the ice by asking them a question, There are ${getUsersInRoom(user.roomID)} users in room`
     });
 
     socket.join(user.roomID);
