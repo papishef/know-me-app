@@ -81,13 +81,13 @@ useEffect(() => {
     socket = io(endPoint, {transports: ['websocket']});   
     socket.emit("join", {nickname, roomID}, (error) => {
         if(error) {
-            alert(error.response);
+            alert(error);
         }
     });  
 
-    // return () => {
-    //     socket.emit("disconnect");
-    // };
+    return () => {
+        socket.emit("disconnect");
+    };
 },[endPoint, location.search]);
 
 
