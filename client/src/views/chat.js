@@ -85,9 +85,9 @@ useEffect(() => {
         }
     });  
 
-    // return () => {
-    //     socket.emit("disconnect");
-    // };
+    return () => {
+        socket.emit("disconnect", nickname);
+    };
 },[endPoint, location.search]);
 
 

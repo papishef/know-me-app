@@ -249,7 +249,7 @@ io.on('connection', function (socket) {
   });
 
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (nickname) => {
     const user = removeUser(nickname);
 
     if (user) {
