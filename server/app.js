@@ -207,8 +207,8 @@ io.on('connection', function (socket) {
     callback();
   });
   //Expecting a message to be sent 
-  socket.on("sendMessage", (message, roomID, callback) => {
-    const user = getUser(socket.id);
+  socket.on("sendMessage", (message, roomID, nickname, callback) => {
+    const user = getUser(nickname);
     ///save message to history
     let messageHistory = new Chat({
       message: message,
@@ -227,8 +227,8 @@ io.on('connection', function (socket) {
     callback();
   });
   //Expecting a question to be sent
-  socket.on("sendQuestion", (quest, roomID, callback) => {
-    const userQuest = getUser(socket.id);
+  socket.on("sendQuestion", (quest, roomID, nickname, callback) => {
+    const userQuest = getUser(nickname);
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
@@ -248,9 +248,9 @@ io.on('connection', function (socket) {
   });
 
   // save question categories for results calculation
-  socket.on("sendCategory", (questionCategory, roomID) => {
+  socket.on("sendCategory", (questionCategory, roomID, nickname, callback) => {
     //save questions for results page
-    const userQuestCategory = getUser(socket.id);
+    const userQuestCategory = getUser(nickname);
 
     let questForCalc = new QuestionAsked({
       category: questionCategory,
@@ -258,9 +258,10 @@ io.on('connection', function (socket) {
       room: _.lowerCase(roomID.trim())
     });
     questForCalc.save((error) => {
-      if (error) // ...
+      if (error) 
       console.log(error);
     });
+    callback();
   });
 
 

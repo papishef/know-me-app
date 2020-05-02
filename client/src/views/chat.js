@@ -131,7 +131,7 @@ useEffect(() => {
 useEffect(() => {
 
      if(quest) {
-        socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
+        socket.emit("sendQuestion", quest, roomID, nickname, () => setQuest(""));
     }
 
 }, [quest, roomID]);
@@ -140,7 +140,7 @@ useEffect(() => {
 useEffect(() => {
 
     if(questionCategory) {
-        socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
+        socket.emit("sendCategory", questionCategory, roomID, nickname, () => setQuestionCategory(""));
     }
 }, [questionCategory, roomID]);
 
@@ -149,7 +149,7 @@ useEffect(() => {
 const sendMessage = (e) => {
     e.preventDefault();
     if(message) {
-        socket.emit("sendMessage", message, roomID, () => setMessage(""));
+        socket.emit("sendMessage", message, roomID, nickname, () => setMessage(""));
     }
 };
 

@@ -10,7 +10,8 @@ const addUser = ({ id, nickname, roomID }) => {
 
 
   if(!nickname || !roomID) return { error: 'Username and room are required.' };
-  if(users.length > 1 && existingUser) return {error: "Room Over load. try another room or create yours and invite friends"};
+  if(users.length > 1 && !existingUser) return {error: "Room Over load. try another room or create yours and invite friends"};
+  if(existingUser) return {error: "User already exists in room, if you are the same user, return to sign in page and log back in to continue"};
 
   const user = { id, nickname, roomID };
 
