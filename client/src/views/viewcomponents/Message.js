@@ -11,7 +11,7 @@ const Message = ({message: {user, text}, nickname}) =>{
 
 
     //confirms which user is active on that device
-    if (user === trimmedName) {
+    if (user.trim().toLowerCase() === trimmedName) {
         isSentbyCurrentUser = true;
     }
     
@@ -26,7 +26,7 @@ const Message = ({message: {user, text}, nickname}) =>{
                 
             </div>
         )
-        : !isSentbyCurrentUser ? (
+        : isSentbyCurrentUser === false ? (
             <div className='theirMessages'>
                 <p className='reciever'>{user}</p>
                 <span className = 'text-wrapper'>

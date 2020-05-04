@@ -28,7 +28,7 @@ const Messages = ({ messages, nickname, messageHistory}) => {
              <hr style={{border: 'solid 1.5px #f5f5f5'}} />
            </div> */}
            <div> {messages.map((message, i) => <div key={i}><Message message={message} nickname={nickname} /></div>)}</div>
-            <div ref={messagesEndRef} className='pt-3 pb-0' />
+            <div ref={messagesEndRef} className='pt-3 pb-3' />
         </div>
     )
 }

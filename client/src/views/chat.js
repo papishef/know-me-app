@@ -41,7 +41,6 @@ const Chat = () => {
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
     // const [loading, setLoading] = useState(false);
- 
     
     const endPoint  = 'http://localhost:4000/';
 
@@ -60,7 +59,6 @@ useEffect(() => {
 },[]);
 
 useEffect(() => {
-
     const {nickname, roomID} = queryString.parse(location.search);
     setRoomID(roomID);
     setNickname(nickname);
@@ -78,19 +76,15 @@ useEffect(() => {
 useEffect(() => {
     const {nickname, roomID} = queryString.parse(location.search);
  
-    setNickname(nickname);
-    setRoomID(roomID);   
-    socket = io(endPoint);   
+    setNickname(nickname.trim().toLowerCase());
+    setRoomID(roomID.trim().toLowerCase());   
+    socket = io(endPoint, {transports: ['websocket']});   
     socket.emit("join", {nickname, roomID}, (error) => {
         if(error) {
-            alert(error.response);
+            alert(error);
         }
     });  
 
-    return () => {
-        socket.emit("disconnect");
-        // socket.off();
-    };
 },[endPoint, location.search]);
 
 
@@ -108,17 +102,16 @@ useEffect(() => {
     setNickname(nickname);
    
     if (messages.length > 3) {
-        let lastMessage = messages.pop();
-        setMessages([lastMessage]);
+        // let lastMessage = messages.pop();
+        messages.splice(0, messages.length);
+        messageHistory.splice(0, messageHistory.length);
         const fetchHistory = async () => {
-            // setLoading(true);
             try {
                 const result = await axios.get(`http://localhost:4000/chat/${roomID}`,);
                 setMessageHistory(result.data.messagesInHistory);
             } catch (error) {
                 console.log(error);
             }
-            // setLoading(false);
         };
         fetchHistory();
     }
@@ -135,7 +128,7 @@ useEffect(() => {
 useEffect(() => {
 
      if(quest) {
-        socket.emit("sendQuestion", quest, roomID, () => setQuest(""));
+        socket.emit("sendQuestion", quest, roomID, nickname, () => setQuest(""));
     }
 
 }, [quest]);
@@ -144,7 +137,7 @@ useEffect(() => {
 useEffect(() => {
 
     if(questionCategory) {
-        socket.emit("sendCategory", questionCategory, roomID, () => setQuestionCategory(""));
+        socket.emit("sendCategory", questionCategory, roomID, nickname, () => setQuestionCategory(""));
     }
 }, [questionCategory, roomID]);
 
@@ -153,7 +146,7 @@ useEffect(() => {
 const sendMessage = (e) => {
     e.preventDefault();
     if(message) {
-        socket.emit("sendMessage", message, roomID, () => setMessage(""));
+        socket.emit("sendMessage", message, roomID, nickname, () => setMessage(""));
     }
 };
 

@@ -8,7 +8,7 @@ if (port == null || port == "") {
   port = 4000;
 }
 const server = app.listen(port, function (res) {
-  console.log("server is listening on 4000");
+  console.log("server is listening on " + port);
 });
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -55,18 +55,7 @@ app.use(
 
 
 app.use(cookieParser());
-const session = require('express-session')({
-  secret: "thenameofthisappwasformerlyknowmeapp",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 604800000
-  }
-});
-const sharedsession = require("express-socket.io-session");
 
-app.use(session);
-io.use(sharedsession(session));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -181,35 +170,33 @@ io.on('connection', function (socket) {
       error,
       user
     } = addUser({
-      id: socket.id,
+      id: nickname,
       nickname,
       roomID
     });
 
-
     if (error) return callback(error);
-
     //Admin message to all new users
     socket.emit("message", {
       user: "PlayRoom",
-      text: `Hello ${user.nickname}, Welcome to ${user.roomID}, any player can pick a question first, Refer to the how to play guide on the top right`
+      text: `Hello ${user.nickname}, Welcome to ${user.roomID}, any player can pick a question first, Refer to the how to play guide on the top right.`
     });
     //Admin message to existin user when a new user joins the room
     socket.broadcast.to(user.roomID).emit("message", {
       user: "PlayRoom",
-      text: `${user.nickname} has entered the Room, Break the ice by asking them a question`
+      text: `${user.nickname} has entered the Room, Break the ice by asking them a question.`
     });
 
     socket.join(user.roomID);
     callback();
   });
   //Expecting a message to be sent 
-  socket.on("sendMessage", (message, roomID, callback) => {
-    const user = getUser(socket.id);
+  socket.on("sendMessage", (message, roomID, nickname, callback) => {
+    const user = getUser(nickname);
     ///save message to history
     let messageHistory = new Chat({
       message: message,
-      sender: user.nickname,
+      sender: _.lowerCase(user.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     messageHistory.save((error) => {
@@ -224,12 +211,12 @@ io.on('connection', function (socket) {
     callback();
   });
   //Expecting a question to be sent
-  socket.on("sendQuestion", (quest, roomID, callback) => {
-    const userQuest = getUser(socket.id);
+  socket.on("sendQuestion", (quest, roomID, nickname, callback) => {
+    const userQuest = getUser(nickname);
     //save questions to chats schema
     let questionHistory = new Chat({
       message: quest,
-      sender: userQuest.nickname,
+      sender: _.lowerCase(userQuest.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questionHistory.save((error) => {
@@ -245,24 +232,25 @@ io.on('connection', function (socket) {
   });
 
   // save question categories for results calculation
-  socket.on("sendCategory", (questionCategory, roomID) => {
+  socket.on("sendCategory", (questionCategory, roomID, nickname, callback) => {
     //save questions for results page
-    const userQuestCategory = getUser(socket.id);
+    const userQuestCategory = getUser(nickname);
 
     let questForCalc = new QuestionAsked({
       category: questionCategory,
-      sender: userQuestCategory.nickname,
+      sender: _.lowerCase(userQuestCategory.nickname.trim()),
       room: _.lowerCase(roomID.trim())
     });
     questForCalc.save((error) => {
-      if (error) // ...
+      if (error) 
       console.log(error);
     });
+    callback();
   });
 
 
-  socket.on("disconnect", (roomID) => {
-    const user = removeUser(socket.id);
+  socket.on("disconnect", (nickname) => {
+    const user = removeUser(nickname);
 
     if (user) {
       io.to(user.roomID).emit("message", {
@@ -273,7 +261,6 @@ io.on('connection', function (socket) {
 
   });
 });
-
 
 //LOGIN AND REG. ROUTES////
 app.post("/signIn", (req, res) => {
@@ -330,13 +317,21 @@ app.get("/questions", (req, res) => {
 app.get("/chat/:roomID", (req, res) => {
 
   Chat.find({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesHistory) => {
     if (messagesHistory) {
-      const messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length - 1);
-      res.json({
-        messagesInHistory
-      });
+      if (messagesHistory.length > 5) {
+        let messagesInHistory = messagesHistory.slice(messagesHistory.length - 5, messagesHistory.length);
+        res.json({
+          messagesInHistory
+        });
+      } else {
+        let messagesInHistory = messagesHistory.slice(messagesHistory[0], messagesHistory.length);
+        res.json({
+          messagesInHistory
+        });
+      }
+
     } else if (error) {
       console.log(error);
     }
@@ -348,7 +343,7 @@ app.get("/chat/:roomID", (req, res) => {
 app.get("/history/:roomID", (req, res) => {
 
   Chat.find({
-    room: req.params.roomID
+    room: _.lowerCase(req.params.roomID.trim())
   }, (error, messagesInHistory) => {
     if (messagesInHistory) {
       res.json({
@@ -413,7 +408,6 @@ app.get("/results/:roomID", (req, res) => {
     });
 
 });
-
 
 /////////////delete room question history//////
 app.delete("/deleteQuestHistory/:roomID", (req, res) => {
