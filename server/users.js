@@ -1,4 +1,5 @@
 //jshint esversion: 6
+const _ = require("lodash");
 const users = [];
 
 const addUser = ({ id, nickname, roomID }) => {
@@ -19,11 +20,18 @@ const addUser = ({ id, nickname, roomID }) => {
   return { user };
 };
 
-const removeUser = (id) => {
-  const index = users.findIndex((user) => user.id === id);
+const removeUser = (nickname) => {
+  return users.filter(function(user) {
+   return user.id !== nickname;
+  });
 
-  if (index !== -1) return users.splice(index, 1)[0];
 };
+
+// const removeUser = (id) => {
+//   const index = users.findIndex((user) => user.id === id);
+
+//   if (index !== -1) return users.splice(index, 1)[0];
+// };
 
 const getUser = (id) => users.find((user) => user.id === id);
 
