@@ -61,7 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Database Connection
-mongoose.connect("mongodb+srv://admin-sheriff:Surprise1%40@kyiakyiadigital-c6jba.mongodb.net/PlayRoomDB", {
+mongoose.connect("mongodb://localhost:27017/PlayRoomDB", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -340,7 +340,7 @@ app.get("/chat/:roomID", (req, res) => {
 });
 
 /////////SEND CHAT full History//////////
-app.get("/history/:roomID", (req, res) => {
+app.get("/history/:roomID/:limit", (req, res) => {
 
   Chat.find({
     room: _.lowerCase(req.params.roomID.trim())
@@ -348,11 +348,11 @@ app.get("/history/:roomID", (req, res) => {
     if (messagesInHistory) {
       res.json({
         messagesInHistory
-      });
+      })
     } else if (error) {
       console.log(error);
     }
-  });
+  }).limit(parseInt(req.params.limit)).sort( {createdAt: -1} );
 
 });
 

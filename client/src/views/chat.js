@@ -37,7 +37,7 @@ const Chat = () => {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [question, setQuestion] = useState([]);
-    const [messageHistory, setMessageHistory] = useState([]);
+    // const [messageHistory, setMessageHistory] = useState([]);
     const [quest, setQuest] = useState("");
     const [questionCategory, setQuestionCategory] = useState("");
     // const [loading, setLoading] = useState(false);
@@ -59,18 +59,14 @@ useEffect(() => {
 },[]);
 
 useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
-    setNickname(nickname);
+    if (messages.length >= 6) {
+    setMessages([])
+}
+}, [messages])
 
-    axios.get(`http://localhost:4000/history/${roomID}`)
-    .then(response => {
-        setMessageHistory(response.data.messagesInHistory);
-    })
-    .catch(error => {
-        console.log(error.response);
-    });
-},[location.search]);
+useEffect(() => {
+        console.log(messages.length)
+    }, [messages])
 
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
@@ -90,32 +86,10 @@ useEffect(() => {
 
 /////////////////////////////////////////////////
 useEffect(() => {
-
-     socket.on("message", (message) => {
-             setMessages([...messages, message]);snd.play();
-     });
+    socket.on("message", (message) => {
+        setMessages([...messages, message]);snd.play();
+     })
 },[messages]);
-
-useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
-    setNickname(nickname);
-   
-    if (messages.length > 3) {
-        // let lastMessage = messages.pop();
-        messages.splice(0, messages.length);
-        messageHistory.splice(0, messageHistory.length);
-        const fetchHistory = async () => {
-            try {
-                const result = await axios.get(`http://localhost:4000/chat/${roomID}`,);
-                setMessageHistory(result.data.messagesInHistory);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchHistory();
-    }
-}, [messages, location.search]);
 
 useEffect(() => {
     socket.on("quest", (quest) => {
@@ -168,7 +142,7 @@ const sendMessage = (e) => {
             {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
             {/* <PacmanLoader css={loaderCss} size={100} color={"#c525cd"} loading={loading} /> */}
             {/* {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>Loading...</p>} */}
-            <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
+            <Messages messages={messages}/>
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     );
