@@ -31,7 +31,7 @@ const Messages = ({ messages, nickname, messageHistory, setMessageHistory, roomI
   const scrollToBottom = () => {
   messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-useEffect(scrollToBottom, [messages, messageHistory]);
+useEffect(scrollToBottom, [messages]);
 
     //////////////////LIMIT INCREMENT
     useEffect(() => {
