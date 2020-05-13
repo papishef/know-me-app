@@ -87,10 +87,6 @@ if (messages.length > 3) {
 }
 
 useEffect(() => {
-    console.log(messages);
-}, [messages]);
-
-useEffect(() => {
     socket.on("quest", (quest) => {
         setMessages([...messages, quest]);
     });
