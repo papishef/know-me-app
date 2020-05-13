@@ -31,31 +31,32 @@ const Messages = ({ messages, nickname, messageHistory, setMessageHistory, roomI
   const scrollToBottom = () => {
   messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
 useEffect(scrollToBottom, [messages]);
 
-    //////////////////LIMIT INCREMENT
-    useEffect(() => {
-      if (inView === true) {
-        updateLimit(prevLimit => prevLimit + 10);
-      }
-    }, [inView]);
+//////////////////LIMIT INCREMENT
+useEffect(() => {
+  if (inView === true) {
+    updateLimit(prevLimit => prevLimit + 10);
+  }
+}, [inView]);
 
-   ////////////////PREVIOUS MESSAGES API REQUEST
-   useEffect(() => {
-    setLoading(true);
+////////////////PREVIOUS MESSAGES API REQUEST
+useEffect(() => {
+  setLoading(true);
   const fetchHistory = async () => {
-    try {
-        const result = await axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}/${limit}`);
-        setMessageHistory([...result.data.messagesInHistory].reverse());
-        setLoading(false);
-    } catch (error) {
-        console.log(error);
-    }
-  };
-    if (inView === true) {
-      fetchHistory();
-    }
-  }, [inView]);
+  try {
+      const result = await axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}/${limit}`);
+      setMessageHistory([...result.data.messagesInHistory].reverse());
+      setLoading(false);
+  } catch (error) {
+      console.log(error);
+  }
+};
+  if (inView === true) {
+    fetchHistory();
+  }
+}, [inView]);
 
 
 
@@ -63,7 +64,7 @@ useEffect(scrollToBottom, [messages]);
     <div className='message-container'>
       <div className='pb-5' style={{color:'transparent'}} ref={ref}>{`${inView}`}</div>
       <BeatLoader css={loaderCss} size={10} color={"#f9f9f9"} loading={loading} />
-      {loading && <p className= "text-center" style={{ textAlign: "center", color: "white", fontFamily: "Comic Sans MS", fontSize: 12 }}>Loading chats</p>}
+      {loading ? <p className= "text-center" style={{ textAlign: "center", color: "white", fontFamily: "Comic Sans MS", fontSize: 12 }}>Loading chats</p> : <p className= "text-center" style={{ textAlign: "center", color: "green", fontFamily: "Comic Sans MS", fontSize: 12, backgroundColor: "white" }}>End of messages</p>}
       <div>{messageHistory && messageHistory.map((messageHistory, i) => <div key={i}><OldMessage messageH={messageHistory.message} sender={messageHistory.sender} nickname={nickname} /></div>)}</div>  
       <div> {messages.map((message, i) => <div key={i}><Message message={message} nickname={nickname} /></div>)}</div>
         <div ref={messagesEndRef} className='pt-5 pb-0' />
