@@ -9,23 +9,12 @@ import io from 'socket.io-client';
 import Navbar from './viewcomponents/Navbar';
 import Messages from './viewcomponents/Messages';
 import MyInput from './viewcomponents/Input';
-// import { css } from "@emotion/core";
-// import PacmanLoader from "react-spinners/PacmanLoader";
 import UIfx from 'uifx';
 import SendSound from '../assets/clearly.mp3';
 const snd = new UIfx(SendSound);
 
 
 let socket;
-
-///css rules from emotion/core for ringloader
-// const loaderCss = css `
-//     display: block;
-//     position: absolute;
-//     top: 40%;
-//     left: 15%;
-// `;
-
 
 const Chat = () => {
     //location hooks from react-router-dom to manipulate platform route, path, location
@@ -58,19 +47,6 @@ useEffect(() => {
 
 },[]);
 
-useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
-    setNickname(nickname);
-
-    axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}`)
-    .then(response => {
-        setMessageHistory(response.data.messagesInHistory);
-    })
-    .catch(error => {
-        console.log(error.response);
-    });
-},[location.search]);
 
 ///////////////////////////////////////////////////////////////////////
 useEffect(() => {
@@ -87,42 +63,38 @@ useEffect(() => {
 
 },[endPoint, location.search]);
 
-
 /////////////////////////////////////////////////
 useEffect(() => {
 
      socket.on("message", (message) => {
-             setMessages([...messages, message]);snd.play();
+             setMessages([...messages, message])
      });
 },[messages]);
 
+/////clean messages array/////////  
+if (messages.length > 3) {
+
+    messages.length = 0;
+    const fetchHistory = async () => {
+        try {
+            const result = await axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}/5`);
+            setMessageHistory([...result.data.messagesInHistory].reverse());
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchHistory();
+}
+
 useEffect(() => {
-    const {nickname, roomID} = queryString.parse(location.search);
-    setRoomID(roomID);
-    setNickname(nickname);
-   
-    if (messages.length > 3) {
-        // let lastMessage = messages.pop();
-        messages.splice(0, messages.length);
-        messageHistory.splice(0, messageHistory.length);
-        const fetchHistory = async () => {
-            try {
-                const result = await axios.get(`https://limitless-river-10398.herokuapp.com/chat/${roomID}`,);
-                setMessageHistory(result.data.messagesInHistory);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchHistory();
-    }
-}, [messages, location.search]);
+    console.log(messages);
+}, [messages]);
 
 useEffect(() => {
     socket.on("quest", (quest) => {
         setMessages([...messages, quest]);
     });
 }, [messages]);
-
 
 //Sending Question to the server
 useEffect(() => {
@@ -165,10 +137,8 @@ const sendMessage = (e) => {
                     </select>
                 </InputGroup>
             </div>
-            {/* <Questions question={question} selectQuestion={selectQuestion} /> */}
-            {/* <PacmanLoader css={loaderCss} size={100} color={"#c525cd"} loading={loading} /> */}
-            {/* {loading && <p className= "ml-5" style={{zIndex: 9999, position: "absolute", top: 500, color: "white", fontFamily: "Comic Sans MS", fontSize: 22, fontWeight: 900}}>Loading...</p>} */}
-            <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} />
+
+            <Messages messageHistory={messageHistory} messages={messages} nickname={nickname} setMessageHistory={setMessageHistory} roomID={roomID} />
             <MyInput message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
     );

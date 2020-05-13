@@ -356,6 +356,23 @@ app.get("/history/:roomID", (req, res) => {
 
 });
 
+/////////SEND CHAT History with limit//////////
+app.get("/history/:roomID/:limit", (req, res) => {
+
+  Chat.find({
+    room: _.lowerCase(req.params.roomID.trim())
+  }, (error, messagesInHistory) => {
+    if (messagesInHistory) {
+      res.json({
+        messagesInHistory
+      });
+    } else if (error) {
+      console.log(error);
+    }
+  }).limit(parseInt(req.params.limit)).sort({ createdAt: -1 });
+
+});
+
 /////////////delete room chat history//////
 app.delete("/delete/:roomID", (req, res) => {
   ////delete messages after disconnect

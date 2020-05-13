@@ -21,6 +21,7 @@ export default function HowToPlay() {
                     <li>After session end, a result page with compatibility information and 2 cent advise is diplayed to help users make decision, if you require PlayRoom's advice.<span role="img" aria-labelledby="wink">😉</span></li>
                     <li style={{color: "red"}}>Remember to only share room ID once for your own privacy.</li>
                     <li>Happy playing player...<span role="img"  aria-labelledby="right-point">👉</span></li>
+                    <li>Rememeber to reload your browser occasionally for best performance since this is a browser game</li>
                 </ul>
             </div>
             </div>
