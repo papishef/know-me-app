@@ -36,7 +36,7 @@ const Chat = () => {
 /////////////////////////////////////////////////
 //question state
 useEffect(() => {
-    axios.get(`https://limitless-river-10398.herokuapp.com/questions`)
+    axios.get(`${endPoint}questions`)
     .then(res => {
       const data = res.data.allQuestions;
       setQuestion(data);
@@ -77,7 +77,7 @@ if (messages.length > 3) {
     messages.length = 0;
     const fetchHistory = async () => {
         try {
-            const result = await axios.get(`https://limitless-river-10398.herokuapp.com/history/${roomID}/5`);
+            const result = await axios.get(`${endPoint}history/${roomID}/5`);
             setMessageHistory([...result.data.messagesInHistory].reverse());
         } catch (error) {
             console.log(error);
